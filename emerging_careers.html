@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Career Crafter — Emerging Careers</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: #F0F2F5;
+    min-height: 100vh;
+    color: #1a1a2e;
+  }
+
+  /* ── NAVBAR ── */
+  nav {
+    background: #fff;
+    border-bottom: 1px solid #E5E7EB;
+    padding: 0.85rem 5%;
+    display: flex; align-items: center; justify-content: space-between;
+    position: sticky; top: 0; z-index: 100;
+  }
+  .brand { display: flex; align-items: center; gap: 0.6rem; text-decoration: none; }
+  .logo-icon {
+    width: 36px; height: 36px; border-radius: 9px;
+    background: linear-gradient(135deg, #1a6b4a 0%, #2ecc8a 50%, #3aa8d8 100%);
+    display: flex; align-items: center; justify-content: center; font-size: 1rem;
+  }
+  .brand-name { font-size: 1.1rem; font-weight: 700; color: #1a1a2e; }
+
+  .nav-right { display: flex; align-items: center; gap: 0.8rem; }
+  .nav-link {
+    font-size: 0.88rem; color: #888; text-decoration: none;
+    font-weight: 500; transition: color 0.2s;
+  }
+  .nav-link:hover { color: #1a1a2e; }
+  .nav-btn {
+    background: #1a1a2e; color: #fff;
+    border: none; cursor: pointer;
+    padding: 0.5rem 1.2rem; border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.88rem; font-weight: 600;
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+  .nav-btn:hover { background: #3d3b6e; }
+
+  /* ── MAIN ── */
+  main {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 3rem 4% 5rem;
+  }
+
+  /* ── HERO ── */
+  .page-hero { text-align: center; margin-bottom: 3rem; }
+
+  .future-badge {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    background: linear-gradient(135deg, #4f46e5, #7c3aed);
+    color: #fff; font-size: 0.7rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.1em;
+    padding: 0.35rem 1rem; border-radius: 100px;
+    margin-bottom: 1.2rem;
+  }
+
+  .page-hero h1 {
+    font-size: clamp(1.8rem, 4vw, 2.5rem);
+    font-weight: 700; letter-spacing: -0.02em;
+    color: #1a1a2e; margin-bottom: 0.8rem;
+  }
+
+  .page-hero p {
+    font-size: 0.95rem; color: #888; line-height: 1.7;
+    max-width: 520px; margin: 0 auto;
+  }
+
+  /* ── SECTION LABEL ── */
+  .section-label {
+    font-size: 0.8rem; font-weight: 700; color: #6C63FF;
+    text-transform: uppercase; letter-spacing: 0.1em;
+    margin-bottom: 0.8rem; margin-top: 2rem;
+  }
+
+  /* ── CARDS GRID ── */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.2rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .career-card {
+    background: #fff;
+    border: 1px solid #E5E7EB;
+    border-radius: 16px;
+    padding: 1.5rem;
+    cursor: pointer;
+    transition: transform 0.22s, box-shadow 0.22s, border-color 0.2s;
+    display: flex; flex-direction: column;
+    text-decoration: none; color: inherit;
+    position: relative;
+    overflow: hidden;
+  }
+  .career-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--card-accent, #6C63FF);
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.3s;
+  }
+  .career-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 32px rgba(0,0,0,0.1);
+    border-color: #d0d5e8;
+  }
+  .career-card:hover::before { transform: scaleX(1); }
+
+  /* card icon */
+  .card-icon {
+    width: 46px; height: 46px; border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.3rem; margin-bottom: 1rem;
+    flex-shrink: 0;
+  }
+
+  .card-title {
+    font-size: 0.97rem; font-weight: 700;
+    color: #1a1a2e; margin-bottom: 0.5rem;
+  }
+
+  .card-desc {
+    font-size: 0.82rem; color: #888;
+    line-height: 1.55; margin-bottom: 1rem; flex: 1;
+  }
+
+  .card-growth {
+    display: flex; align-items: center; gap: 0.4rem;
+    font-size: 0.78rem; font-weight: 600;
+    color: #22c55e; margin-bottom: 0.9rem;
+  }
+  .card-growth span { font-size: 0.85rem; }
+
+  .card-link {
+    font-size: 0.82rem; font-weight: 700;
+    color: #6C63FF; display: flex; align-items: center; gap: 0.3rem;
+    transition: gap 0.2s;
+  }
+  .career-card:hover .card-link { gap: 0.6rem; }
+
+  /* ── HOT BADGE ── */
+  .hot-badge {
+    position: absolute; top: 1rem; right: 1rem;
+    background: #FEF3C7; color: #d97706;
+    font-size: 0.65rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.07em;
+    padding: 0.2rem 0.55rem; border-radius: 100px;
+  }
+
+  /* ── CTA BANNER ── */
+  .cta-banner {
+    background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 50%, #9333ea 100%);
+    border-radius: 18px;
+    padding: 2.5rem 2rem;
+    text-align: center;
+    margin-top: 2rem;
+  }
+  .cta-banner h2 {
+    font-size: 1.4rem; font-weight: 700;
+    color: #fff; margin-bottom: 0.6rem; letter-spacing: -0.01em;
+  }
+  .cta-banner p {
+    font-size: 0.88rem; color: rgba(255,255,255,0.75);
+    max-width: 460px; margin: 0 auto 1.5rem; line-height: 1.6;
+  }
+  .btn-assess {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: rgba(255,255,255,0.15);
+    border: 1.5px solid rgba(255,255,255,0.4);
+    color: #fff; border-radius: 100px;
+    padding: 0.7rem 1.8rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem; font-weight: 600;
+    cursor: pointer; text-decoration: none;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .btn-assess:hover { background: rgba(255,255,255,0.28); transform: scale(1.03); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    .cards-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 500px) {
+    .cards-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav>
+  <a class="brand" href="index.html">
+    <div class="logo-icon">🎯</div>
+    <span class="brand-name">Career Crafter</span>
+  </a>
+  <div class="nav-right">
+    <a class="nav-link" href="index.html">Home</a>
+    <a class="nav-btn" href="dashboard.html">Dashboard</a>
+  </div>
+</nav>
+
+<!-- MAIN -->
+<main>
+
+  <!-- Hero -->
+  <div class="page-hero">
+    <div class="future-badge">🚀 Future-Ready Careers</div>
+    <h1>Emerging Career Opportunities</h1>
+    <p>Explore high-growth careers that are shaping the future. These fields offer exceptional opportunities for innovation and impact.</p>
+  </div>
+
+  <!-- Section: Tech & Engineering -->
+  <div class="section-label">⚡ Tech & Engineering</div>
+  <div class="cards-grid">
+
+    <a class="career-card" href="roadmap.html?career=ai" style="--card-accent:#7c3aed" onclick="goRoadmap('ai',event)">
+      <span class="hot-badge">🔥 Hot</span>
+      <div class="card-icon" style="background:linear-gradient(135deg,#a855f7,#7c3aed)">🤖</div>
+      <div class="card-title">AI Engineer</div>
+      <p class="card-desc">Design and develop artificial intelligence systems, machine learning models, and neural networks to solve complex problems.</p>
+      <div class="card-growth"><span>📈</span> 40% growth expected by 2027</div>
+      <span class="card-link">View Career Roadmap →</span>
+    </a>
+
+    <a class="career-card" href="roadmap.html?career=webdev" style="--card-accent:#2563eb" onclick="goRoadmap('webdev',event)">
+      <div class="card-icon" style="background:linear-gradient(135deg,#3b82f6,#1d4ed8)">🌐</div>
+      <div class="card-title">Web Developer</div>
+      <p class="card-desc">Build responsive, modern websites and web apps using the latest frontend and backend technologies.</p>
+      <div class="card-growth"><span>📈</span> 23% growth in web industry</div>
+      <span class="card-link">View Career Roadmap →</span>
+    </a>
+
+    <a class="career-card" href="roadmap.html?career=gamedev" style="--card-accent:#ea580c" onclick="goRoadmap('gamedev',event)">
+      <span class="hot-badge">🎮 Trending</span>
+      <div class="card-icon" style="background:linear-gradient(135deg,#f97316,#ea580c)">🎮</div>
+      <div class="card-title">Game Developer</div>
+      <p class="card-desc">Create immersive gaming experiences using cutting-edge technologies, 3D graphics, and interactive storytelling.</p>
+      <div class="card-growth"><span>📈</span> 35% growth in gaming industry</div>
+      <span class="card-link">View Career Roadmap →</span>
+    </a>
+
+    <a class="career-card" href="roadmap.html?career=mobile" style="--card-accent:#db2777" onclick="goRoadmap('mobile',event)">
+      <div class="card-icon" style="background:linear-gradient(135deg,#ec4899,#9333ea)">📱</div>
+      <div class="card-title">Mobile App Developer</div>
+      <p class="card-desc">Build cross-platform iOS & Android applications used by millions — from startup ideas to enterprise solutions.</p>
+      <div class="card-growth"><span>📈</span> 22% growth in mobile tech</div>
+      <span class="card-link">View Career Roadmap →</span>
+    </a>
+
+    <a class="career-card" href="roadmap.html?career=cloud" style="--card-accent:#0891b2" onclick="goRoadmap('cloud',event)">
+      <span class="hot-badge">💰 High Pay</span>
+      <div class="card-icon" style="background:linear-gradient(135deg,#06b6d4,#0284c7)">☁️</div>
+      <div class="card-title">Cloud Engineer</div>
+      <p class="card-desc">Design, deploy and scale cloud infrastructure on AWS, Azure and GCP powering global digital services.</p>
+      <div class="card-growth"><span>📈</span> 28% growth in cloud computing</div>
+      <span class="card-link">View Career Roadmap →</span>
+    </a>
+
+    <a class="career-card" href="roadmap.html?career=devops" style="--card-accent:#1d4ed8" onclick="goRoadmap('devops',event)">
+      <div class="card-icon" style="background:linear-gradient(135deg,#3b82f6,#0891b2)">⚙️</div>
+      <div class="card-title">DevOps Engineer</div>
+      <p class="card-desc">Bridge development and operations — automate pipelines, manage infrastructure and enable faster releases.</p>
+      <div class="card-growth"><span>📈</span> 25% growth in DevOps roles</div>
+      <span class="card-link">View Career Roadmap →</span>
+    </a>
+
+  </div>
+
+  <!-- Section: Data & AI -->
+  <div class="section-label">📊 Data & Artificial Intelligence</div>
+  <div class="cards-grid">
+
+    <a class="career-card" href="roadmap.html?career=data" style="--card-accent:#16a34a" onclick="goRoadmap('data',event)">
+      <span class="hot-badge">🔥 Hot</span>
+      <div class="card-icon" style="background:linear-gradient(135deg,#22c55e,#16a34a)">📊</div>
+      <div class="card-title">Data Analyst / Scientist</div>
+      <p class="card-desc">Transform raw data into actionable insights, helping businesses make informed decisions through statistical analysis.</p>
+      <div class="card-growth"><span>📈</span> 36% growth in data roles</div>
+      <span class="card-link">View Career Roadmap →</span>
+    </a>
+
+    <a class="career-card" href="roadmap.html?career=blockchain" style="--card-accent:#d97706" onclick="goRoadmap('blockchain',event)">
+      <span class="hot-badge">💎 Future</span>
+      <div class="card-icon" style="background:linear-gradient(135deg,#f59e0b,#d97706)">⛓️</div>
+      <div class="card-title">Blockchain Developer</div>
+      <p class="card-desc">Build decentralized apps, smart contracts and DeFi protocols on Ethereum, Solana and other blockchain platforms.</p>
+      <div class="card-growth"><span>📈</span> 45% growth in Web3 space</div>
+      <span class="card-link">View Career Roadmap →</span>
+    </a>
+
+    <a class="career-card" href="roadmap.html" style="--card-accent:#0891b2">
+      <span class="hot-badge">🆕 New</span>
+      <div class="card-icon" style="background:linear-gradient(135deg,#06b6d4,#0e7490)">🧠</div>
+      <div class="card-title">Prompt Engineer</div>
+      <p class="card-desc">Specialise in designing, testing and optimising prompts for large language models and AI systems to maximise accuracy.</p>
+      <div class="card-growth"><span>📈</span> 200%+ growth since ChatGPT launch</div>
+      <span class="card-link">View Career Roadmap →</span>
+    </a>
+
+    <a class="career-card" href="roadmap.html" style="--card-accent:#7c3aed">
+      <div class="card-icon" style="background:linear-gradient(135deg,#8b5cf6,#6d28d9)">🔬</div>
+      <div class="card-title">ML Research Scientist</div>
+      <p class="card-desc">Push the boundaries of artificial intelligence through academic research, publishing papers and developing novel algorithms.</p>
+      <div class="card-growth"><span>📈</span> 38% growth in AI research</div>
+      <span class="card-link">View Career Roadmap →</span>
+    </a>
+
+    <a class="career-card" href="roadmap.html" style="--card-accent:#059669">
+      <div class="card-icon" style="background:linear-gradient(135deg,#10b981,#059669)">🌱</div>
+      <div class="card-title">Green AI Specialist</div>
+      <p class="card-desc">Develop sustainable AI solutions that minimise environmental impact while maximising efficiency and innovation.</p>
+      <div class="card-growth"><span>📈</span> 61% growth in green tech</div>
+      <span class="card-link">View Career Roadmap →</span>
+    </a>
+
+    <a class="career-card" href="roadmap.html" style="--card-accent:#dc2626">
+      <span class="hot-badge">⚡ Rising</span>
+      <div class="card-icon" style="background:linear-gradient(135deg,#ef4444,#dc2626)">📡</div>
+      <div class="card-title">IoT Engineer</div>
+      <p class="card-desc">Connect the physical and digital world by building smart devices, sensors, and embedded systems for the Internet of Things.</p>
+      <div class="card-growth"><span>📈</span> 30% growth in IoT industry</div>
+      <span class="card-link">View Career Roadmap →</span>
+    </a>
+
+  </div>
+
+  <!-- Section: Security & Design -->
+  <div class="section-label">🛡️ Security, Design & Business</div>
+  <div class="cards-grid">
+
+    <a class="career-card" href="roadmap.html?career=cyber" style="--card-accent:#dc2626" onclick="goRoadmap('cyber',event)">
+      <span class="hot-badge">🔥 Critical</span>
+      <div class="card-icon" style="background:linear-gradient(135deg,#f87171,#dc2626)">🔒</div>
+      <div class="card-title">Cybersecurity Specialist</div>
+      <p class="card-desc">Protect organisations from cyber threats, secure networks, and ensure data privacy in an increasingly digital world.</p>
+      <div class="card-growth"><span>📈</span> 33% growth in security jobs</div>
+      <span class="card-link">View Career Roadmap →</span>
+    </a>
+
+    <a class="career-card" href="roadmap.html?career=ux" style="--card-accent:#a855f7" onclick="goRoadmap('ux',event)">
+      <div class="card-icon" style="background:linear-gradient(135deg,#c084fc,#9333ea)">🎨</div>
+      <div class="card-title">UX Designer</div>
+      <p class="card-desc">Craft intuitive and delightful user experiences, combining psychology, design thinking, and user research.</p>
+      <div class="card-growth"><span>📈</span> 25% growth in design field</div>
+      <span class="card-link">View Career Roadmap →</span>
+    </a>
+
+    <a class="career-card" href="roadmap.html" style="--card-accent:#0284c7">
+      <div class="card-icon" style="background:linear-gradient(135deg,#38bdf8,#0284c7)">📲</div>
+      <div class="card-title">Digital Marketing Specialist</div>
+      <p class="card-desc">Drive business growth through SEO, social media, paid ads, email campaigns, and data-driven marketing strategies.</p>
+      <div class="card-growth"><span>📈</span> 19% growth in digital marketing</div>
+      <span class="card-link">View Career Roadmap →</span>
+    </a>
+
+    <a class="career-card" href="roadmap.html" style="--card-accent:#16a34a">
+      <div class="card-icon" style="background:linear-gradient(135deg,#4ade80,#16a34a)">💼</div>
+      <div class="card-title">Product Manager</div>
+      <p class="card-desc">Lead cross-functional teams to define, build and launch products that customers love and businesses need.</p>
+      <div class="card-growth"><span>📈</span> 20% growth in product roles</div>
+      <span class="card-link">View Career Roadmap →</span>
+    </a>
+
+    <a class="career-card" href="roadmap.html" style="--card-accent:#d97706">
+      <span class="hot-badge">🌍 Remote</span>
+      <div class="card-icon" style="background:linear-gradient(135deg,#fbbf24,#d97706)">🚀</div>
+      <div class="card-title">Tech Entrepreneur</div>
+      <p class="card-desc">Build and scale technology startups — combining technical skills with business acumen to create impactful ventures.</p>
+      <div class="card-growth"><span>📈</span> ₹1Cr+ potential earnings</div>
+      <span class="card-link">View Career Roadmap →</span>
+    </a>
+
+    <a class="career-card" href="roadmap.html" style="--card-accent:#7c3aed">
+      <div class="card-icon" style="background:linear-gradient(135deg,#a78bfa,#7c3aed)">🏥</div>
+      <div class="card-title">Health Tech Specialist</div>
+      <p class="card-desc">Apply technology to revolutionise healthcare — from telemedicine platforms to AI diagnostics and medical devices.</p>
+      <div class="card-growth"><span>📈</span> 29% growth in health tech</div>
+      <span class="card-link">View Career Roadmap →</span>
+    </a>
+
+  </div>
+
+  <!-- CTA Banner -->
+  <div class="cta-banner">
+    <h2>Not Sure Which Path to Choose?</h2>
+    <p>Take our comprehensive career assessment to discover which of these exciting careers matches your unique strengths and interests.</p>
+    <a class="btn-assess" href="assessment.html">🎯 Start Career Assessment →</a>
+  </div>
+
+</main>
+
+<script>
+  // Keep URL + storage in sync so roadmap opens the right role
+  function goRoadmap(careerKey, e) {
+    if (e) e.preventDefault();
+    try { localStorage.setItem('roadmap_career', careerKey); } catch (_) {}
+    window.location.href = 'roadmap.html?career=' + encodeURIComponent(careerKey);
+  }
+</script>
+<script src="chatbot.js"></script>
+</body>
+</html>

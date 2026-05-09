@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Career Crafter — Login</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: #F0F2F5;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+  }
+
+  .page-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+
+  /* ── LOGO ── */
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 2rem;
+  }
+
+  .logo-icon {
+    width: 56px; height: 56px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #1a6b4a 0%, #2ecc8a 50%, #3aa8d8 100%);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.6rem;
+    box-shadow: 0 4px 16px rgba(46,204,138,0.3);
+    position: relative;
+    overflow: hidden;
+  }
+  .logo-icon::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, transparent 60%);
+  }
+
+  .brand-text { line-height: 1.1; }
+  .brand-name {
+    font-size: 1.55rem;
+    font-weight: 700;
+    color: #1a1a2e;
+    letter-spacing: -0.02em;
+  }
+  .brand-tagline {
+    font-size: 0.7rem;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 500;
+  }
+
+  /* ── CARD ── */
+  .card {
+    background: #fff;
+    border-radius: 20px;
+    padding: 2.5rem 2.2rem;
+    width: min(420px, 100%);
+    box-shadow: 0 4px 30px rgba(0,0,0,0.08);
+  }
+
+  .card-title {
+    font-size: 1.7rem;
+    font-weight: 700;
+    color: #1a1a2e;
+    text-align: center;
+    margin-bottom: 0.4rem;
+    letter-spacing: -0.02em;
+  }
+
+  .card-sub {
+    font-size: 0.9rem;
+    color: #888;
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  /* ── FIELDS ── */
+  .field { margin-bottom: 1.2rem; }
+  .field label {
+    display: block;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 0.5rem;
+  }
+
+  .input-wrap { position: relative; }
+  .input-wrap input {
+    width: 100%;
+    padding: 0.85rem 1rem 0.85rem 1rem;
+    border: 1.5px solid #E5E7EB;
+    border-radius: 10px;
+    font-size: 0.93rem;
+    font-family: 'DM Sans', sans-serif;
+    color: #1a1a2e;
+    background: #fff;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .input-wrap input::placeholder { color: #bbb; }
+  .input-wrap input:focus {
+    border-color: #6C63FF;
+    box-shadow: 0 0 0 3px rgba(108,99,255,0.1);
+  }
+
+  .toggle-pw {
+    position: absolute; right: 1rem; top: 50%;
+    transform: translateY(-50%);
+    background: none; border: none; cursor: pointer;
+    color: #aaa; font-size: 1rem;
+    transition: color 0.2s;
+    padding: 0;
+  }
+  .toggle-pw:hover { color: #555; }
+
+  /* ── OPTIONS ROW ── */
+  .options-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+  }
+  .remember {
+    display: flex; align-items: center; gap: 0.5rem;
+    cursor: pointer;
+  }
+  .remember input[type="checkbox"] {
+    width: 16px; height: 16px;
+    accent-color: #6C63FF;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  .remember span { font-size: 0.85rem; color: #555; }
+  .forgot {
+    font-size: 0.85rem;
+    color: #6C63FF;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+  .forgot:hover { color: #4f46e5; text-decoration: underline; }
+
+  /* ── BUTTON ── */
+  .btn-login {
+    width: 100%;
+    padding: 0.95rem;
+    border-radius: 10px;
+    background: #1a1a2e;
+    color: #fff;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+    letter-spacing: 0.01em;
+  }
+  .btn-login:hover {
+    background: #2d2b55;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(26,26,46,0.25);
+  }
+  .btn-login:active { transform: translateY(0); }
+
+  /* loading state */
+  .btn-login.loading {
+    pointer-events: none;
+    background: #555;
+  }
+  .btn-login.loading::after {
+    content: ' ⏳';
+  }
+
+  /* ── SIGNUP LINK ── */
+  .signup-row {
+    text-align: center;
+    margin-top: 1.5rem;
+    font-size: 0.88rem;
+    color: #888;
+  }
+  .signup-row a {
+    color: #6C63FF;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.2s;
+  }
+  .signup-row a:hover { color: #4f46e5; text-decoration: underline; }
+
+  /* ── ERROR MESSAGE ── */
+  .error-msg {
+    background: #FEF2F2;
+    border: 1px solid #FECACA;
+    color: #DC2626;
+    border-radius: 8px;
+    padding: 0.7rem 1rem;
+    font-size: 0.85rem;
+    margin-bottom: 1.2rem;
+    display: none;
+    text-align: center;
+  }
+  .error-msg.show { display: block; animation: shake 0.3s ease; }
+  @keyframes shake {
+    0%,100%{transform:translateX(0)}
+    25%{transform:translateX(-6px)}
+    75%{transform:translateX(6px)}
+  }
+
+  /* ── SUCCESS ── */
+  .success-overlay {
+    display: none;
+    position: fixed; inset: 0;
+    background: rgba(26,26,46,0.5);
+    backdrop-filter: blur(6px);
+    z-index: 999;
+    align-items: center; justify-content: center;
+  }
+  .success-overlay.show { display: flex; animation: fadeIn 0.3s ease; }
+  @keyframes fadeIn { from{opacity:0} to{opacity:1} }
+  .success-box {
+    background: #fff;
+    border-radius: 20px;
+    padding: 2.5rem 2rem;
+    text-align: center;
+    max-width: 340px;
+    animation: popUp 0.35s cubic-bezier(.34,1.56,.64,1) both;
+  }
+  @keyframes popUp { from{transform:scale(0.8);opacity:0} to{transform:scale(1);opacity:1} }
+  .success-box .icon { font-size: 3rem; margin-bottom: 1rem; }
+  .success-box h3 { font-size: 1.4rem; font-weight: 700; color: #1a1a2e; margin-bottom: 0.4rem; }
+  .success-box p { font-size: 0.9rem; color: #888; }
+</style>
+</head>
+<body>
+
+<div class="page-wrap">
+
+  <!-- BRAND -->
+  <div class="brand">
+    <div class="logo-icon">🎯</div>
+    <div class="brand-text">
+      <div class="brand-name">Career Crafter</div>
+      <div class="brand-tagline">Career Guidance</div>
+    </div>
+  </div>
+
+  <!-- CARD -->
+  <div class="card">
+    <h1 class="card-title">Welcome Back</h1>
+    <p class="card-sub">Continue your career journey</p>
+
+    <div class="error-msg" id="errorMsg">❌ Invalid email or password. Please try again.</div>
+
+    <div class="field">
+      <label for="email">Email Address</label>
+      <div class="input-wrap">
+        <input type="email" id="email" placeholder="your.email@example.com" autocomplete="email"/>
+      </div>
+    </div>
+
+    <div class="field">
+      <label for="password">Password</label>
+      <div class="input-wrap">
+        <input type="password" id="password" placeholder="Enter your password" autocomplete="current-password"/>
+        <button class="toggle-pw" type="button" id="togglePw" title="Show/hide password">👁</button>
+      </div>
+    </div>
+
+    <div class="options-row">
+      <label class="remember">
+        <input type="checkbox" id="remember"/>
+        <span>Remember me</span>
+      </label>
+      <a href="#" class="forgot">Forgot password?</a>
+    </div>
+
+    <button class="btn-login" id="loginBtn" onclick="handleLogin()">Log In</button>
+
+    <p class="signup-row">Don't have an account? <a href="signup.html">Sign Up</a></p>
+  </div>
+
+</div>
+
+<!-- SUCCESS OVERLAY -->
+<div class="success-overlay" id="successOverlay">
+  <div class="success-box">
+    <div class="icon">🚀</div>
+    <h3>Login Successful!</h3>
+    <p>Redirecting you to your career dashboard...</p>
+  </div>
+</div>
+
+<script>
+  // Toggle password visibility
+  const pwInput = document.getElementById('password');
+  const toggleBtn = document.getElementById('togglePw');
+  toggleBtn.addEventListener('click', () => {
+    const isHidden = pwInput.type === 'password';
+    pwInput.type = isHidden ? 'text' : 'password';
+    toggleBtn.textContent = isHidden ? '🙈' : '👁';
+  });
+
+  // Handle login
+  function handleLogin() {
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value;
+    const errorMsg = document.getElementById('errorMsg');
+    const btn = document.getElementById('loginBtn');
+
+    // Basic validation
+    errorMsg.classList.remove('show');
+
+    if (!email || !password) {
+      errorMsg.textContent = '⚠️ Please fill in both email and password.';
+      errorMsg.classList.add('show');
+      return;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      errorMsg.textContent = '⚠️ Please enter a valid email address.';
+      errorMsg.classList.add('show');
+      return;
+    }
+
+    if (password.length < 6) {
+      errorMsg.textContent = '⚠️ Password must be at least 6 characters.';
+      errorMsg.classList.add('show');
+      return;
+    }
+
+    // Check against registered users
+    const users = JSON.parse(localStorage.getItem('cc_users') || '[]');
+    const user = users.find(u => u.email.toLowerCase() === email.toLowerCase());
+
+    if (!user) {
+      errorMsg.textContent = '❌ No account found with this email. Please sign up first.';
+      errorMsg.classList.add('show');
+      return;
+    }
+
+    if (user.password !== password) {
+      errorMsg.textContent = '❌ Incorrect password. Please try again.';
+      errorMsg.classList.add('show');
+      // Shake the password field
+      document.getElementById('password').style.borderColor = '#ef4444';
+      setTimeout(() => document.getElementById('password').style.borderColor = '', 2000);
+      return;
+    }
+
+    // Credentials correct — log in
+    btn.classList.add('loading');
+    btn.textContent = 'Logging in...';
+
+    setTimeout(() => {
+      btn.classList.remove('loading');
+      btn.textContent = 'Log In';
+      localStorage.setItem('cc_username', user.name);
+      localStorage.setItem('cc_loggedIn', 'true');
+      localStorage.setItem('cc_current_user', user.email);
+      // Route to correct dashboard based on role
+      const role = user.role || 'student'; // always use account role, never leftover localStorage
+      localStorage.setItem('cc_role', role);
+      const dashRoutes = {
+        student:    'dashboard.html',
+        counsellor: 'dashboard-counsellor.html',
+        college:    'dashboard-college.html',
+        parent:     'dashboard-parent.html',
+      };
+      window.location.href = dashRoutes[role] || 'dashboard.html';
+    }, 1200);
+  }
+
+  // Allow Enter key to submit
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') handleLogin();
+  });
+</script>
+</body>
+</html>

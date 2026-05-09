@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Career Crafter — My Profile</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet"/>
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'DM Sans',sans-serif;background:#F0F2F5;color:#1a1a2e;min-height:100vh}
+
+  nav{background:#fff;border-bottom:1px solid #E5E7EB;padding:.85rem 4%;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+  .brand{display:flex;align-items:center;gap:.6rem;text-decoration:none}
+  .logo-icon{width:36px;height:36px;border-radius:9px;background:linear-gradient(135deg,#1a6b4a,#2ecc8a 50%,#3aa8d8);display:flex;align-items:center;justify-content:center;font-size:1rem}
+  .brand-name{font-size:1.1rem;font-weight:700;color:#1a1a2e}
+  .nav-back{font-size:.85rem;color:#6C63FF;text-decoration:none;font-weight:600}
+  .nav-back:hover{text-decoration:underline}
+
+  main{max-width:1000px;margin:0 auto;padding:2rem 4% 5rem}
+
+  /* TAB BAR */
+  .tabs{display:flex;gap:.3rem;background:#fff;border:1px solid #E5E7EB;border-radius:14px;padding:.4rem;margin-bottom:1.5rem;overflow-x:auto;scrollbar-width:none}
+  .tabs::-webkit-scrollbar{display:none}
+  .tab-btn{flex-shrink:0;padding:.55rem 1.1rem;border-radius:10px;border:none;background:transparent;font-family:'DM Sans',sans-serif;font-size:.85rem;font-weight:600;color:#888;cursor:pointer;transition:all .2s;white-space:nowrap}
+  .tab-btn.active{background:#1a1a2e;color:#fff}
+  .tab-btn:hover:not(.active){background:#F3F4F6;color:#1a1a2e}
+
+  .tab-panel{display:none}
+  .tab-panel.active{display:block;animation:fadeUp .3s ease both}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+  /* CARDS */
+  .card{background:#fff;border:1px solid #E5E7EB;border-radius:16px;padding:1.6rem;margin-bottom:1.2rem}
+  .card-title{font-size:.95rem;font-weight:700;margin-bottom:1.2rem;display:flex;align-items:center;gap:.5rem}
+  .card-title span{font-size:1rem}
+
+  /* PROFILE HEADER */
+  .profile-header{background:#fff;border:1px solid #E5E7EB;border-radius:16px;padding:2rem;margin-bottom:1.2rem;display:flex;align-items:flex-start;gap:1.5rem;flex-wrap:wrap}
+  .avatar-section{display:flex;flex-direction:column;align-items:center;gap:.6rem}
+  .avatar-circle{width:90px;height:90px;border-radius:50%;background:linear-gradient(135deg,#4f46e5,#7c3aed);display:flex;align-items:center;justify-content:center;font-size:2.2rem;font-weight:700;color:#fff;font-family:'Instrument Serif',serif;cursor:pointer;position:relative;overflow:hidden;flex-shrink:0}
+  .avatar-circle:hover .avatar-edit{opacity:1}
+  .avatar-edit{position:absolute;inset:0;background:rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center;font-size:.72rem;color:#fff;font-weight:700;opacity:0;transition:opacity .2s}
+  .profile-info{flex:1;min-width:200px}
+  .profile-name{font-family:'Instrument Serif',serif;font-size:1.7rem;letter-spacing:-.02em;margin-bottom:.2rem}
+  .profile-tagline{font-size:.88rem;color:#888;margin-bottom:.8rem}
+  .profile-badges{display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:.8rem}
+  .badge{padding:.28rem .8rem;border-radius:100px;font-size:.72rem;font-weight:700}
+  .badge-purple{background:#F3F0FF;color:#6C63FF;border:1px solid #DDD6FE}
+  .badge-green{background:#DCFCE7;color:#15803d;border:1px solid #BBF7D0}
+  .badge-blue{background:#DBEAFE;color:#1d4ed8;border:1px solid #BFDBFE}
+  .badge-orange{background:#FEF3C7;color:#d97706;border:1px solid #FDE68A}
+  .profile-stats{display:flex;gap:1.5rem;margin-top:.5rem}
+  .pstat{text-align:center}
+  .pstat-num{font-size:1.4rem;font-weight:700;color:#1a1a2e;font-family:'Instrument Serif',serif}
+  .pstat-label{font-size:.72rem;color:#888}
+  .edit-profile-btn{background:#1a1a2e;color:#fff;border:none;padding:.6rem 1.4rem;border-radius:100px;font-family:'DM Sans',sans-serif;font-size:.85rem;font-weight:700;cursor:pointer;transition:background .2s,transform .2s;margin-top:.8rem}
+  .edit-profile-btn:hover{background:#6C63FF;transform:translateY(-1px)}
+
+  /* COMPLETION BAR */
+  .completion-bar-wrap{background:#F9FAFB;border-radius:10px;padding:1rem;margin-bottom:1rem}
+  .comp-header{display:flex;justify-content:space-between;margin-bottom:.5rem}
+  .comp-label{font-size:.82rem;font-weight:700}
+  .comp-pct{font-size:.82rem;font-weight:700;color:#6C63FF}
+  .comp-track{height:8px;background:#E5E7EB;border-radius:8px;overflow:hidden}
+  .comp-fill{height:100%;border-radius:8px;background:linear-gradient(90deg,#6C63FF,#a855f7);transition:width .6s ease}
+  .comp-items{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.8rem}
+  .comp-item{display:flex;align-items:center;gap:.3rem;font-size:.75rem;color:#888}
+  .comp-item.done{color:#15803d}
+  .comp-dot{width:6px;height:6px;border-radius:50%;background:#D1D5DB;flex-shrink:0}
+  .comp-item.done .comp-dot{background:#22c55e}
+
+  /* FORM FIELDS */
+  .field{margin-bottom:1rem}
+  .field label{display:block;font-size:.8rem;font-weight:700;color:#555;margin-bottom:.4rem;text-transform:uppercase;letter-spacing:.06em}
+  .field input,.field select,.field textarea{width:100%;padding:.75rem 1rem;border:1.5px solid #E5E7EB;border-radius:10px;font-size:.9rem;font-family:'DM Sans',sans-serif;color:#1a1a2e;background:#fff;outline:none;transition:border-color .2s,box-shadow .2s}
+  .field input:focus,.field select,.field textarea:focus{border-color:#6C63FF;box-shadow:0 0 0 3px rgba(108,99,255,.1)}
+  .field textarea{min-height:80px;resize:vertical}
+  .field select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23888' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 1rem center;cursor:pointer}
+  .field-row{display:grid;grid-template-columns:1fr 1fr;gap:.8rem}
+  .field-hint{font-size:.72rem;color:#aaa;margin-top:.3rem}
+
+  /* SKILL TAGS */
+  .skill-input-wrap{display:flex;gap:.5rem;margin-bottom:.8rem}
+  .skill-input-wrap input{flex:1}
+  .add-btn{background:#1a1a2e;color:#fff;border:none;border-radius:10px;padding:.75rem 1.2rem;font-family:'DM Sans',sans-serif;font-size:.85rem;font-weight:700;cursor:pointer;white-space:nowrap;transition:background .2s}
+  .add-btn:hover{background:#6C63FF}
+  .tags-wrap{display:flex;flex-wrap:wrap;gap:.4rem}
+  .skill-tag{background:#F3F0FF;color:#4f46e5;border:1px solid #DDD6FE;border-radius:100px;padding:.3rem .85rem;font-size:.78rem;font-weight:600;display:flex;align-items:center;gap:.4rem}
+  .tag-remove{cursor:pointer;opacity:.5;font-size:.9rem;transition:opacity .2s;background:none;border:none;color:inherit;padding:0;line-height:1}
+  .tag-remove:hover{opacity:1}
+
+  /* GOAL TRACKER */
+  .goal-item{display:flex;align-items:flex-start;gap:.8rem;padding:.9rem;background:#F9FAFB;border-radius:12px;margin-bottom:.6rem;border:1px solid #F0F0F0;transition:border-color .2s}
+  .goal-item:hover{border-color:#DDD6FE}
+  .goal-check{width:20px;height:20px;border-radius:6px;border:2px solid #D1D5DB;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .2s;margin-top:2px;background:#fff}
+  .goal-check.checked{background:#22c55e;border-color:#22c55e;color:#fff}
+  .goal-text{flex:1}
+  .goal-title{font-size:.88rem;font-weight:600;margin-bottom:.2rem}
+  .goal-title.done{text-decoration:line-through;color:#aaa}
+  .goal-meta{font-size:.75rem;color:#aaa;display:flex;gap:.8rem}
+  .goal-deadline{color:#f97316}
+  .goal-del{background:none;border:none;color:#ccc;cursor:pointer;font-size:.9rem;padding:.2rem;transition:color .2s}
+  .goal-del:hover{color:#ef4444}
+  .add-goal-btn{width:100%;padding:.75rem;border:1.5px dashed #D1D5DB;background:transparent;border-radius:12px;font-family:'DM Sans',sans-serif;font-size:.85rem;color:#888;cursor:pointer;transition:all .2s;margin-top:.5rem}
+  .add-goal-btn:hover{border-color:#6C63FF;color:#6C63FF;background:#F8F7FF}
+
+  /* ACTIVITY HEATMAP (MINI) */
+  .heatmap-grid{display:flex;gap:3px;flex-wrap:wrap;margin-top:.8rem}
+  .heatmap-cell{width:14px;height:14px;border-radius:3px;background:#F0F2F5;cursor:pointer;transition:transform .1s}
+  .heatmap-cell:hover{transform:scale(1.3)}
+  .heatmap-cell.l1{background:#c4b5fd}
+  .heatmap-cell.l2{background:#8b5cf6}
+  .heatmap-cell.l3{background:#6C63FF}
+  .heatmap-cell.l4{background:#4f46e5}
+  .heatmap-legend{display:flex;align-items:center;gap:.4rem;margin-top:.6rem;font-size:.72rem;color:#aaa}
+  .hl-cell{width:11px;height:11px;border-radius:2px}
+
+  /* CAREER MATCH CARD */
+  .match-card{border:1.5px solid #E5E7EB;border-radius:14px;padding:1.2rem;margin-bottom:.8rem;display:flex;align-items:center;gap:1rem;transition:border-color .2s,transform .2s;cursor:pointer;text-decoration:none;color:inherit}
+  .match-card:hover{border-color:#6C63FF;transform:translateY(-2px)}
+  .match-card.top{border-color:#6C63FF;background:#F8F7FF}
+  .match-icon{width:46px;height:46px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0}
+  .match-info{flex:1}
+  .match-title{font-size:.92rem;font-weight:700;margin-bottom:.2rem}
+  .match-sub{font-size:.78rem;color:#888}
+  .match-pct{font-size:1.1rem;font-weight:700;color:#6C63FF;flex-shrink:0}
+
+  /* ROADMAP PROGRESS */
+  .roadmap-progress-item{display:flex;gap:.8rem;align-items:flex-start;margin-bottom:.8rem}
+  .rp-num{width:28px;height:28px;border-radius:50%;background:#1a1a2e;color:#fff;display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:700;flex-shrink:0}
+  .rp-num.done{background:#22c55e}
+  .rp-num.active{background:#6C63FF}
+  .rp-body{flex:1;background:#F9FAFB;border-radius:10px;padding:.75rem}
+  .rp-title{font-size:.88rem;font-weight:700;margin-bottom:.3rem}
+  .rp-bar-track{height:5px;background:#E5E7EB;border-radius:5px;overflow:hidden}
+  .rp-bar-fill{height:100%;border-radius:5px;background:#22c55e}
+  .rp-meta{display:flex;justify-content:space-between;font-size:.72rem;color:#aaa;margin-top:.3rem}
+
+  /* SAVE BUTTON */
+  .save-btn{background:#1a1a2e;color:#fff;border:none;padding:.85rem 2.5rem;border-radius:100px;font-family:'DM Sans',sans-serif;font-size:.9rem;font-weight:700;cursor:pointer;transition:background .2s,transform .2s}
+  .save-btn:hover{background:#6C63FF;transform:translateY(-1px)}
+
+  /* TOAST */
+  #toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(100px);background:#1a1a2e;color:#fff;padding:.75rem 1.8rem;border-radius:100px;font-size:.88rem;font-weight:600;z-index:9999;transition:transform .3s cubic-bezier(.34,1.56,.64,1);pointer-events:none}
+  #toast.show{transform:translateX(-50%) translateY(0)}
+
+  /* CERT UPLOAD */
+  .cert-item{display:flex;align-items:center;gap:.8rem;padding:.8rem 1rem;background:#F9FAFB;border-radius:10px;margin-bottom:.5rem;border:1px solid #F0F0F0}
+  .cert-icon{width:36px;height:36px;border-radius:8px;background:#DBEAFE;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0}
+  .cert-info{flex:1}
+  .cert-name{font-size:.85rem;font-weight:600}
+  .cert-date{font-size:.72rem;color:#aaa}
+  .cert-del{background:none;border:none;color:#ccc;cursor:pointer;font-size:1rem;transition:color .2s}
+  .cert-del:hover{color:#ef4444}
+  .upload-zone{border:2px dashed #E5E7EB;border-radius:12px;padding:1.5rem;text-align:center;cursor:pointer;transition:all .2s}
+  .upload-zone:hover{border-color:#6C63FF;background:#F8F7FF}
+  .upload-zone p{font-size:.85rem;color:#888;margin-top:.4rem}
+
+  @media(max-width:600px){
+    .profile-header{flex-direction:column}
+    .field-row{grid-template-columns:1fr}
+    .profile-stats{gap:1rem}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="brand" href="index.html">
+    <div class="logo-icon">🎯</div>
+    <span class="brand-name">Career Crafter</span>
+  </a>
+  <a class="nav-back" href="dashboard.html">← Dashboard</a>
+</nav>
+
+<main>
+
+  <!-- PROFILE HEADER -->
+  <div class="profile-header">
+    <div class="avatar-section">
+      <div class="avatar-circle" id="avatarCircle" onclick="document.getElementById('avatarInput').click()">
+        <span id="avatarInitials">?</span>
+        <div class="avatar-edit">Edit</div>
+      </div>
+      <input type="file" id="avatarInput" accept="image/*" style="display:none" onchange="uploadAvatar(this)"/>
+      <div style="font-size:.72rem;color:#aaa;text-align:center">Click to change</div>
+    </div>
+    <div class="profile-info">
+      <div class="profile-name" id="displayName">Your Name</div>
+      <div class="profile-tagline" id="displayTagline">Add a tagline about your career goals...</div>
+      <div class="profile-badges" id="displayBadges"></div>
+      <div class="profile-stats">
+        <div class="pstat"><div class="pstat-num" id="statSkills">0</div><div class="pstat-label">Skills</div></div>
+        <div class="pstat"><div class="pstat-num" id="statGoals">0</div><div class="pstat-label">Goals set</div></div>
+        <div class="pstat"><div class="pstat-num" id="statCerts">0</div><div class="pstat-label">Certs</div></div>
+        <div class="pstat"><div class="pstat-num" id="statStreak">0</div><div class="pstat-label">Day streak</div></div>
+      </div>
+    </div>
+    <button class="edit-profile-btn" onclick="switchTab('info')">✏️ Edit Profile</button>
+  </div>
+
+  <!-- PROFILE COMPLETION -->
+  <div class="completion-bar-wrap">
+    <div class="comp-header">
+      <span class="comp-label">Profile Completion</span>
+      <span class="comp-pct" id="compPct">0%</span>
+    </div>
+    <div class="comp-track"><div class="comp-fill" id="compFill" style="width:0%"></div></div>
+    <div class="comp-items" id="compItems"></div>
+  </div>
+
+  <!-- TABS -->
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab('overview')">📊 Overview</button>
+    <button class="tab-btn" onclick="switchTab('info')">👤 Personal Info</button>
+    <button class="tab-btn" onclick="switchTab('skills')">💡 Skills</button>
+    <button class="tab-btn" onclick="switchTab('goals')">🎯 Goals</button>
+    <button class="tab-btn" onclick="switchTab('certs')">🏅 Certifications</button>
+    <button class="tab-btn" onclick="switchTab('career')">🚀 Career Match</button>
+  </div>
+
+  <!-- ═══ TAB: OVERVIEW ═══ -->
+  <div class="tab-panel active" id="tab-overview">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.2rem">
+
+      <div class="card">
+        <div class="card-title"><span>🗺️</span> Active Roadmap Progress</div>
+        <div id="roadmapProgressDisplay">
+          <div style="text-align:center;padding:1rem;color:#aaa;font-size:.85rem">
+            Complete the assessment to get your roadmap 🎯
+          </div>
+        </div>
+        <a href="assessment.html" style="display:block;text-align:center;margin-top:.8rem;font-size:.82rem;color:#6C63FF;font-weight:600;text-decoration:none">Take Assessment →</a>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><span>🎯</span> This Week's Goals</div>
+        <div id="weekGoalsDisplay"></div>
+        <button class="add-goal-btn" onclick="switchTab('goals')">+ Add a goal</button>
+      </div>
+
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span>📅</span> Activity — Last 3 Months</div>
+      <div class="heatmap-grid" id="heatmapGrid"></div>
+      <div class="heatmap-legend">
+        <span>Less</span>
+        <div class="hl-cell" style="background:#F0F2F5"></div>
+        <div class="hl-cell" style="background:#c4b5fd"></div>
+        <div class="hl-cell" style="background:#8b5cf6"></div>
+        <div class="hl-cell" style="background:#4f46e5"></div>
+        <span>More</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span>💡</span> Top Skills</div>
+      <div id="overviewSkills" class="tags-wrap">
+        <span style="font-size:.82rem;color:#aaa">No skills added yet — go to Skills tab to add some!</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ TAB: PERSONAL INFO ═══ -->
+  <div class="tab-panel" id="tab-info">
+    <div class="card">
+      <div class="card-title"><span>👤</span> Basic Information</div>
+      <div class="field-row">
+        <div class="field"><label>First Name</label><input type="text" id="firstName" placeholder="Priya" oninput="liveUpdate()"/></div>
+        <div class="field"><label>Last Name</label><input type="text" id="lastName" placeholder="Mehta" oninput="liveUpdate()"/></div>
+      </div>
+      <div class="field"><label>Tagline / Bio</label><textarea id="tagline" placeholder="e.g. Aspiring AI Engineer from Pune · Passionate about building things that matter" oninput="liveUpdate()"></textarea></div>
+      <div class="field-row">
+        <div class="field"><label>Date of Birth</label><input type="date" id="dob"/></div>
+        <div class="field"><label>Gender</label>
+          <select id="gender">
+            <option value="">Prefer not to say</option>
+            <option>Male</option><option>Female</option><option>Non-binary</option><option>Other</option>
+          </select>
+        </div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>City</label><input type="text" id="city" placeholder="Pune"/></div>
+        <div class="field"><label>State</label><input type="text" id="state" placeholder="Maharashtra"/></div>
+      </div>
+      <div class="field"><label>Email</label><input type="email" id="email" placeholder="you@example.com"/></div>
+      <div class="field"><label>Phone</label><input type="tel" id="phone" placeholder="+91 98765 43210"/></div>
+      <div class="field"><label>LinkedIn URL</label><input type="url" id="linkedin" placeholder="linkedin.com/in/yourname"/></div>
+      <div class="field"><label>GitHub / Portfolio URL</label><input type="url" id="github" placeholder="github.com/yourname"/></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span>🎓</span> Education</div>
+      <div class="field"><label>Current / Latest Degree</label>
+        <select id="degree">
+          <option value="">Select...</option>
+          <option>High School (10th / 12th)</option>
+          <option>Diploma / Polytechnic</option>
+          <option>B.Tech / B.E.</option>
+          <option>B.Sc / B.Com / B.A.</option>
+          <option>BCA / MCA</option>
+          <option>M.Tech / M.E.</option>
+          <option>MBA</option>
+          <option>M.Sc</option>
+          <option>PhD</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="field"><label>Institution Name</label><input type="text" id="institution" placeholder="e.g. Pune Institute of Computer Technology"/></div>
+      <div class="field-row">
+        <div class="field"><label>Field / Branch</label><input type="text" id="branch" placeholder="e.g. Computer Science"/></div>
+        <div class="field"><label>Graduation Year</label><input type="number" id="gradYear" placeholder="2026" min="2000" max="2030"/></div>
+      </div>
+      <div class="field"><label>CGPA / Percentage</label><input type="text" id="cgpa" placeholder="e.g. 8.5 / 85%"/></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span>💼</span> Career Preferences</div>
+      <div class="field"><label>Target Career Field</label>
+        <select id="targetField">
+          <option value="">Select...</option>
+          <option>AI / Machine Learning</option>
+          <option>Web Development</option>
+          <option>Data Science / Analytics</option>
+          <option>Cybersecurity</option>
+          <option>Game Development</option>
+          <option>Mobile App Development</option>
+          <option>Cloud / DevOps</option>
+          <option>UX / UI Design</option>
+          <option>Blockchain</option>
+          <option>Product Management</option>
+          <option>Digital Marketing</option>
+          <option>Not decided yet</option>
+        </select>
+      </div>
+      <div class="field"><label>Work Preference</label>
+        <select id="workPref">
+          <option value="">Select...</option>
+          <option>Full-time Job</option>
+          <option>Freelancing</option>
+          <option>Internship first</option>
+          <option>Start my own company</option>
+          <option>Research / Academia</option>
+        </select>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>Preferred Work Mode</label>
+          <select id="workMode">
+            <option value="">Select...</option>
+            <option>Remote</option>
+            <option>Hybrid</option>
+            <option>On-site</option>
+            <option>Open to all</option>
+          </select>
+        </div>
+        <div class="field"><label>Expected Salary (₹ LPA)</label><input type="text" id="salary" placeholder="e.g. 6-10 LPA"/></div>
+      </div>
+      <div class="field"><label>Years of Experience</label>
+        <select id="experience">
+          <option value="">Select...</option>
+          <option>Student / Fresher (0 years)</option>
+          <option>0-1 year</option>
+          <option>1-3 years</option>
+          <option>3-5 years</option>
+          <option>5+ years</option>
+        </select>
+      </div>
+    </div>
+
+    <button class="save-btn" onclick="saveProfile()">💾 Save Profile</button>
+  </div>
+
+  <!-- ═══ TAB: SKILLS ═══ -->
+  <div class="tab-panel" id="tab-skills">
+    <div class="card">
+      <div class="card-title"><span>💻</span> Technical Skills</div>
+      <div class="skill-input-wrap">
+        <input type="text" id="techSkillInput" placeholder="e.g. Python, React, SQL..." onkeydown="if(event.key==='Enter')addSkill('tech')"/>
+        <button class="add-btn" onclick="addSkill('tech')">+ Add</button>
+      </div>
+      <div class="tags-wrap" id="techSkillTags"></div>
+      <p class="field-hint" style="margin-top:.8rem">Suggested: Python · JavaScript · SQL · React · Node.js · Machine Learning · Docker · AWS · Flutter · Figma</p>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span>🤝</span> Soft Skills</div>
+      <div class="skill-input-wrap">
+        <input type="text" id="softSkillInput" placeholder="e.g. Leadership, Communication..." onkeydown="if(event.key==='Enter')addSkill('soft')"/>
+        <button class="add-btn" onclick="addSkill('soft')">+ Add</button>
+      </div>
+      <div class="tags-wrap" id="softSkillTags"></div>
+      <p class="field-hint" style="margin-top:.8rem">Suggested: Leadership · Communication · Problem Solving · Teamwork · Time Management · Critical Thinking</p>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span>🌍</span> Languages Known</div>
+      <div class="skill-input-wrap">
+        <input type="text" id="langInput" placeholder="e.g. English, Hindi, Marathi..." onkeydown="if(event.key==='Enter')addSkill('lang')"/>
+        <button class="add-btn" onclick="addSkill('lang')">+ Add</button>
+      </div>
+      <div class="tags-wrap" id="langTags"></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span>🛠️</span> Tools & Platforms</div>
+      <div class="skill-input-wrap">
+        <input type="text" id="toolInput" placeholder="e.g. VS Code, Git, Postman..." onkeydown="if(event.key==='Enter')addSkill('tool')"/>
+        <button class="add-btn" onclick="addSkill('tool')">+ Add</button>
+      </div>
+      <div class="tags-wrap" id="toolTags"></div>
+    </div>
+
+    <button class="save-btn" onclick="saveProfile()">💾 Save Skills</button>
+  </div>
+
+  <!-- ═══ TAB: GOALS ═══ -->
+  <div class="tab-panel" id="tab-goals">
+    <div class="card">
+      <div class="card-title"><span>🎯</span> Add New Goal</div>
+      <div class="field"><label>Goal Title</label><input type="text" id="goalTitle" placeholder="e.g. Complete Python course on Coursera"/></div>
+      <div class="field-row">
+        <div class="field"><label>Category</label>
+          <select id="goalCat">
+            <option value="learning">📚 Learning</option>
+            <option value="project">💻 Project</option>
+            <option value="job">💼 Job / Internship</option>
+            <option value="cert">🏅 Certification</option>
+            <option value="networking">🤝 Networking</option>
+            <option value="other">⚡ Other</option>
+          </select>
+        </div>
+        <div class="field"><label>Deadline</label><input type="date" id="goalDeadline"/></div>
+      </div>
+      <div class="field"><label>Priority</label>
+        <select id="goalPriority">
+          <option value="high">🔴 High</option>
+          <option value="medium">🟡 Medium</option>
+          <option value="low">🟢 Low</option>
+        </select>
+      </div>
+      <button class="add-btn" style="width:100%;border-radius:100px;padding:.8rem" onclick="addGoal()">+ Add Goal</button>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span>📋</span> My Goals <span id="goalCountBadge" style="font-size:.72rem;background:#F3F0FF;color:#6C63FF;border-radius:100px;padding:.2rem .6rem;font-weight:700;margin-left:.3rem">0</span></div>
+      <div id="goalsList">
+        <div style="text-align:center;padding:1.5rem;color:#aaa;font-size:.85rem">No goals yet — add your first goal above! 🎯</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ TAB: CERTIFICATIONS ═══ -->
+  <div class="tab-panel" id="tab-certs">
+    <div class="card">
+      <div class="card-title"><span>➕</span> Add Certification</div>
+      <div class="field"><label>Certificate Name</label><input type="text" id="certName" placeholder="e.g. Google Data Analytics Certificate"/></div>
+      <div class="field-row">
+        <div class="field"><label>Issued By</label><input type="text" id="certIssuer" placeholder="e.g. Google / Coursera"/></div>
+        <div class="field"><label>Date Issued</label><input type="month" id="certDate"/></div>
+      </div>
+      <div class="field"><label>Certificate URL (optional)</label><input type="url" id="certUrl" placeholder="https://coursera.org/verify/..."/></div>
+      <button class="add-btn" style="width:100%;border-radius:100px;padding:.8rem" onclick="addCert()">+ Add Certificate</button>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span>🏅</span> My Certifications <span id="certCountBadge" style="font-size:.72rem;background:#DCFCE7;color:#15803d;border-radius:100px;padding:.2rem .6rem;font-weight:700;margin-left:.3rem">0</span></div>
+      <div id="certsList">
+        <div style="text-align:center;padding:1.5rem;color:#aaa;font-size:.85rem">No certifications yet — add your first one! 🏅</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ TAB: CAREER MATCH ═══ -->
+  <div class="tab-panel" id="tab-career">
+    <div class="card" id="careerMatchCard">
+      <div class="card-title"><span>🚀</span> Your Career Matches</div>
+      <div id="careerMatchDisplay">
+        <div style="text-align:center;padding:2rem;color:#aaa">
+          <div style="font-size:2rem;margin-bottom:.8rem">🎯</div>
+          <div style="font-weight:700;margin-bottom:.4rem;color:#1a1a2e">Take the Assessment First</div>
+          <div style="font-size:.85rem;margin-bottom:1.2rem">Complete the career assessment to see your personalised career matches here.</div>
+          <a href="assessment.html" style="display:inline-block;background:#1a1a2e;color:#fff;padding:.75rem 2rem;border-radius:100px;font-weight:700;font-size:.88rem;text-decoration:none">Start Assessment →</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span>📈</span> Skills vs Target Career Gap</div>
+      <div id="skillGapDisplay">
+        <div style="font-size:.85rem;color:#aaa;text-align:center;padding:1rem">Select your target career in Personal Info tab to see skill gaps</div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<div id="toast">✅ Profile saved!</div>
+
+<script>
+/* ═══ DATA ═══ */
+const SKILL_GAPS = {
+  'AI / Machine Learning': ['Python','Machine Learning','Deep Learning','TensorFlow','Mathematics','Data Structures'],
+  'Web Development': ['HTML','CSS','JavaScript','React','Node.js','SQL'],
+  'Data Science / Analytics': ['Python','SQL','Pandas','Statistics','Tableau','Machine Learning'],
+  'Cybersecurity': ['Networking','Linux','Python','Ethical Hacking','SIEM','Cryptography'],
+  'Game Development': ['C#','Unity','3D Math','Game Physics','Blender','C++'],
+  'Mobile App Development': ['Flutter','Dart','React Native','Firebase','REST APIs','UI Design'],
+  'Cloud / DevOps': ['Linux','Docker','Kubernetes','AWS','Terraform','CI/CD'],
+  'UX / UI Design': ['Figma','User Research','Wireframing','Prototyping','Typography','CSS'],
+  'Blockchain': ['Solidity','JavaScript','Cryptography','Web3.js','Smart Contracts','Node.js'],
+  'Product Management': ['Communication','Data Analysis','Roadmapping','Agile','SQL','User Research'],
+};
+
+const ROADMAP_STEPS = {
+  'AI / Machine Learning': ['Foundation (Python & Math)','Core ML Skills','Specialisation (NLP/CV)','Job Ready'],
+  'Web Development': ['HTML/CSS/Git','JavaScript','React Framework','Backend & Databases','Deploy & Apply'],
+  'Data Science / Analytics': ['Foundations','Data Wrangling','Visualisation & BI','ML & Projects','Job Ready'],
+  'Cybersecurity': ['Networking & OS','Security Fundamentals','Ethical Hacking Labs','Certify & Apply'],
+  'default': ['Learn Basics','Build Skills','Create Projects','Apply for Jobs'],
+};
+
+let profile = {
+  firstName:'', lastName:'', tagline:'', dob:'', gender:'', city:'', state:'',
+  email:'', phone:'', linkedin:'', github:'',
+  degree:'', institution:'', branch:'', gradYear:'', cgpa:'',
+  targetField:'', workPref:'', workMode:'', salary:'', experience:'',
+  techSkills:[], softSkills:[], langs:[], tools:[],
+  goals:[], certs:[],
+  careerMatches: null,
+  streak: 0, lastVisit: null,
+};
+
+/* ═══ PER-USER KEY ═══ */
+function getUserKey() {
+  const email = localStorage.getItem('cc_current_user') || 'guest';
+  return 'cc_profile_' + email;
+}
+
+/* ═══ LOAD / SAVE ═══ */
+function loadProfile() {
+  const saved = localStorage.getItem(getUserKey());
+  if (saved) {
+    profile = {...profile, ...JSON.parse(saved)};
+  } else {
+    // Fresh account — pre-fill from signup data
+    const username = localStorage.getItem('cc_username') || '';
+    const parts = username.trim().split(' ');
+    profile.firstName = parts[0] || '';
+    profile.lastName = parts.slice(1).join(' ') || '';
+    profile.email = localStorage.getItem('cc_current_user') || '';
+  }
+  populateFields();
+  renderAll();
+  updateStreak();
+}
+
+function saveProfile() {
+  harvestFields();
+  localStorage.setItem(getUserKey(), JSON.stringify(profile));
+  showToast('✅ Profile saved!');
+  renderAll();
+}
+
+function harvestFields() {
+  ['firstName','lastName','tagline','dob','gender','city','state',
+   'email','phone','linkedin','github','degree','institution',
+   'branch','gradYear','cgpa','targetField','workPref','workMode',
+   'salary','experience'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) profile[id] = el.value;
+  });
+}
+
+function populateFields() {
+  ['firstName','lastName','tagline','dob','gender','city','state',
+   'email','phone','linkedin','github','degree','institution',
+   'branch','gradYear','cgpa','targetField','workPref','workMode',
+   'salary','experience'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el && profile[id]) el.value = profile[id];
+  });
+  renderTags('techSkillTags', profile.techSkills, 'tech');
+  renderTags('softSkillTags', profile.softSkills, 'soft');
+  renderTags('langTags', profile.langs, 'lang');
+  renderTags('toolTags', profile.tools, 'tool');
+}
+
+/* ═══ TABS ═══ */
+function switchTab(name) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  const tabs = {overview:0, info:1, skills:2, goals:3, certs:4, career:5};
+  document.querySelectorAll('.tab-btn')[tabs[name]].classList.add('active');
+}
+
+/* ═══ LIVE UPDATE ═══ */
+function liveUpdate() {
+  const fn = document.getElementById('firstName').value;
+  const ln = document.getElementById('lastName').value;
+  const tg = document.getElementById('tagline').value;
+  if (fn || ln) {
+    document.getElementById('displayName').textContent = (fn + ' ' + ln).trim() || 'Your Name';
+    const initials = (fn[0]||'') + (ln[0]||'');
+    document.getElementById('avatarInitials').textContent = initials.toUpperCase() || '?';
+  }
+  if (tg) document.getElementById('displayTagline').textContent = tg;
+}
+
+/* ═══ AVATAR ═══ */
+function uploadAvatar(input) {
+  const file = input.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    const circle = document.getElementById('avatarCircle');
+    circle.style.backgroundImage = `url(${e.target.result})`;
+    circle.style.backgroundSize = 'cover';
+    document.getElementById('avatarInitials').style.display = 'none';
+    localStorage.setItem('cc_avatar', e.target.result);
+  };
+  reader.readAsDataURL(file);
+}
+
+/* ═══ SKILLS ═══ */
+function addSkill(type) {
+  const inputMap = {tech:'techSkillInput', soft:'softSkillInput', lang:'langInput', tool:'toolInput'};
+  const arrMap = {tech:'techSkills', soft:'softSkills', lang:'langs', tool:'tools'};
+  const tagsMap = {tech:'techSkillTags', soft:'softSkillTags', lang:'langTags', tool:'toolTags'};
+  const input = document.getElementById(inputMap[type]);
+  const val = input.value.trim();
+  if (!val) return;
+  const arr = profile[arrMap[type]];
+  if (!arr.includes(val)) {
+    arr.push(val);
+    renderTags(tagsMap[type], arr, type);
+    updateStats();
+    updateCompletion();
+    updateOverviewSkills();
+  }
+  input.value = '';
+}
+
+function removeSkill(type, val) {
+  const arrMap = {tech:'techSkills', soft:'softSkills', lang:'langs', tool:'tools'};
+  const tagsMap = {tech:'techSkillTags', soft:'softSkillTags', lang:'langTags', tool:'toolTags'};
+  profile[arrMap[type]] = profile[arrMap[type]].filter(s => s !== val);
+  renderTags(tagsMap[type], profile[arrMap[type]], type);
+  updateStats();
+  updateCompletion();
+  updateOverviewSkills();
+}
+
+function renderTags(containerId, arr, type) {
+  const c = document.getElementById(containerId);
+  if (!c) return;
+  c.innerHTML = arr.length ? arr.map(s => `
+    <span class="skill-tag">
+      ${s}
+      <button class="tag-remove" onclick="removeSkill('${type}','${s}')">×</button>
+    </span>`).join('') : '';
+}
+
+/* ═══ GOALS ═══ */
+function addGoal() {
+  const title = document.getElementById('goalTitle').value.trim();
+  if (!title) { showToast('⚠️ Please enter a goal title'); return; }
+  profile.goals.push({
+    id: Date.now(), title,
+    cat: document.getElementById('goalCat').value,
+    deadline: document.getElementById('goalDeadline').value,
+    priority: document.getElementById('goalPriority').value,
+    done: false
+  });
+  document.getElementById('goalTitle').value = '';
+  document.getElementById('goalDeadline').value = '';
+  renderGoals();
+  updateStats();
+  updateCompletion();
+  renderWeekGoals();
+  showToast('🎯 Goal added!');
+}
+
+function toggleGoal(id) {
+  const g = profile.goals.find(g => g.id === id);
+  if (g) { g.done = !g.done; renderGoals(); renderWeekGoals(); }
+}
+
+function deleteGoal(id) {
+  profile.goals = profile.goals.filter(g => g.id !== id);
+  renderGoals(); updateStats(); renderWeekGoals();
+}
+
+const PRIORITY_COLORS = {high:'#FEE2E2', medium:'#FEF9C3', low:'#DCFCE7'};
+const PRIORITY_TEXT = {high:'🔴 High', medium:'🟡 Medium', low:'🟢 Low'};
+const CAT_ICONS = {learning:'📚', project:'💻', job:'💼', cert:'🏅', networking:'🤝', other:'⚡'};
+
+function renderGoals() {
+  const el = document.getElementById('goalsList');
+  const badge = document.getElementById('goalCountBadge');
+  badge.textContent = profile.goals.length;
+  if (!profile.goals.length) {
+    el.innerHTML = '<div style="text-align:center;padding:1.5rem;color:#aaa;font-size:.85rem">No goals yet — add your first goal above! 🎯</div>';
+    return;
+  }
+  const sorted = [...profile.goals].sort((a,b) => {
+    if (a.done !== b.done) return a.done ? 1 : -1;
+    const p = {high:0, medium:1, low:2};
+    return p[a.priority] - p[b.priority];
+  });
+  el.innerHTML = sorted.map(g => `
+    <div class="goal-item">
+      <div class="goal-check ${g.done?'checked':''}" onclick="toggleGoal(${g.id})">${g.done?'✓':''}</div>
+      <div class="goal-text">
+        <div class="goal-title ${g.done?'done':''}">${CAT_ICONS[g.cat]||'⚡'} ${g.title}</div>
+        <div class="goal-meta">
+          <span style="background:${PRIORITY_COLORS[g.priority]};padding:.1rem .5rem;border-radius:100px;font-size:.7rem;font-weight:700">${PRIORITY_TEXT[g.priority]}</span>
+          ${g.deadline ? `<span class="goal-deadline">📅 ${formatDate(g.deadline)}</span>` : ''}
+        </div>
+      </div>
+      <button class="goal-del" onclick="deleteGoal(${g.id})">🗑</button>
+    </div>`).join('');
+}
+
+function renderWeekGoals() {
+  const el = document.getElementById('weekGoalsDisplay');
+  const active = profile.goals.filter(g => !g.done).slice(0, 3);
+  if (!active.length) {
+    el.innerHTML = '<div style="font-size:.82rem;color:#aaa;text-align:center;padding:.8rem">No pending goals</div>';
+    return;
+  }
+  el.innerHTML = active.map(g => `
+    <div style="display:flex;align-items:center;gap:.6rem;padding:.5rem 0;border-bottom:1px solid #F5F5F5">
+      <div style="width:8px;height:8px;border-radius:50%;background:${g.priority==='high'?'#ef4444':g.priority==='medium'?'#f59e0b':'#22c55e'};flex-shrink:0"></div>
+      <span style="font-size:.83rem;flex:1">${g.title}</span>
+    </div>`).join('');
+}
+
+/* ═══ CERTIFICATIONS ═══ */
+function addCert() {
+  const name = document.getElementById('certName').value.trim();
+  if (!name) { showToast('⚠️ Please enter certificate name'); return; }
+  profile.certs.push({
+    id: Date.now(), name,
+    issuer: document.getElementById('certIssuer').value,
+    date: document.getElementById('certDate').value,
+    url: document.getElementById('certUrl').value,
+  });
+  document.getElementById('certName').value = '';
+  document.getElementById('certIssuer').value = '';
+  document.getElementById('certDate').value = '';
+  document.getElementById('certUrl').value = '';
+  renderCerts(); updateStats(); updateCompletion(); showToast('🏅 Certificate added!');
+}
+
+function deleteCert(id) {
+  profile.certs = profile.certs.filter(c => c.id !== id);
+  renderCerts(); updateStats();
+}
+
+function renderCerts() {
+  const el = document.getElementById('certsList');
+  const badge = document.getElementById('certCountBadge');
+  badge.textContent = profile.certs.length;
+  if (!profile.certs.length) {
+    el.innerHTML = '<div style="text-align:center;padding:1.5rem;color:#aaa;font-size:.85rem">No certifications yet!</div>';
+    return;
+  }
+  el.innerHTML = profile.certs.map(c => `
+    <div class="cert-item">
+      <div class="cert-icon">🏅</div>
+      <div class="cert-info">
+        <div class="cert-name">${c.name}</div>
+        <div class="cert-date">${c.issuer}${c.date?' · '+c.date:''}</div>
+      </div>
+      ${c.url ? `<a href="${c.url}" target="_blank" style="font-size:.75rem;color:#6C63FF;font-weight:700;text-decoration:none;margin-right:.5rem">View</a>` : ''}
+      <button class="cert-del" onclick="deleteCert(${c.id})">🗑</button>
+    </div>`).join('');
+}
+
+/* ═══ PROFILE COMPLETION ═══ */
+const COMPLETION_CHECKS = [
+  { label:'Basic info', key:'basic', check: () => !!(profile.firstName && profile.email) },
+  { label:'Education', key:'edu', check: () => !!(profile.degree && profile.institution) },
+  { label:'Target career', key:'career', check: () => !!profile.targetField },
+  { label:'Skills added', key:'skills', check: () => profile.techSkills.length >= 3 },
+  { label:'Goals set', key:'goals', check: () => profile.goals.length >= 1 },
+  { label:'Certifications', key:'certs', check: () => profile.certs.length >= 1 },
+  { label:'Assessment done', key:'assessment', check: () => !!localStorage.getItem('roadmap_career') },
+  { label:'Bio / tagline', key:'tagline', check: () => !!profile.tagline },
+];
+
+function updateCompletion() {
+  const done = COMPLETION_CHECKS.filter(c => c.check()).length;
+  const pct = Math.round((done / COMPLETION_CHECKS.length) * 100);
+  document.getElementById('compPct').textContent = pct + '%';
+  document.getElementById('compFill').style.width = pct + '%';
+  document.getElementById('compItems').innerHTML = COMPLETION_CHECKS.map(c => `
+    <div class="comp-item ${c.check()?'done':''}">
+      <div class="comp-dot"></div>
+      <span>${c.check()?'✓':''} ${c.label}</span>
+    </div>`).join('');
+  updateBadges(pct);
+}
+
+function updateBadges(pct) {
+  const badges = [];
+  if (profile.targetField) badges.push({text: profile.targetField, cls:'badge-purple'});
+  if (profile.experience) badges.push({text: profile.experience.split(' ')[0] === 'Student' ? 'Fresher' : profile.experience, cls:'badge-blue'});
+  if (pct >= 80) badges.push({text:'Profile Pro 🌟', cls:'badge-orange'});
+  if (profile.certs.length >= 2) badges.push({text:`${profile.certs.length} Certs`, cls:'badge-green'});
+  document.getElementById('displayBadges').innerHTML = badges.slice(0,4).map(b => `<span class="badge ${b.cls}">${b.text}</span>`).join('');
+}
+
+/* ═══ STATS ═══ */
+function updateStats() {
+  document.getElementById('statSkills').textContent = profile.techSkills.length + profile.softSkills.length;
+  document.getElementById('statGoals').textContent = profile.goals.length;
+  document.getElementById('statCerts').textContent = profile.certs.length;
+  document.getElementById('statStreak').textContent = profile.streak || 0;
+}
+
+function updateOverviewSkills() {
+  const el = document.getElementById('overviewSkills');
+  const all = [...profile.techSkills, ...profile.softSkills].slice(0, 12);
+  el.innerHTML = all.length ? all.map(s => `<span class="skill-tag">${s}</span>`).join('') :
+    '<span style="font-size:.82rem;color:#aaa">No skills added yet</span>';
+}
+
+/* ═══ SKILL GAP ANALYSIS ═══ */
+function renderSkillGap() {
+  const el = document.getElementById('skillGapDisplay');
+  const roadmapKey = (typeof localStorage !== 'undefined' && localStorage.getItem('roadmap_career')) || 'ai';
+  const field = profile.targetField;
+  if (!field || !SKILL_GAPS[field]) {
+    el.innerHTML = '<div style="font-size:.85rem;color:#aaa;text-align:center;padding:1rem">Select your target career in Personal Info tab</div>';
+    return;
+  }
+  const required = SKILL_GAPS[field];
+  const userSkills = [...profile.techSkills, ...profile.softSkills, ...profile.tools].map(s => s.toLowerCase());
+  el.innerHTML = `
+    <div style="font-size:.82rem;color:#888;margin-bottom:1rem">Required skills for <strong style="color:#1a1a2e">${field}</strong></div>
+    <div style="display:flex;flex-wrap:wrap;gap:.5rem">
+      ${required.map(s => {
+        const has = userSkills.some(u => u.includes(s.toLowerCase()) || s.toLowerCase().includes(u));
+        return `<span style="padding:.3rem .85rem;border-radius:100px;font-size:.78rem;font-weight:700;
+          background:${has?'#DCFCE7':'#FEF2F2'};color:${has?'#15803d':'#dc2626'};
+          border:1px solid ${has?'#BBF7D0':'#FECACA'}">
+          ${has?'✓':'✗'} ${s}
+        </span>`;
+      }).join('')}
+    </div>
+    <div style="margin-top:1rem;font-size:.82rem;color:#888">
+      You have <strong style="color:#22c55e">${required.filter(s=>userSkills.some(u=>u.includes(s.toLowerCase())||s.toLowerCase().includes(u))).length}</strong> of 
+      <strong>${required.length}</strong> required skills.
+      ${required.filter(s=>!userSkills.some(u=>u.includes(s.toLowerCase())||s.toLowerCase().includes(u))).length > 0 ?
+      `<a href="roadmap.html?career=${encodeURIComponent(roadmapKey)}" style="color:#6C63FF;font-weight:700;text-decoration:none;margin-left:.3rem">View roadmap to close gaps →</a>` : 
+      '<span style="color:#22c55e;font-weight:700;margin-left:.3rem">🎉 You have all required skills!</span>'}
+    </div>`;
+}
+
+/* ═══ ROADMAP PROGRESS ═══ */
+function renderRoadmapProgress() {
+  const el = document.getElementById('roadmapProgressDisplay');
+  const career = localStorage.getItem('roadmap_career');
+  const fieldMap = {'ai':'AI / Machine Learning','webdev':'Web Development','data':'Data Science / Analytics','cyber':'Cybersecurity','gamedev':'Game Development','mobile':'Mobile App Development','cloud':'Cloud / DevOps','ux':'UX / UI Design','blockchain':'Blockchain','devops':'Cloud / DevOps'};
+  const field = fieldMap[career] || profile.targetField;
+  const steps = ROADMAP_STEPS[field] || ROADMAP_STEPS['default'];
+  const techCount = profile.techSkills.length;
+  const progress = Math.min(Math.floor(techCount / 3), steps.length - 1);
+  el.innerHTML = steps.map((s, i) => `
+    <div class="roadmap-progress-item">
+      <div class="rp-num ${i < progress ? 'done' : i === progress ? 'active' : ''}">${i < progress ? '✓' : i+1}</div>
+      <div class="rp-body">
+        <div class="rp-title">${s}</div>
+        <div class="rp-bar-track">
+          <div class="rp-bar-fill" style="width:${i < progress ? 100 : i === progress ? 40 : 0}%"></div>
+        </div>
+        <div class="rp-meta">
+          <span>${i < progress ? 'Completed' : i === progress ? 'In Progress' : 'Upcoming'}</span>
+        </div>
+      </div>
+    </div>`).join('');
+}
+
+/* ═══ HEATMAP ═══ */
+function renderHeatmap() {
+  const el = document.getElementById('heatmapGrid');
+  const cells = 84; // 12 weeks × 7 days
+  let html = '';
+  for (let i = 0; i < cells; i++) {
+    const r = Math.random();
+    const lvl = r > .85 ? 'l4' : r > .7 ? 'l3' : r > .55 ? 'l2' : r > .4 ? 'l1' : '';
+    html += `<div class="heatmap-cell ${lvl}" title="Activity"></div>`;
+  }
+  el.innerHTML = html;
+}
+
+/* ═══ CAREER MATCHES ═══ */
+function renderCareerMatches() {
+  const el = document.getElementById('careerMatchDisplay');
+  const saved = localStorage.getItem('cc_assessment_results');
+  if (saved) {
+    const results = JSON.parse(saved);
+    el.innerHTML = results.slice(0,5).map((c,i) => `
+      <a class="match-card ${i===0?'top':''}" href="roadmap.html?career=${c.roadmap}" onclick="try{localStorage.setItem('roadmap_career','${c.roadmap}')}catch(e){}">
+        <div class="match-icon" style="background:${i===0?'#F3F0FF':'#F9FAFB'}">${c.icon}</div>
+        <div class="match-info">
+          <div class="match-title">${c.title}</div>
+          <div class="match-sub">${i===0?'Your best match':'Good match'}</div>
+        </div>
+        <div class="match-pct">${c.score}%</div>
+      </a>`).join('');
+  }
+}
+
+/* ═══ STREAK ═══ */
+function updateStreak() {
+  const today = new Date().toDateString();
+  const last = profile.lastVisit;
+  if (last !== today) {
+    const yesterday = new Date(Date.now() - 86400000).toDateString();
+    profile.streak = last === yesterday ? (profile.streak || 0) + 1 : 1;
+    profile.lastVisit = today;
+    localStorage.setItem(getUserKey(), JSON.stringify(profile));
+  }
+  document.getElementById('statStreak').textContent = profile.streak || 1;
+}
+
+/* ═══ UTILS ═══ */
+function formatDate(d) {
+  if (!d) return '';
+  const date = new Date(d);
+  return date.toLocaleDateString('en-IN', { day:'numeric', month:'short', year:'numeric' });
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+function renderAll() {
+  updateStats();
+  updateCompletion();
+  updateOverviewSkills();
+  renderGoals();
+  renderWeekGoals();
+  renderCerts();
+  renderHeatmap();
+  renderRoadmapProgress();
+  renderSkillGap();
+  renderCareerMatches();
+  liveUpdate();
+  // Load avatar
+  const savedAvatar = localStorage.getItem('cc_avatar');
+  if (savedAvatar) {
+    const circle = document.getElementById('avatarCircle');
+    circle.style.backgroundImage = `url(${savedAvatar})`;
+    circle.style.backgroundSize = 'cover';
+    document.getElementById('avatarInitials').style.display = 'none';
+  }
+}
+
+loadProfile();
+</script>
+<script src="chatbot.js"></script>
+</body>
+</html>

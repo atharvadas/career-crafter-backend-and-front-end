@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="description" content="Browse 10+ tech career paths on Career Crafter — roadmaps, skills, and salary ranges for India."/>
+<title>Career Crafter — Explore Careers</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --ink: #0D0D14;
+  --muted: #6B7280;
+  --border: #E8E8F0;
+  --cream: #FAFAF8;
+  --accent: #5B4FE8;
+  --card: #fff;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Plus Jakarta Sans',system-ui,sans-serif;background:var(--cream);color:var(--ink);line-height:1.6;min-height:100vh}
+nav{
+  position:sticky;top:0;z-index:50;background:rgba(250,250,248,.94);
+  backdrop-filter:blur(12px);border-bottom:1px solid var(--border);
+  padding:.85rem 5%;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.75rem
+}
+.brand{display:flex;align-items:center;gap:.55rem;text-decoration:none;font-weight:800;font-size:1.05rem;color:var(--ink)}
+.brand span{color:var(--accent)}
+.logo{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#1a6b4a,#2ecc8a 55%,#3aa8d8);display:flex;align-items:center;justify-content:center;font-size:1rem}
+.nav-links{display:flex;align-items:center;gap:.35rem;flex-wrap:wrap}
+.nav-links a{
+  text-decoration:none;color:var(--muted);font-size:.82rem;font-weight:600;padding:.45rem .85rem;border-radius:8px
+}
+.nav-links a:hover{color:var(--ink);background:#F0F0F8}
+.nav-links a.primary{background:var(--accent);color:#fff}
+.nav-links a.primary:hover{background:#4A3FD0;color:#fff}
+main{max-width:1100px;margin:0 auto;padding:2.5rem 5% 4rem}
+.hero{text-align:center;margin-bottom:2.5rem}
+.badge{display:inline-flex;align-items:center;gap:.4rem;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);background:#EEEDFB;padding:.3rem .85rem;border-radius:100px;margin-bottom:1rem}
+.hero h1{font-family:'Instrument Serif',serif;font-size:clamp(1.85rem,4vw,2.75rem);font-weight:400;letter-spacing:-.03em;margin-bottom:.75rem}
+.hero h1 em{color:var(--accent);font-style:italic}
+.hero p{color:var(--muted);max-width:560px;margin:0 auto;font-size:.95rem}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.15rem;margin-top:2rem}
+@media(max-width:900px){.grid{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.grid{grid-template-columns:1fr}}
+.card{
+  background:var(--card);border:1.5px solid var(--border);border-radius:16px;padding:1.35rem;
+  text-decoration:none;color:inherit;display:block;transition:transform .2s,box-shadow .2s,border-color .2s
+}
+.card:hover{border-color:var(--accent);transform:translateY(-4px);box-shadow:0 14px 36px rgba(91,79,232,.12)}
+.c-icon{width:46px;height:46px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.25rem;margin-bottom:.85rem}
+.c-title{font-size:.95rem;font-weight:700;margin-bottom:.35rem}
+.c-desc{font-size:.78rem;color:var(--muted);line-height:1.55;margin-bottom:.75rem}
+.c-meta{font-size:.72rem;font-weight:700;color:#16A34A}
+.bottom-note{text-align:center;margin-top:2.5rem;padding:1.5rem;background:#fff;border:1px solid var(--border);border-radius:16px;color:var(--muted);font-size:.88rem}
+.bottom-note a{color:var(--accent);font-weight:700;text-decoration:none}
+.bottom-note a:hover{text-decoration:underline}
+footer{padding:2rem 5%;border-top:1px solid var(--border);text-align:center;font-size:.78rem;color:var(--muted)}
+footer a{color:var(--accent);text-decoration:none;font-weight:600;margin:0 .5rem}
+</style>
+</head>
+<body>
+<nav>
+  <a class="brand" href="index.html"><span class="logo">🎯</span>Career<span>Crafter</span></a>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="dashboard.html">Dashboard</a>
+    <a href="assessment.html">Assessment</a>
+    <a href="emerging_careers.html">Emerging trends</a>
+    <a href="signup.html" class="primary">Get started</a>
+  </div>
+</nav>
+<main>
+  <div class="hero">
+    <div class="badge">🗺️ Career library</div>
+    <h1>Explore <em>10+</em> structured paths</h1>
+    <p>Each card opens a full roadmap with skills, certifications, courses, milestones, and India salary bands. Pick a role and start planning.</p>
+  </div>
+  <div class="grid">
+    <a class="card" href="roadmap.html?career=ai">
+      <div class="c-icon" style="background:#EEEDFB">🤖</div>
+      <div class="c-title">AI Engineer</div>
+      <div class="c-desc">ML, deep learning, and intelligent systems.</div>
+      <div class="c-meta">📈 ₹8L–₹35L · View roadmap →</div>
+    </a>
+    <a class="card" href="roadmap.html?career=webdev">
+      <div class="c-icon" style="background:#DBEAFE">🌐</div>
+      <div class="c-title">Web Developer</div>
+      <div class="c-desc">Frontend, backend, and modern full-stack skills.</div>
+      <div class="c-meta">📈 ₹4L–₹25L · View roadmap →</div>
+    </a>
+    <a class="card" href="roadmap.html?career=data">
+      <div class="c-icon" style="background:#DCFCE7">📊</div>
+      <div class="c-title">Data Analyst / Scientist</div>
+      <div class="c-desc">SQL, Python, visualisation, and ML foundations.</div>
+      <div class="c-meta">📈 ₹5L–₹30L · View roadmap →</div>
+    </a>
+    <a class="card" href="roadmap.html?career=cyber">
+      <div class="c-icon" style="background:#FEF3C7">🔒</div>
+      <div class="c-title">Cybersecurity Analyst</div>
+      <div class="c-desc">Networks, ethical hacking, and defensive security.</div>
+      <div class="c-meta">📈 ₹5L–₹28L · View roadmap →</div>
+    </a>
+    <a class="card" href="roadmap.html?career=gamedev">
+      <div class="c-icon" style="background:#FEF2F2">🎮</div>
+      <div class="c-title">Game Developer</div>
+      <div class="c-desc">Engines, physics, and shipping playable titles.</div>
+      <div class="c-meta">📈 ₹4L–₹20L · View roadmap →</div>
+    </a>
+    <a class="card" href="roadmap.html?career=ux">
+      <div class="c-icon" style="background:#F3F0FF">🎨</div>
+      <div class="c-title">UX / UI Designer</div>
+      <div class="c-desc">Research, systems, and high-fidelity interfaces.</div>
+      <div class="c-meta">📈 ₹3.5L–₹20L · View roadmap →</div>
+    </a>
+    <a class="card" href="roadmap.html?career=mobile">
+      <div class="c-icon" style="background:#FCE7F3">📱</div>
+      <div class="c-title">Mobile App Developer</div>
+      <div class="c-desc">Flutter / React Native and app store delivery.</div>
+      <div class="c-meta">📈 ₹4L–₹22L · View roadmap →</div>
+    </a>
+    <a class="card" href="roadmap.html?career=cloud">
+      <div class="c-icon" style="background:#E0F2FE">☁️</div>
+      <div class="c-title">Cloud Engineer</div>
+      <div class="c-desc">AWS, Azure, or GCP infrastructure at scale.</div>
+      <div class="c-meta">📈 ₹7L–₹40L · View roadmap →</div>
+    </a>
+    <a class="card" href="roadmap.html?career=devops">
+      <div class="c-icon" style="background:#EEF2FF">⚙️</div>
+      <div class="c-title">DevOps Engineer</div>
+      <div class="c-desc">CI/CD, containers, and platform reliability.</div>
+      <div class="c-meta">📈 ₹8L–₹38L · View roadmap →</div>
+    </a>
+    <a class="card" href="roadmap.html?career=blockchain">
+      <div class="c-icon" style="background:#FFFBEB">⛓️</div>
+      <div class="c-title">Blockchain Developer</div>
+      <div class="c-desc">Smart contracts, Web3, and decentralised apps.</div>
+      <div class="c-meta">📈 ₹8L–₹45L · View roadmap →</div>
+    </a>
+  </div>
+  <p class="bottom-note">Want future-facing roles (prompt engineering, green AI, IoT)? Browse <a href="emerging_careers.html">Emerging careers</a>. Not sure where you fit? Take the <a href="assessment.html">40-question assessment</a> first.</p>
+</main>
+<footer>
+  <a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a> · <a href="cookies.html">Cookies</a>
+  <div style="margin-top:.5rem">© 2026 Career Crafter</div>
+</footer>
+<script src="chatbot.js"></script>
+</body>
+</html>

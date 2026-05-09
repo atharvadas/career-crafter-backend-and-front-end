@@ -1,0 +1,11 @@
+[build]
+  publish = "."
+
+[functions]
+  directory = "Netlify/functions"
+
+# Old placeholder filename used in several nav links
+[[redirects]]
+  from = "/career-crafter.html"
+  to = "/index.html"
+  status = 301

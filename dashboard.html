@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Career Crafter — Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: #F0F2F5;
+    min-height: 100vh;
+    color: #1a1a2e;
+  }
+
+  /* ── NAVBAR ── */
+  nav {
+    background: #fff;
+    border-bottom: 1px solid #E5E7EB;
+    padding: 0.9rem 4%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky; top: 0; z-index: 100;
+  }
+
+  .brand {
+    display: flex; align-items: center; gap: 0.6rem;
+    text-decoration: none;
+  }
+  .logo-icon {
+    width: 40px; height: 40px; border-radius: 10px;
+    background: linear-gradient(135deg, #1a6b4a 0%, #2ecc8a 50%, #3aa8d8 100%);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem;
+    box-shadow: 0 3px 10px rgba(46,204,138,0.25);
+  }
+  .brand-name {
+    font-size: 1.2rem; font-weight: 700;
+    color: #1a1a2e; letter-spacing: -0.02em;
+  }
+
+  .nav-right { display: flex; align-items: center; gap: 1.2rem; }
+  .welcome-text { font-size: 0.92rem; color: #555; font-weight: 500; }
+  .welcome-text span { color: #1a1a2e; font-weight: 600; }
+
+  .btn-logout {
+    background: #1a1a2e; color: #fff;
+    border: none; cursor: pointer;
+    padding: 0.55rem 1.3rem;
+    border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.88rem; font-weight: 600;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .btn-logout:hover { background: #3d3b6e; transform: translateY(-1px); }
+
+  /* ── MAIN ── */
+  main {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 2.5rem 4%;
+  }
+
+  .page-header { margin-bottom: 2rem; }
+  .page-header h1 {
+    font-size: 1.9rem; font-weight: 700;
+    color: #1a1a2e; letter-spacing: -0.02em;
+    margin-bottom: 0.3rem;
+  }
+  .page-header p { font-size: 0.92rem; color: #888; }
+
+  /* ── CARDS GRID ── */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.2rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .dash-card {
+    background: #fff;
+    border: 1px solid #E5E7EB;
+    border-radius: 16px;
+    padding: 1.8rem;
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+    text-decoration: none;
+    display: block;
+    color: inherit;
+  }
+  .dash-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.09);
+    border-color: #d0d4dc;
+  }
+
+  /* card badge (top right) */
+  .card-badge {
+    position: absolute; top: 1.4rem; right: 1.4rem;
+    background: #F3F4F6; color: #555;
+    font-size: 0.75rem; font-weight: 600;
+    padding: 0.3rem 0.8rem;
+    border-radius: 6px;
+    transition: background 0.2s, color 0.2s;
+  }
+  .dash-card:hover .card-badge { background: #1a1a2e; color: #fff; }
+
+  /* card icon */
+  .card-icon {
+    width: 52px; height: 52px; border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem; margin-bottom: 1.2rem;
+  }
+  .icon-purple { background: linear-gradient(135deg, #a855f7, #7c3aed); }
+  .icon-blue   { background: linear-gradient(135deg, #3b82f6, #1d4ed8); }
+  .icon-green  { background: linear-gradient(135deg, #22c55e, #15803d); }
+  .icon-orange { background: linear-gradient(135deg, #f97316, #ea580c); }
+
+  .card-title {
+    font-size: 1.1rem; font-weight: 700;
+    color: #1a1a2e; margin-bottom: 0.4rem;
+  }
+  .card-desc {
+    font-size: 0.88rem; color: #888;
+    line-height: 1.5; margin-bottom: 1.2rem;
+  }
+  .card-link {
+    display: inline-flex; align-items: center; gap: 0.3rem;
+    font-size: 0.88rem; font-weight: 600;
+    color: #6C63FF; text-decoration: none;
+    transition: gap 0.2s;
+  }
+  .dash-card:hover .card-link { gap: 0.6rem; }
+
+  /* ── CTA BANNER ── */
+  .cta-banner {
+    background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 50%, #9333ea 100%);
+    border-radius: 16px;
+    padding: 2rem 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+  .cta-text h2 {
+    font-size: 1.35rem; font-weight: 700;
+    color: #fff; margin-bottom: 0.3rem;
+    letter-spacing: -0.01em;
+  }
+  .cta-text p { font-size: 0.88rem; color: rgba(255,255,255,0.75); }
+
+  .btn-cta {
+    background: #fff; color: #4f46e5;
+    border: none; cursor: pointer;
+    padding: 0.75rem 1.8rem;
+    border-radius: 10px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.92rem; font-weight: 700;
+    white-space: nowrap;
+    transition: transform 0.2s, box-shadow 0.2s;
+    flex-shrink: 0;
+  }
+  .btn-cta:hover { transform: scale(1.03); box-shadow: 0 6px 20px rgba(0,0,0,0.15); }
+
+  /* ── LOGOUT CONFIRM MODAL ── */
+  .modal-overlay {
+    display: none; position: fixed; inset: 0;
+    background: rgba(26,26,46,0.45);
+    backdrop-filter: blur(5px);
+    z-index: 999;
+    align-items: center; justify-content: center;
+  }
+  .modal-overlay.show { display: flex; animation: fadeIn 0.2s ease; }
+  @keyframes fadeIn { from{opacity:0} to{opacity:1} }
+
+  .modal-box {
+    background: #fff; border-radius: 18px;
+    padding: 2rem; text-align: center;
+    max-width: 340px; width: 90%;
+    animation: popUp 0.3s cubic-bezier(.34,1.56,.64,1) both;
+  }
+  @keyframes popUp { from{transform:scale(0.85);opacity:0} to{transform:scale(1);opacity:1} }
+  .modal-box .modal-icon { font-size: 2.5rem; margin-bottom: 0.8rem; }
+  .modal-box h3 { font-size: 1.2rem; font-weight: 700; margin-bottom: 0.4rem; }
+  .modal-box p { font-size: 0.88rem; color: #888; margin-bottom: 1.5rem; }
+  .modal-btns { display: flex; gap: 0.8rem; justify-content: center; }
+  .modal-btns button {
+    padding: 0.65rem 1.5rem; border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem; font-weight: 600;
+    cursor: pointer; border: none;
+    transition: transform 0.15s;
+  }
+  .modal-btns button:hover { transform: translateY(-1px); }
+  .btn-cancel { background: #F3F4F6; color: #555; }
+  .btn-confirm { background: #1a1a2e; color: #fff; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 640px) {
+    .cards-grid { grid-template-columns: 1fr; }
+    .cta-banner { flex-direction: column; text-align: center; }
+    .btn-cta { width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav>
+  <a class="brand" href="career-crafter.html">
+    <div class="logo-icon">🎯</div>
+    <span class="brand-name">Career Crafter</span>
+  </a>
+  <div class="nav-right">
+    <span class="welcome-text">Welcome, <span id="userName">Shruti</span></span>
+    <button class="btn-logout" onclick="confirmLogout()">Log Out</button>
+  </div>
+</nav>
+
+<!-- MAIN CONTENT -->
+<main>
+
+  <!-- Page Header -->
+  <div class="page-header">
+    <h1>Your Dashboard</h1>
+    <p>Track your progress and continue your career journey</p>
+  </div>
+
+  <!-- 2x2 Cards Grid -->
+  <div class="cards-grid">
+
+    <!-- Card 1: Complete Your Profile -->
+    <a class="dash-card" href="profile.html">
+      <span class="card-badge">Start Now</span>
+      <div class="card-icon icon-purple">👤</div>
+      <div class="card-title">Complete Your Profile</div>
+      <p class="card-desc">Add your academic background, skills, and interests</p>
+      <span class="card-link">Get Started →</span>
+    </a>
+
+    <!-- Card 2: Take Assessment -->
+    <a class="dash-card" href="assessment.html">
+      <span class="card-badge">Begin</span>
+      <div class="card-icon icon-blue">📋</div>
+      <div class="card-title">Take Assessment</div>
+      <p class="card-desc">Discover careers that match your strengths</p>
+      <span class="card-link">Get Started →</span>
+    </a>
+
+    <!-- Card 3: View Career Roadmaps -->
+    <a class="dash-card" href="roadmap.html">
+      <span class="card-badge">Explore</span>
+      <div class="card-icon icon-green">📍</div>
+      <div class="card-title">View Career Roadmaps</div>
+      <p class="card-desc">Explore detailed paths for your dream career</p>
+      <span class="card-link">Get Started →</span>
+    </a>
+
+    <!-- Card 4: Emerging Careers -->
+    <a class="dash-card" href="careers.html">
+      <span class="card-badge">Discover</span>
+      <div class="card-icon icon-orange">🔔</div>
+      <div class="card-title">Emerging Careers</div>
+      <p class="card-desc">Learn about high-growth career opportunities</p>
+      <span class="card-link">Get Started →</span>
+    </a>
+
+  </div>
+
+  <!-- CTA Banner -->
+  <div class="cta-banner">
+    <div class="cta-text">
+      <h2>Ready to discover your path?</h2>
+      <p>Take our comprehensive career assessment now</p>
+    </div>
+    <button class="btn-cta">Start Assessment</button>
+  </div>
+
+</main>
+
+<!-- LOGOUT CONFIRM MODAL -->
+<div class="modal-overlay" id="logoutModal">
+  <div class="modal-box">
+    <div class="modal-icon">👋</div>
+    <h3>Logging Out?</h3>
+    <p>You'll need to sign in again to access your dashboard.</p>
+    <div class="modal-btns">
+      <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+      <button class="btn-confirm" onclick="doLogout()">Yes, Log Out</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Guard: redirect to login if not logged in
+  if (!localStorage.getItem('cc_loggedIn')) {
+    window.location.href = 'login.html';
+  }
+
+  // ── ROLE ROUTER — send each role to their own dashboard
+  const role = localStorage.getItem('cc_role') || 'student';
+  if (role === 'counsellor') { window.location.replace('dashboard-counsellor.html'); }
+  else if (role === 'college') { window.location.replace('dashboard-college.html'); }
+  else if (role === 'parent')  { window.location.replace('dashboard-parent.html'); }
+  // else: student — continue loading this page normally
+
+  // Show correct username for current logged-in user
+  const stored = localStorage.getItem('cc_username');
+  if (stored) document.getElementById('userName').textContent = stored;
+
+  function confirmLogout() {
+    document.getElementById('logoutModal').classList.add('show');
+  }
+  function closeModal() {
+    document.getElementById('logoutModal').classList.remove('show');
+  }
+  function doLogout() {
+    // Clear session only (keep user data safe)
+    localStorage.removeItem('cc_loggedIn');
+    localStorage.removeItem('cc_username');
+    localStorage.removeItem('cc_current_user');
+    localStorage.removeItem('cc_role');
+    window.location.href = 'login.html';
+  }
+
+  // Close modal on overlay click
+  document.getElementById('logoutModal').addEventListener('click', function(e) {
+    if (e.target === this) closeModal();
+  });
+</script>
+</body>
+</html>

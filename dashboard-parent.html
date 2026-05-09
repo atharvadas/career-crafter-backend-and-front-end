@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Career Crafter — Parent Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:#FFFBEB;color:#0D0D14;min-height:100vh}
+nav{background:#fff;border-bottom:1px solid #FDE68A;padding:.9rem 4%;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.brand{display:flex;align-items:center;gap:.6rem;text-decoration:none}
+.logo-icon{width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,#92400e,#D97706 50%,#FBBF24);display:flex;align-items:center;justify-content:center;font-size:.9rem}
+.brand-name{font-size:1rem;font-weight:800;color:#0D0D14}
+.brand-role-tag{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;background:#FEF3C7;color:#92400e;padding:.2rem .6rem;border-radius:100px;margin-left:.3rem}
+.nav-right{display:flex;align-items:center;gap:1rem}
+.nav-welcome{font-size:.85rem;color:#6B7280;font-weight:500}
+.nav-welcome span{color:#0D0D14;font-weight:700}
+.btn-logout{background:#0D0D14;color:#fff;border:none;padding:.5rem 1.1rem;border-radius:8px;font-family:'Plus Jakarta Sans',sans-serif;font-size:.82rem;font-weight:700;cursor:pointer;transition:background .2s}
+.btn-logout:hover{background:#D97706}
+main{max-width:860px;margin:0 auto;padding:2rem 4% 5rem}
+
+/* HERO CARD */
+.hero-card{background:linear-gradient(135deg,#0D0D14,#1a0a2e);border-radius:20px;padding:2rem;margin-bottom:1.5rem;color:#fff;position:relative;overflow:hidden}
+.hero-card::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 80% 50%,rgba(217,119,6,.2),transparent 60%);pointer-events:none}
+.hero-greeting{font-size:.82rem;color:rgba(255,255,255,.55);margin-bottom:.3rem;position:relative;z-index:1}
+.hero-title{font-family:'Instrument Serif',serif;font-size:1.8rem;letter-spacing:-.02em;position:relative;z-index:1;margin-bottom:.5rem}
+.hero-title em{color:#FBBF24;font-style:italic}
+.hero-sub{font-size:.85rem;color:rgba(255,255,255,.6);position:relative;z-index:1}
+.hero-stats{display:flex;gap:2rem;margin-top:1.5rem;position:relative;z-index:1;flex-wrap:wrap}
+.hero-stat{text-align:center}
+.hero-stat-num{font-family:'Instrument Serif',serif;font-size:1.8rem;color:#FBBF24}
+.hero-stat-label{font-size:.72rem;color:rgba(255,255,255,.5);font-weight:600}
+
+/* CHILD CARD */
+.child-card{background:#fff;border:2px solid #FDE68A;border-radius:20px;padding:1.8rem;margin-bottom:1.5rem}
+.child-header{display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem}
+.child-avatar{width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,#D97706,#FBBF24);display:flex;align-items:center;justify-content:center;font-family:'Instrument Serif',serif;font-size:1.6rem;color:#fff;flex-shrink:0}
+.child-name{font-size:1.2rem;font-weight:800;color:#0D0D14;letter-spacing:-.01em}
+.child-edu{font-size:.82rem;color:#6B7280;margin-top:.2rem}
+.child-career-badge{display:inline-flex;align-items:center;gap:.4rem;background:#FFFBEB;border:1px solid #FDE68A;border-radius:100px;padding:.3rem .85rem;font-size:.75rem;font-weight:700;color:#92400e;margin-top:.5rem}
+
+/* PROGRESS SECTION */
+.progress-section{background:#FAFAFA;border-radius:14px;padding:1.3rem;margin-bottom:1rem}
+.progress-label{font-size:.8rem;font-weight:700;color:#374151;margin-bottom:.5rem;display:flex;justify-content:space-between}
+.progress-label span{color:#D97706}
+.progress-track{height:12px;background:#E5E7EB;border-radius:12px;overflow:hidden}
+.progress-fill{height:100%;border-radius:12px;background:linear-gradient(90deg,#D97706,#FBBF24);transition:width 1s ease}
+.milestone-list{display:flex;flex-direction:column;gap:.5rem;margin-top:.8rem}
+.milestone-item{display:flex;align-items:center;gap:.7rem;font-size:.83rem}
+.milestone-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+.milestone-item.done{color:#374151}
+.milestone-item.active{color:#D97706;font-weight:600}
+.milestone-item.upcoming{color:#9CA3AF}
+
+/* INFO CARDS */
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.5rem}
+.info-card{background:#fff;border:1px solid #E5E7EB;border-radius:16px;padding:1.3rem}
+.info-card-icon{font-size:1.5rem;margin-bottom:.7rem}
+.info-card-title{font-size:.85rem;font-weight:700;color:#0D0D14;margin-bottom:.5rem}
+.info-card-body{font-size:.82rem;color:#6B7280;line-height:1.6}
+.info-card-highlight{color:#D97706;font-weight:700}
+
+/* GOALS */
+.goals-card{background:#fff;border:1px solid #E5E7EB;border-radius:16px;padding:1.5rem;margin-bottom:1.5rem}
+.card-title{font-size:.92rem;font-weight:700;margin-bottom:1.2rem;display:flex;align-items:center;gap:.4rem}
+.goal-row{display:flex;align-items:center;gap:.8rem;padding:.7rem;background:#FAFAFA;border-radius:10px;margin-bottom:.5rem;border:1px solid #F0F0F0}
+.goal-status-icon{font-size:1rem;flex-shrink:0}
+.goal-info{flex:1}
+.goal-title-text{font-size:.85rem;font-weight:600;color:#0D0D14}
+.goal-title-text.done-text{text-decoration:line-through;color:#9CA3AF}
+.goal-meta-text{font-size:.72rem;color:#9CA3AF}
+.goal-priority{font-size:.68rem;font-weight:700;padding:.15rem .5rem;border-radius:100px}
+.p-high{background:#FEE2E2;color:#DC2626}
+.p-medium{background:#FEF3C7;color:#D97706}
+.p-low{background:#DCFCE7;color:#15803d}
+
+/* UNDERSTANDING SECTION */
+.what-means{background:#FEF3C7;border:1px solid #FDE68A;border-radius:16px;padding:1.5rem;margin-bottom:1.5rem}
+.what-means-title{font-size:.92rem;font-weight:700;color:#92400e;margin-bottom:1rem;display:flex;align-items:center;gap:.4rem}
+.explain-item{display:flex;gap:.8rem;margin-bottom:.9rem;align-items:flex-start}
+.explain-icon{width:32px;height:32px;border-radius:8px;background:#fff;display:flex;align-items:center;justify-content:center;font-size:.9rem;flex-shrink:0;border:1px solid #FDE68A}
+.explain-title{font-size:.83rem;font-weight:700;color:#0D0D14;margin-bottom:.2rem}
+.explain-desc{font-size:.78rem;color:#6B7280;line-height:1.5}
+
+/* LINK CHILD */
+.link-child-card{background:#fff;border:2px dashed #FDE68A;border-radius:20px;padding:2rem;text-align:center;margin-bottom:1.5rem}
+.link-child-card .icon{font-size:2.5rem;margin-bottom:.8rem}
+.link-child-card h3{font-size:1.1rem;font-weight:800;margin-bottom:.4rem}
+.link-child-card p{font-size:.85rem;color:#6B7280;margin-bottom:1.2rem;max-width:400px;margin-left:auto;margin-right:auto}
+.link-input-row{display:flex;gap:.5rem;max-width:400px;margin:0 auto}
+.link-input{flex:1;padding:.7rem 1rem;border:1.5px solid #E5E7EB;border-radius:10px;font-size:.87rem;font-family:'Plus Jakarta Sans',sans-serif;outline:none;transition:border-color .2s}
+.link-input:focus{border-color:#D97706;box-shadow:0 0 0 3px rgba(217,119,6,.1)}
+.link-btn{background:#D97706;color:#fff;border:none;border-radius:10px;padding:.7rem 1.3rem;font-family:'Plus Jakarta Sans',sans-serif;font-size:.85rem;font-weight:700;cursor:pointer;transition:background .2s;white-space:nowrap}
+.link-btn:hover{background:#B45309}
+
+#toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(100px);background:#D97706;color:#fff;padding:.7rem 1.8rem;border-radius:100px;font-size:.85rem;font-weight:700;z-index:9999;transition:transform .3s cubic-bezier(.34,1.56,.64,1)}
+#toast.show{transform:translateX(-50%) translateY(0)}
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);backdrop-filter:blur(5px);z-index:999;align-items:center;justify-content:center}
+.modal-overlay.show{display:flex}
+.logout-box{background:#fff;border-radius:18px;padding:2rem;text-align:center;max-width:320px;width:90%}
+.logout-box .licon{font-size:2.5rem;margin-bottom:.8rem}
+.logout-box h3{font-size:1.1rem;font-weight:800;margin-bottom:.4rem}
+.logout-box p{font-size:.85rem;color:#6B7280;margin-bottom:1.5rem}
+.logout-btns{display:flex;gap:.8rem;justify-content:center}
+.logout-btns button{padding:.6rem 1.5rem;border-radius:8px;font-family:'Plus Jakarta Sans',sans-serif;font-size:.88rem;font-weight:700;cursor:pointer;border:none}
+.btn-cancel-l{background:#F3F4F6;color:#374151}
+.btn-confirm-l{background:#0D0D14;color:#fff}
+@media(max-width:600px){.info-grid{grid-template-columns:1fr}.hero-stats{gap:1rem}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="brand" href="index.html">
+    <div class="logo-icon">🎯</div>
+    <span class="brand-name">CareerCrafter</span>
+    <span class="brand-role-tag">Parent</span>
+  </a>
+  <div class="nav-right">
+    <span class="nav-welcome">Hello, <span id="parentName">Parent</span></span>
+    <button class="btn-logout" onclick="document.getElementById('logoutModal').classList.add('show')">Log Out</button>
+  </div>
+</nav>
+
+<main id="mainContent"></main>
+
+<div class="modal-overlay" id="logoutModal">
+  <div class="logout-box">
+    <div class="licon">👋</div>
+    <h3>Logging Out?</h3>
+    <p>You'll need to sign in again to view your child's progress.</p>
+    <div class="logout-btns">
+      <button class="btn-cancel-l" onclick="document.getElementById('logoutModal').classList.remove('show')">Cancel</button>
+      <button class="btn-confirm-l" onclick="doLogout()">Yes, Log Out</button>
+    </div>
+  </div>
+</div>
+<div id="toast"></div>
+
+<script>
+if (!localStorage.getItem('cc_loggedIn') || localStorage.getItem('cc_role') !== 'parent') {
+  window.location.href = 'login.html';
+}
+
+const parentEmail  = localStorage.getItem('cc_current_user') || '';
+const parentKey    = 'cc_parent_' + parentEmail;
+let parentData     = { linkedChildEmail: null };
+
+function loadData() {
+  const saved = localStorage.getItem(parentKey);
+  if (saved) parentData = {...parentData, ...JSON.parse(saved)};
+  document.getElementById('parentName').textContent = localStorage.getItem('cc_username') || 'Parent';
+
+  if (parentData.linkedChildEmail) {
+    renderChildDashboard();
+  } else {
+    renderLinkChild();
+  }
+}
+
+function renderLinkChild() {
+  document.getElementById('mainContent').innerHTML = `
+    <div class="hero-card">
+      <div class="hero-greeting">Good day, ${localStorage.getItem('cc_username') || 'Parent'} 👋</div>
+      <div class="hero-title">Welcome to <em>Career Crafter</em></div>
+      <div class="hero-sub">Your dedicated space to monitor and support your child's career journey</div>
+    </div>
+
+    <div class="link-child-card">
+      <div class="icon">🔗</div>
+      <h3>Link Your Child's Account</h3>
+      <p>Enter your child's email address that they used to register on Career Crafter. Once linked, you'll be able to see their career path, goals, and progress.</p>
+      <div class="link-input-row">
+        <input class="link-input" type="email" id="childEmailInput" placeholder="child@email.com"/>
+        <button class="link-btn" onclick="linkChild()">Link Account →</button>
+      </div>
+      <p style="font-size:.73rem;color:#aaa;margin-top:.8rem">Your child must have a Student account on Career Crafter first.</p>
+    </div>
+
+    <div class="what-means">
+      <div class="what-means-title">💡 What you'll see once linked</div>
+      <div class="explain-item">
+        <div class="explain-icon">🗺️</div>
+        <div><div class="explain-title">Their Career Roadmap</div><div class="explain-desc">See which career they're working towards and exactly what steps they're taking to get there.</div></div>
+      </div>
+      <div class="explain-item">
+        <div class="explain-icon">📊</div>
+        <div><div class="explain-title">Skills Progress</div><div class="explain-desc">See the specific skills they've been learning and what gaps still need to be closed.</div></div>
+      </div>
+      <div class="explain-item">
+        <div class="explain-icon">🎯</div>
+        <div><div class="explain-title">Goals & Milestones</div><div class="explain-desc">View the goals your child has set and whether they're on track to meet them.</div></div>
+      </div>
+    </div>
+  `;
+}
+
+function linkChild() {
+  const email = document.getElementById('childEmailInput').value.trim();
+  if (!email) return showToast('⚠️ Please enter your child\'s email');
+
+  const users = JSON.parse(localStorage.getItem('cc_users') || '[]');
+  const child = users.find(u => u.email.toLowerCase() === email.toLowerCase() && u.role === 'student');
+
+  if (!child) {
+    showToast('❌ No student account found with that email');
+    return;
+  }
+
+  parentData.linkedChildEmail = email;
+  localStorage.setItem(parentKey, JSON.stringify(parentData));
+  showToast('✅ Account linked successfully!');
+  setTimeout(() => renderChildDashboard(), 800);
+}
+
+function renderChildDashboard() {
+  const childEmail = parentData.linkedChildEmail;
+  const users      = JSON.parse(localStorage.getItem('cc_users') || '[]');
+  const child      = users.find(u => u.email.toLowerCase() === childEmail.toLowerCase());
+  const childProfileKey = 'cc_profile_' + childEmail;
+  const childProfile    = JSON.parse(localStorage.getItem(childProfileKey) || '{}');
+
+  const childName    = child?.name || childEmail;
+  const initials     = childName.split(' ').map(n=>n[0]).join('').toUpperCase().slice(0,2);
+  const targetCareer = childProfile.targetField || 'Not decided yet';
+  const education    = child?.academic || childProfile.degree || 'Not specified';
+  const techSkills   = childProfile.techSkills || [];
+  const softSkills   = childProfile.softSkills || [];
+  const goals        = childProfile.goals || [];
+  const certs        = childProfile.certs || [];
+  const streak       = childProfile.streak || 0;
+
+  // Roadmap steps based on career
+  const STEPS = {
+    'AI / Machine Learning': ['Foundation (Python & Math)','Core ML Skills','Specialisation','Job Ready'],
+    'Web Development':       ['HTML/CSS/Git','JavaScript','React Framework','Backend','Deploy'],
+    'Data Science / Analytics':['Foundations','Data Wrangling','Visualisation','ML Projects','Apply'],
+    'Cybersecurity':         ['Networking & OS','Security Basics','Ethical Hacking','Certify'],
+    'default':               ['Learn Basics','Build Skills','Create Projects','Apply for Jobs'],
+  };
+  const steps = STEPS[targetCareer] || STEPS['default'];
+  const techCount   = techSkills.length;
+  const stepsDone   = Math.min(Math.floor(techCount / 3), steps.length - 1);
+  const progressPct = Math.round((stepsDone / steps.length) * 100);
+  const goalsDone   = goals.filter(g => g.done).length;
+
+  document.getElementById('mainContent').innerHTML = `
+    <!-- Hero -->
+    <div class="hero-card">
+      <div class="hero-greeting">Your child's career journey 👨‍👩‍👧</div>
+      <div class="hero-title"><em>${childName}</em></div>
+      <div class="hero-sub">Here's a summary of their current progress on Career Crafter</div>
+      <div class="hero-stats">
+        <div class="hero-stat"><div class="hero-stat-num">${techSkills.length + softSkills.length}</div><div class="hero-stat-label">Skills Added</div></div>
+        <div class="hero-stat"><div class="hero-stat-num">${goals.length}</div><div class="hero-stat-label">Goals Set</div></div>
+        <div class="hero-stat"><div class="hero-stat-num">${certs.length}</div><div class="hero-stat-label">Certifications</div></div>
+        <div class="hero-stat"><div class="hero-stat-num">${streak}</div><div class="hero-stat-label">Day Streak 🔥</div></div>
+      </div>
+    </div>
+
+    <!-- Child Card -->
+    <div class="child-card">
+      <div class="child-header">
+        <div class="child-avatar">${initials||'?'}</div>
+        <div>
+          <div class="child-name">${childName}</div>
+          <div class="child-edu">📚 ${education}</div>
+          <div class="child-career-badge">🎯 Target: ${targetCareer}</div>
+        </div>
+      </div>
+
+      <!-- Roadmap Progress -->
+      <div class="progress-section">
+        <div class="progress-label">Roadmap Progress <span>${progressPct}%</span></div>
+        <div class="progress-track"><div class="progress-fill" style="width:${progressPct}%"></div></div>
+        <div class="milestone-list">
+          ${steps.map((s,i) => `
+            <div class="milestone-item ${i < stepsDone ? 'done' : i === stepsDone ? 'active' : 'upcoming'}">
+              <div class="milestone-dot" style="background:${i < stepsDone ? '#22c55e' : i === stepsDone ? '#D97706' : '#D1D5DB'}"></div>
+              ${i < stepsDone ? '✅' : i === stepsDone ? '🔄' : '○'} ${s}
+            </div>`).join('')}
+        </div>
+      </div>
+    </div>
+
+    <!-- Info Grid -->
+    <div class="info-grid">
+      <div class="info-card">
+        <div class="info-card-icon">💡</div>
+        <div class="info-card-title">Skills They're Building</div>
+        <div class="info-card-body">
+          ${techSkills.length ? techSkills.slice(0,4).map(s=>`<span style="display:inline-block;background:#F3F0FF;color:#4f46e5;border-radius:100px;padding:.15rem .6rem;font-size:.72rem;font-weight:600;margin:.1rem">${s}</span>`).join('')+(techSkills.length>4?`<br><span class="info-card-highlight">+${techSkills.length-4} more skills</span>`:'')
+          : '<span style="color:#9CA3AF">No skills added yet</span>'}
+        </div>
+      </div>
+      <div class="info-card">
+        <div class="info-card-icon">🏅</div>
+        <div class="info-card-title">Certifications Earned</div>
+        <div class="info-card-body">
+          ${certs.length ? certs.slice(0,3).map(c=>`<div style="margin-bottom:.3rem">✅ ${c.name}</div>`).join('')
+          : '<span style="color:#9CA3AF">No certifications yet. Encourage them to take an online course!</span>'}
+        </div>
+      </div>
+    </div>
+
+    <!-- Goals -->
+    <div class="goals-card">
+      <div class="card-title">🎯 Their Current Goals</div>
+      ${goals.length ? goals.slice(0,5).map(g => `
+        <div class="goal-row">
+          <div class="goal-status-icon">${g.done ? '✅' : '⏳'}</div>
+          <div class="goal-info">
+            <div class="goal-title-text ${g.done?'done-text':''}">${g.title}</div>
+            <div class="goal-meta-text">${g.deadline ? '📅 ' + g.deadline : 'No deadline set'}</div>
+          </div>
+          <span class="goal-priority p-${g.priority}">${g.priority}</span>
+        </div>`).join('')
+      : '<div style="text-align:center;padding:1.5rem;color:#9CA3AF;font-size:.85rem">No goals set yet. Encourage your child to set goals on Career Crafter!</div>'}
+      ${goals.length ? `<div style="font-size:.78rem;color:#6B7280;margin-top:.8rem;text-align:center">${goalsDone} of ${goals.length} goals completed</div>` : ''}
+    </div>
+
+    <!-- What it means section -->
+    <div class="what-means">
+      <div class="what-means-title">💛 What this means for you as a parent</div>
+      <div class="explain-item">
+        <div class="explain-icon">📈</div>
+        <div>
+          <div class="explain-title">They are actively working on their career</div>
+          <div class="explain-desc">The fact that they're on Career Crafter means they're taking their future seriously. ${progressPct > 30 ? 'Their progress looks good!' : 'Encourage them to complete more milestones.'}</div>
+        </div>
+      </div>
+      <div class="explain-item">
+        <div class="explain-icon">🎯</div>
+        <div>
+          <div class="explain-title">Their target career is <span style="color:#D97706">${targetCareer}</span></div>
+          <div class="explain-desc">This is a structured, high-growth field. Career Crafter has given them a clear step-by-step roadmap to get there.</div>
+        </div>
+      </div>
+      <div class="explain-item">
+        <div class="explain-icon">💬</div>
+        <div>
+          <div class="explain-title">How you can support them</div>
+          <div class="explain-desc">Ask them about their daily goals, encourage certifications, and give them time to study. Your support makes a huge difference!</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Unlink option -->
+    <div style="text-align:center;margin-top:1rem">
+      <button onclick="unlinkChild()" style="background:none;border:none;font-size:.78rem;color:#9CA3AF;cursor:pointer;font-family:inherit;text-decoration:underline">Unlink this child account</button>
+    </div>
+  `;
+}
+
+function unlinkChild() {
+  if (!confirm('Are you sure you want to unlink your child\'s account?')) return;
+  parentData.linkedChildEmail = null;
+  localStorage.setItem(parentKey, JSON.stringify(parentData));
+  renderLinkChild();
+}
+
+function doLogout() {
+  localStorage.removeItem('cc_loggedIn'); localStorage.removeItem('cc_username');
+  localStorage.removeItem('cc_current_user'); localStorage.removeItem('cc_role');
+  window.location.href = 'login.html';
+}
+function showToast(msg) {
+  const t = document.getElementById('toast'); t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+loadData();
+</script>
+</body>
+</html>

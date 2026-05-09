@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Career Crafter — College Sign Up</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:#EFF6FF;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:2rem 1rem}
+.page-wrap{display:flex;flex-direction:column;align-items:center;width:100%}
+.brand{display:flex;align-items:center;gap:.6rem;margin-bottom:1.8rem;text-decoration:none}
+.logo-icon{width:48px;height:48px;border-radius:13px;background:linear-gradient(135deg,#1e40af,#0284c7 50%,#38bdf8);display:flex;align-items:center;justify-content:center;font-size:1.3rem;box-shadow:0 4px 16px rgba(2,132,199,.3)}
+.brand-name{font-size:1.4rem;font-weight:800;color:#0D0D14}
+.brand-role{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#0284C7;background:#DBEAFE;padding:.2rem .7rem;border-radius:100px;margin-left:.3rem}
+.card{background:#fff;border-radius:20px;padding:2.5rem 2.2rem;width:min(500px,100%);box-shadow:0 4px 32px rgba(0,0,0,.08);border:1px solid #BFDBFE}
+.card-title{font-size:1.6rem;font-weight:800;color:#0D0D14;text-align:center;margin-bottom:.3rem;letter-spacing:-.02em}
+.card-sub{font-size:.88rem;color:#6B7280;text-align:center;margin-bottom:1.8rem}
+.role-badge{display:flex;align-items:center;gap:.6rem;background:#EFF6FF;border:1px solid #BFDBFE;border-radius:12px;padding:.75rem 1rem;margin-bottom:1.5rem}
+.role-badge-icon{font-size:1.3rem}
+.role-badge-text{font-size:.82rem;color:#1e40af;font-weight:600}
+.field{margin-bottom:1rem}
+.field label{display:block;font-size:.8rem;font-weight:700;color:#374151;margin-bottom:.4rem;text-transform:uppercase;letter-spacing:.05em}
+.field input,.field select,.field textarea{width:100%;padding:.78rem 1rem;border:1.5px solid #E5E7EB;border-radius:10px;font-size:.9rem;font-family:'Plus Jakarta Sans',sans-serif;color:#0D0D14;background:#fff;outline:none;transition:border-color .2s,box-shadow .2s}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:#0284C7;box-shadow:0 0 0 3px rgba(2,132,199,.1)}
+.field select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23888' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 1rem center;cursor:pointer}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:.8rem}
+.error-msg{background:#FEF2F2;border:1px solid #FECACA;color:#DC2626;border-radius:8px;padding:.7rem 1rem;font-size:.83rem;margin-bottom:1rem;display:none;text-align:center}
+.error-msg.show{display:block;animation:shake .3s ease}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+.btn-create{width:100%;padding:.95rem;border-radius:10px;background:#0284C7;color:#fff;font-family:'Plus Jakarta Sans',sans-serif;font-size:.95rem;font-weight:700;border:none;cursor:pointer;transition:all .2s;margin-top:.5rem}
+.btn-create:hover{background:#0369A1;transform:translateY(-1px);box-shadow:0 6px 20px rgba(2,132,199,.3)}
+.login-row{text-align:center;margin-top:1.2rem;font-size:.85rem;color:#6B7280}
+.login-row a{color:#0284C7;text-decoration:none;font-weight:700}
+.login-row a:hover{text-decoration:underline}
+.success-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);backdrop-filter:blur(6px);z-index:999;align-items:center;justify-content:center}
+.success-overlay.show{display:flex}
+.success-box{background:#fff;border-radius:20px;padding:2.5rem;text-align:center;max-width:340px;width:90%}
+.success-box .icon{font-size:3rem;margin-bottom:1rem}
+.success-box h3{font-size:1.3rem;font-weight:800;margin-bottom:.4rem;color:#0D0D14}
+.success-box p{font-size:.88rem;color:#6B7280;margin-bottom:1.5rem}
+.success-box a{display:inline-block;background:#0284C7;color:#fff;padding:.75rem 2rem;border-radius:10px;text-decoration:none;font-weight:700;font-size:.9rem}
+@media(max-width:480px){.field-row{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="page-wrap">
+  <a class="brand" href="choose-role.html">
+    <div class="logo-icon">🏫</div>
+    <span class="brand-name">CareerCrafter</span>
+    <span class="brand-role">Institution</span>
+  </a>
+  <div class="card">
+    <h1 class="card-title">Register Your Institution</h1>
+    <p class="card-sub">Set up Career Crafter for your college or university</p>
+    <div class="role-badge">
+      <span class="role-badge-icon">🏫</span>
+      <span class="role-badge-text">College / Institution — you'll get an analytics & student management dashboard</span>
+    </div>
+    <div class="error-msg" id="errorMsg"></div>
+    <div class="field"><label>Institution Name</label><input type="text" id="institutionName" placeholder="e.g. Pune Institute of Computer Technology"/></div>
+    <div class="field-row">
+      <div class="field"><label>City</label><input type="text" id="city" placeholder="Pune"/></div>
+      <div class="field"><label>State</label><input type="text" id="state" placeholder="Maharashtra"/></div>
+    </div>
+    <div class="field"><label>Institution Type</label>
+      <select id="instType">
+        <option value="">Select...</option>
+        <option>Engineering College</option>
+        <option>University</option>
+        <option>Polytechnic / Diploma Institute</option>
+        <option>MBA / Management Institute</option>
+        <option>Arts & Science College</option>
+        <option>Vocational Training Institute</option>
+        <option>Other</option>
+      </select>
+    </div>
+    <div class="field"><label>Number of Students (approx.)</label>
+      <select id="studentCount">
+        <option value="">Select...</option>
+        <option>Less than 500</option>
+        <option>500 – 2,000</option>
+        <option>2,000 – 5,000</option>
+        <option>5,000 – 10,000</option>
+        <option>More than 10,000</option>
+      </select>
+    </div>
+    <div class="field"><label>Contact Person Name</label><input type="text" id="contactName" placeholder="Dr. / Prof. Full Name"/></div>
+    <div class="field"><label>Designation</label><input type="text" id="designation" placeholder="e.g. Training & Placement Officer"/></div>
+    <div class="field"><label>Official Email Address</label><input type="email" id="email" placeholder="tpo@college.edu.in"/></div>
+    <div class="field"><label>Contact Phone</label><input type="tel" id="phone" placeholder="+91 98765 43210"/></div>
+    <div class="field"><label>Password</label><input type="password" id="password" placeholder="Minimum 8 characters"/></div>
+    <div class="field"><label>Confirm Password</label><input type="password" id="confirm" placeholder="Re-enter password"/></div>
+    <button class="btn-create" onclick="handleSignup()">Register Institution →</button>
+    <p class="login-row">Already registered? <a href="login.html">Log in</a> · <a href="choose-role.html">Change role</a></p>
+  </div>
+</div>
+
+<div class="success-overlay" id="successOverlay">
+  <div class="success-box">
+    <div class="icon">🏫</div>
+    <h3>Institution Registered!</h3>
+    <p>Your institution account is ready. Log in to access your analytics dashboard.</p>
+    <a href="login.html">Go to Login →</a>
+  </div>
+</div>
+
+<script>
+function handleSignup() {
+  const instName    = document.getElementById('institutionName').value.trim();
+  const city        = document.getElementById('city').value.trim();
+  const state       = document.getElementById('state').value.trim();
+  const instType    = document.getElementById('instType').value;
+  const studentCount= document.getElementById('studentCount').value;
+  const contactName = document.getElementById('contactName').value.trim();
+  const designation = document.getElementById('designation').value.trim();
+  const email       = document.getElementById('email').value.trim();
+  const phone       = document.getElementById('phone').value.trim();
+  const password    = document.getElementById('password').value;
+  const confirm     = document.getElementById('confirm').value;
+  const errorMsg    = document.getElementById('errorMsg');
+  errorMsg.classList.remove('show');
+
+  if (!instName)    return showError('⚠️ Please enter your institution name.');
+  if (!city||!state)return showError('⚠️ Please enter city and state.');
+  if (!instType)    return showError('⚠️ Please select institution type.');
+  if (!studentCount)return showError('⚠️ Please select approximate student count.');
+  if (!contactName) return showError('⚠️ Please enter contact person name.');
+  if (!designation) return showError('⚠️ Please enter your designation.');
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return showError('⚠️ Please enter a valid email.');
+  if (!phone)       return showError('⚠️ Please enter a contact number.');
+  if (password.length < 8) return showError('⚠️ Password must be at least 8 characters.');
+  if (!/[A-Z]/.test(password)) return showError('⚠️ Password must contain an uppercase letter.');
+  if (!/[0-9]/.test(password)) return showError('⚠️ Password must contain a number.');
+  if (password !== confirm) return showError('⚠️ Passwords do not match.');
+
+  const users = JSON.parse(localStorage.getItem('cc_users') || '[]');
+  if (users.find(u => u.email.toLowerCase() === email.toLowerCase()))
+    return showError('❌ An account with this email already exists.');
+
+  users.push({ name: contactName, email, phone, password, role: 'college', institutionName: instName, city, state, instType, studentCount, designation, createdAt: new Date().toISOString() });
+  localStorage.setItem('cc_users', JSON.stringify(users));
+  localStorage.setItem('cc_role', 'college');
+  localStorage.setItem('cc_username', contactName.split(' ')[0]);
+  document.getElementById('successOverlay').classList.add('show');
+}
+function showError(msg) { const el = document.getElementById('errorMsg'); el.textContent = msg; el.classList.add('show'); }
+document.addEventListener('keydown', e => { if (e.key === 'Enter') handleSignup(); });
+</script>
+</body>
+</html>

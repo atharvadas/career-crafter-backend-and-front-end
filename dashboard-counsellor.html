@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Career Crafter — Counsellor Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:#F0F7F4;color:#0D0D14;min-height:100vh}
+
+/* NAV */
+nav{background:#fff;border-bottom:1px solid #D1FAE5;padding:.9rem 4%;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.brand{display:flex;align-items:center;gap:.6rem;text-decoration:none}
+.logo-icon{width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,#065f46,#059669 50%,#34d399);display:flex;align-items:center;justify-content:center;font-size:.9rem}
+.brand-name{font-size:1rem;font-weight:800;color:#0D0D14}
+.brand-role-tag{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;background:#DCFCE7;color:#065f46;padding:.2rem .6rem;border-radius:100px;margin-left:.3rem}
+.nav-right{display:flex;align-items:center;gap:1rem}
+.nav-welcome{font-size:.85rem;color:#6B7280;font-weight:500}
+.nav-welcome span{color:#0D0D14;font-weight:700}
+.btn-logout{background:#0D0D14;color:#fff;border:none;padding:.5rem 1.1rem;border-radius:8px;font-family:'Plus Jakarta Sans',sans-serif;font-size:.82rem;font-weight:700;cursor:pointer;transition:background .2s}
+.btn-logout:hover{background:#059669}
+
+/* MAIN */
+main{max-width:1100px;margin:0 auto;padding:2rem 4% 5rem}
+.page-header{margin-bottom:2rem}
+.page-header h1{font-family:'Instrument Serif',serif;font-size:1.9rem;letter-spacing:-.02em;margin-bottom:.3rem}
+.page-header p{font-size:.88rem;color:#6B7280}
+
+/* STAT CARDS */
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.8rem}
+.stat-card{background:#fff;border:1px solid #D1FAE5;border-radius:14px;padding:1.3rem;transition:transform .2s}
+.stat-card:hover{transform:translateY(-3px)}
+.stat-card-label{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#6B7280;margin-bottom:.5rem}
+.stat-card-num{font-family:'Instrument Serif',serif;font-size:2rem;letter-spacing:-.02em;color:#0D0D14;margin-bottom:.2rem}
+.stat-card-sub{font-size:.73rem;color:#059669;font-weight:600}
+
+/* TABS */
+.tabs{display:flex;gap:.3rem;background:#fff;border:1px solid #D1FAE5;border-radius:12px;padding:.35rem;margin-bottom:1.5rem;overflow-x:auto;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab-btn{flex-shrink:0;padding:.5rem 1.1rem;border-radius:9px;border:none;background:transparent;font-family:'Plus Jakarta Sans',sans-serif;font-size:.83rem;font-weight:600;color:#6B7280;cursor:pointer;transition:all .2s;white-space:nowrap}
+.tab-btn.active{background:#059669;color:#fff}
+.tab-btn:hover:not(.active){background:#F0FDF4;color:#0D0D14}
+.tab-panel{display:none}
+.tab-panel.active{display:block;animation:fadeUp .3s ease both}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+/* CARDS */
+.card{background:#fff;border:1px solid #E5E7EB;border-radius:16px;padding:1.5rem;margin-bottom:1.2rem}
+.card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.2rem}
+.card-title{font-size:.92rem;font-weight:700;display:flex;align-items:center;gap:.4rem}
+.card-action{font-size:.78rem;font-weight:700;color:#059669;text-decoration:none;background:#F0FDF4;border:1px solid #BBF7D0;padding:.3rem .8rem;border-radius:8px;cursor:pointer;border-width:1px;font-family:inherit;transition:all .2s}
+.card-action:hover{background:#DCFCE7}
+
+/* STUDENT TABLE */
+.student-table{width:100%;border-collapse:collapse}
+.student-table th{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#6B7280;padding:.7rem 1rem;text-align:left;border-bottom:1px solid #F0F0F0;background:#FAFAFA}
+.student-table td{padding:.9rem 1rem;border-bottom:1px solid #F9FAFB;font-size:.85rem;vertical-align:middle}
+.student-table tr:hover td{background:#FAFFF9}
+.student-name{font-weight:700;color:#0D0D14;margin-bottom:.1rem}
+.student-email{font-size:.72rem;color:#9CA3AF}
+.progress-mini{height:6px;background:#F0F0F0;border-radius:6px;overflow:hidden;width:80px}
+.progress-mini-fill{height:100%;border-radius:6px;background:linear-gradient(90deg,#059669,#34d399)}
+.status-badge{display:inline-flex;align-items:center;gap:.3rem;padding:.25rem .7rem;border-radius:100px;font-size:.72rem;font-weight:700}
+.status-active{background:#DCFCE7;color:#065f46}
+.status-pending{background:#FEF3C7;color:#92400e}
+.status-inactive{background:#F3F4F6;color:#6B7280}
+.action-btn{background:none;border:1px solid #E5E7EB;padding:.3rem .7rem;border-radius:7px;font-size:.75rem;font-weight:600;cursor:pointer;font-family:inherit;color:#374151;transition:all .2s;margin-right:.3rem}
+.action-btn:hover{border-color:#059669;color:#059669;background:#F0FDF4}
+
+/* SEARCH & FILTER */
+.table-controls{display:flex;gap:.8rem;margin-bottom:1rem;flex-wrap:wrap}
+.search-input{flex:1;min-width:200px;padding:.6rem 1rem;border:1.5px solid #E5E7EB;border-radius:10px;font-size:.85rem;font-family:'Plus Jakarta Sans',sans-serif;outline:none;color:#0D0D14}
+.search-input:focus{border-color:#059669;box-shadow:0 0 0 3px rgba(5,150,105,.1)}
+.filter-select{padding:.6rem 1rem;border:1.5px solid #E5E7EB;border-radius:10px;font-size:.82rem;font-family:'Plus Jakarta Sans',sans-serif;outline:none;color:#374151;background:#fff;cursor:pointer}
+.filter-select:focus{border-color:#059669}
+
+/* ADD STUDENT FORM */
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin-bottom:1rem}
+.field{margin-bottom:0}
+.field label{display:block;font-size:.75rem;font-weight:700;color:#374151;margin-bottom:.3rem;text-transform:uppercase;letter-spacing:.05em}
+.field input,.field select,.field textarea{width:100%;padding:.7rem .9rem;border:1.5px solid #E5E7EB;border-radius:9px;font-size:.87rem;font-family:'Plus Jakarta Sans',sans-serif;color:#0D0D14;background:#fff;outline:none;transition:border-color .2s}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:#059669;box-shadow:0 0 0 3px rgba(5,150,105,.1)}
+.field select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23888' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right .9rem center;cursor:pointer}
+.field textarea{min-height:70px;resize:vertical}
+.save-btn{background:#059669;color:#fff;border:none;padding:.8rem 2rem;border-radius:100px;font-family:'Plus Jakarta Sans',sans-serif;font-size:.88rem;font-weight:700;cursor:pointer;transition:all .2s}
+.save-btn:hover{background:#047857;transform:translateY(-1px)}
+
+/* NOTE ITEM */
+.note-item{background:#FAFFF9;border:1px solid #D1FAE5;border-radius:12px;padding:1rem;margin-bottom:.7rem}
+.note-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:.4rem}
+.note-student{font-size:.82rem;font-weight:700;color:#065f46}
+.note-date{font-size:.72rem;color:#9CA3AF}
+.note-text{font-size:.84rem;color:#374151;line-height:1.55}
+
+/* CAREER DIST CHART */
+.career-dist{display:flex;flex-direction:column;gap:.6rem}
+.career-dist-row{display:flex;align-items:center;gap:.8rem}
+.career-dist-label{font-size:.8rem;font-weight:600;width:160px;flex-shrink:0;color:#374151}
+.career-dist-bar-track{flex:1;height:8px;background:#F0F0F0;border-radius:8px;overflow:hidden}
+.career-dist-bar{height:100%;border-radius:8px;background:linear-gradient(90deg,#059669,#34d399)}
+.career-dist-count{font-size:.75rem;font-weight:700;color:#059669;width:30px;text-align:right}
+
+/* EMPTY STATE */
+.empty-state{text-align:center;padding:3rem;color:#9CA3AF}
+.empty-state .empty-icon{font-size:2.5rem;margin-bottom:.8rem}
+.empty-state p{font-size:.85rem}
+
+/* MODAL */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);backdrop-filter:blur(5px);z-index:999;align-items:center;justify-content:center}
+.modal-overlay.show{display:flex}
+.modal{background:#fff;border-radius:20px;padding:2rem;width:min(520px,92vw);max-height:85vh;overflow-y:auto}
+.modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem}
+.modal-title{font-size:1.1rem;font-weight:800}
+.modal-close{background:#F3F4F6;border:none;width:30px;height:30px;border-radius:50%;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;transition:background .2s}
+.modal-close:hover{background:#059669;color:#fff}
+
+/* TOAST */
+#toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(100px);background:#059669;color:#fff;padding:.7rem 1.8rem;border-radius:100px;font-size:.85rem;font-weight:700;z-index:9999;transition:transform .3s cubic-bezier(.34,1.56,.64,1)}
+#toast.show{transform:translateX(-50%) translateY(0)}
+
+/* LOGOUT MODAL */
+.logout-box{background:#fff;border-radius:18px;padding:2rem;text-align:center;max-width:320px;width:90%}
+.logout-box .licon{font-size:2.5rem;margin-bottom:.8rem}
+.logout-box h3{font-size:1.1rem;font-weight:800;margin-bottom:.4rem}
+.logout-box p{font-size:.85rem;color:#6B7280;margin-bottom:1.5rem}
+.logout-btns{display:flex;gap:.8rem;justify-content:center}
+.logout-btns button{padding:.6rem 1.5rem;border-radius:8px;font-family:'Plus Jakarta Sans',sans-serif;font-size:.88rem;font-weight:700;cursor:pointer;border:none;transition:transform .15s}
+.btn-cancel-l{background:#F3F4F6;color:#374151}
+.btn-confirm-l{background:#0D0D14;color:#fff}
+
+@media(max-width:768px){
+  .stats-row{grid-template-columns:1fr 1fr}
+  .form-grid{grid-template-columns:1fr}
+  .student-table{font-size:.78rem}
+  .student-table th:nth-child(4),.student-table td:nth-child(4){display:none}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="brand" href="index.html">
+    <div class="logo-icon">🎯</div>
+    <span class="brand-name">CareerCrafter</span>
+    <span class="brand-role-tag">Counsellor</span>
+  </a>
+  <div class="nav-right">
+    <span class="nav-welcome">Welcome, <span id="counsellorName">Counsellor</span></span>
+    <button class="btn-logout" onclick="confirmLogout()">Log Out</button>
+  </div>
+</nav>
+
+<main>
+  <div class="page-header">
+    <h1>Counsellor Dashboard</h1>
+    <p>Manage your students, track progress, and provide personalised guidance</p>
+  </div>
+
+  <!-- STATS -->
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="stat-card-label">Total Students</div>
+      <div class="stat-card-num" id="statTotal">0</div>
+      <div class="stat-card-sub">Registered with you</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-card-label">Active This Week</div>
+      <div class="stat-card-num" id="statActive">0</div>
+      <div class="stat-card-sub">Making progress</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-card-label">Avg. Profile Score</div>
+      <div class="stat-card-num" id="statAvg">—</div>
+      <div class="stat-card-sub">Completion rate</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-card-label">Notes Added</div>
+      <div class="stat-card-num" id="statNotes">0</div>
+      <div class="stat-card-sub">Guidance entries</div>
+    </div>
+  </div>
+
+  <!-- TABS -->
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab('students')">👥 My Students</button>
+    <button class="tab-btn" onclick="switchTab('add')">➕ Add Student</button>
+    <button class="tab-btn" onclick="switchTab('notes')">📝 Guidance Notes</button>
+    <button class="tab-btn" onclick="switchTab('insights')">📊 Career Insights</button>
+  </div>
+
+  <!-- ═══ STUDENTS TAB ═══ -->
+  <div class="tab-panel active" id="tab-students">
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">👥 Student List</div>
+        <button class="card-action" onclick="switchTab('add')">+ Add Student</button>
+      </div>
+      <div class="table-controls">
+        <input class="search-input" type="text" placeholder="🔍 Search by name or email..." id="searchInput" oninput="filterStudents()"/>
+        <select class="filter-select" id="statusFilter" onchange="filterStudents()">
+          <option value="">All Status</option>
+          <option value="active">Active</option>
+          <option value="pending">Pending</option>
+          <option value="inactive">Inactive</option>
+        </select>
+        <select class="filter-select" id="careerFilter" onchange="filterStudents()">
+          <option value="">All Careers</option>
+          <option>AI / ML Engineer</option>
+          <option>Web Developer</option>
+          <option>Data Scientist</option>
+          <option>Cybersecurity</option>
+          <option>UX Designer</option>
+          <option>Game Developer</option>
+          <option>Cloud Engineer</option>
+          <option>Not Decided</option>
+        </select>
+      </div>
+      <div style="overflow-x:auto">
+        <table class="student-table">
+          <thead>
+            <tr>
+              <th>Student</th>
+              <th>Target Career</th>
+              <th>Roadmap Progress</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="studentTableBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ ADD STUDENT TAB ═══ -->
+  <div class="tab-panel" id="tab-add">
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">➕ Add New Student</div>
+      </div>
+      <div class="form-grid">
+        <div class="field"><label>First Name</label><input type="text" id="sFirstName" placeholder="Priya"/></div>
+        <div class="field"><label>Last Name</label><input type="text" id="sLastName" placeholder="Sharma"/></div>
+        <div class="field"><label>Email Address</label><input type="email" id="sEmail" placeholder="student@email.com"/></div>
+        <div class="field"><label>Phone</label><input type="tel" id="sPhone" placeholder="+91 98765 43210"/></div>
+        <div class="field"><label>Education Level</label>
+          <select id="sEdu">
+            <option value="">Select...</option>
+            <option>High School</option>
+            <option>Diploma</option>
+            <option>B.Tech / B.E.</option>
+            <option>B.Sc / BCA</option>
+            <option>M.Tech / MBA</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="field"><label>Target Career</label>
+          <select id="sCareer">
+            <option value="">Select or leave blank</option>
+            <option>AI / ML Engineer</option>
+            <option>Web Developer</option>
+            <option>Data Scientist</option>
+            <option>Cybersecurity Analyst</option>
+            <option>UX Designer</option>
+            <option>Game Developer</option>
+            <option>Cloud Engineer</option>
+            <option>Mobile App Developer</option>
+            <option>DevOps Engineer</option>
+            <option>Blockchain Developer</option>
+            <option>Not Decided</option>
+          </select>
+        </div>
+        <div class="field"><label>Status</label>
+          <select id="sStatus">
+            <option value="active">Active</option>
+            <option value="pending">Pending</option>
+            <option value="inactive">Inactive</option>
+          </select>
+        </div>
+        <div class="field"><label>Roadmap Progress (%)</label><input type="number" id="sProgress" placeholder="0" min="0" max="100"/></div>
+      </div>
+      <div class="field" style="margin-bottom:1rem"><label>Initial Guidance Note (optional)</label>
+        <textarea id="sNote" placeholder="Add any initial observations or guidance for this student..."></textarea>
+      </div>
+      <button class="save-btn" onclick="addStudent()">➕ Add Student</button>
+    </div>
+  </div>
+
+  <!-- ═══ NOTES TAB ═══ -->
+  <div class="tab-panel" id="tab-notes">
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">📝 Add Guidance Note</div>
+      </div>
+      <div class="form-grid">
+        <div class="field"><label>Select Student</label>
+          <select id="noteStudent"><option value="">Select a student...</option></select>
+        </div>
+        <div class="field"><label>Session Type</label>
+          <select id="noteType">
+            <option value="guidance">General Guidance</option>
+            <option value="assessment">Assessment Review</option>
+            <option value="career">Career Discussion</option>
+            <option value="skills">Skills Planning</option>
+            <option value="followup">Follow-up</option>
+          </select>
+        </div>
+      </div>
+      <div class="field" style="margin-bottom:1rem"><label>Note / Observations</label>
+        <textarea id="noteText" placeholder="Document what was discussed, advice given, and any next steps for this student..." style="min-height:100px"></textarea>
+      </div>
+      <button class="save-btn" onclick="addNote()">💾 Save Note</button>
+    </div>
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">📋 All Guidance Notes</div>
+        <span id="noteCount" style="font-size:.75rem;color:#6B7280;font-weight:600">0 notes</span>
+      </div>
+      <div id="notesList"></div>
+    </div>
+  </div>
+
+  <!-- ═══ INSIGHTS TAB ═══ -->
+  <div class="tab-panel" id="tab-insights">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.2rem">
+      <div class="card">
+        <div class="card-header"><div class="card-title">🎯 Career Interest Distribution</div></div>
+        <div class="career-dist" id="careerDistribution"></div>
+      </div>
+      <div class="card">
+        <div class="card-header"><div class="card-title">📈 Progress Overview</div></div>
+        <div id="progressOverview"></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header"><div class="card-title">⚠️ Students Needing Attention</div></div>
+      <div id="attentionList"></div>
+    </div>
+  </div>
+</main>
+
+<!-- STUDENT DETAIL MODAL -->
+<div class="modal-overlay" id="studentModal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title" id="modalStudentName">Student Details</div>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div id="modalContent"></div>
+  </div>
+</div>
+
+<!-- LOGOUT MODAL -->
+<div class="modal-overlay" id="logoutModal">
+  <div class="logout-box">
+    <div class="licon">👋</div>
+    <h3>Logging Out?</h3>
+    <p>You'll need to sign in again to access your dashboard.</p>
+    <div class="logout-btns">
+      <button class="btn-cancel-l" onclick="closeLogout()">Cancel</button>
+      <button class="btn-confirm-l" onclick="doLogout()">Yes, Log Out</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+// ── Guard
+if (!localStorage.getItem('cc_loggedIn') || localStorage.getItem('cc_role') !== 'counsellor') {
+  window.location.href = 'login.html';
+}
+
+const counsellorKey = 'cc_counsellor_' + (localStorage.getItem('cc_current_user') || 'guest');
+
+let data = {
+  students: [],
+  notes: []
+};
+
+function loadData() {
+  const saved = localStorage.getItem(counsellorKey);
+  if (saved) data = JSON.parse(saved);
+  document.getElementById('counsellorName').textContent = localStorage.getItem('cc_username') || 'Counsellor';
+}
+
+function saveData() {
+  localStorage.setItem(counsellorKey, JSON.stringify(data));
+}
+
+// ── Tabs
+function switchTab(name) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  const tabs = {students:0, add:1, notes:2, insights:3};
+  document.querySelectorAll('.tab-btn')[tabs[name]].classList.add('active');
+  if (name === 'notes') populateNoteStudentDropdown();
+  if (name === 'insights') renderInsights();
+}
+
+// ── Add Student
+function addStudent() {
+  const fn     = document.getElementById('sFirstName').value.trim();
+  const ln     = document.getElementById('sLastName').value.trim();
+  const email  = document.getElementById('sEmail').value.trim();
+  const phone  = document.getElementById('sPhone').value.trim();
+  const edu    = document.getElementById('sEdu').value;
+  const career = document.getElementById('sCareer').value;
+  const status = document.getElementById('sStatus').value;
+  const progress = parseInt(document.getElementById('sProgress').value) || 0;
+  const note   = document.getElementById('sNote').value.trim();
+
+  if (!fn || !ln) return showToast('⚠️ Please enter student name');
+  if (!email)     return showToast('⚠️ Please enter email');
+
+  const student = {
+    id: Date.now(),
+    name: fn + ' ' + ln, firstName: fn, lastName: ln,
+    email, phone, edu, career: career || 'Not Decided',
+    status, progress: Math.min(progress, 100),
+    addedAt: new Date().toISOString()
+  };
+  data.students.push(student);
+
+  if (note) {
+    data.notes.push({
+      id: Date.now() + 1,
+      studentId: student.id,
+      studentName: student.name,
+      type: 'guidance',
+      text: note,
+      date: new Date().toLocaleDateString('en-IN', {day:'numeric',month:'short',year:'numeric'})
+    });
+  }
+
+  saveData();
+  renderStudents();
+  updateStats();
+
+  // Clear form
+  ['sFirstName','sLastName','sEmail','sPhone','sProgress','sNote'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('sEdu').value = '';
+  document.getElementById('sCareer').value = '';
+
+  showToast('✅ Student added successfully!');
+  switchTab('students');
+}
+
+// ── Render Students
+function renderStudents(list) {
+  const students = list || data.students;
+  const tbody = document.getElementById('studentTableBody');
+
+  if (!students.length) {
+    tbody.innerHTML = `<tr><td colspan="5"><div class="empty-state"><div class="empty-icon">👥</div><p>No students yet. Add your first student using the "Add Student" tab.</p></div></td></tr>`;
+    return;
+  }
+
+  const STATUS_BADGES = {
+    active:   '<span class="status-badge status-active">● Active</span>',
+    pending:  '<span class="status-badge status-pending">● Pending</span>',
+    inactive: '<span class="status-badge status-inactive">● Inactive</span>',
+  };
+
+  tbody.innerHTML = students.map(s => `
+    <tr>
+      <td>
+        <div class="student-name">${s.name}</div>
+        <div class="student-email">${s.email}</div>
+      </td>
+      <td>${s.career || 'Not Decided'}</td>
+      <td>
+        <div style="display:flex;align-items:center;gap:.5rem">
+          <div class="progress-mini"><div class="progress-mini-fill" style="width:${s.progress}%"></div></div>
+          <span style="font-size:.75rem;font-weight:700;color:#374151">${s.progress}%</span>
+        </div>
+      </td>
+      <td>${STATUS_BADGES[s.status] || STATUS_BADGES.pending}</td>
+      <td>
+        <button class="action-btn" onclick="viewStudent(${s.id})">View</button>
+        <button class="action-btn" onclick="deleteStudent(${s.id})" style="color:#ef4444;border-color:#FECACA">Remove</button>
+      </td>
+    </tr>`).join('');
+}
+
+function filterStudents() {
+  const search = document.getElementById('searchInput').value.toLowerCase();
+  const status = document.getElementById('statusFilter').value;
+  const career = document.getElementById('careerFilter').value;
+
+  let filtered = data.students.filter(s => {
+    const matchSearch = !search || s.name.toLowerCase().includes(search) || s.email.toLowerCase().includes(search);
+    const matchStatus = !status || s.status === status;
+    const matchCareer = !career || s.career === career;
+    return matchSearch && matchStatus && matchCareer;
+  });
+  renderStudents(filtered);
+}
+
+function deleteStudent(id) {
+  if (!confirm('Remove this student from your list?')) return;
+  data.students = data.students.filter(s => s.id !== id);
+  data.notes    = data.notes.filter(n => n.studentId !== id);
+  saveData();
+  renderStudents();
+  updateStats();
+  showToast('Student removed');
+}
+
+// ── View Student Modal
+function viewStudent(id) {
+  const s = data.students.find(s => s.id === id);
+  if (!s) return;
+  const studentNotes = data.notes.filter(n => n.studentId === id);
+  document.getElementById('modalStudentName').textContent = s.name;
+  document.getElementById('modalContent').innerHTML = `
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin-bottom:1.2rem">
+      <div style="background:#F9FAFB;padding:.8rem;border-radius:10px">
+        <div style="font-size:.7rem;font-weight:700;color:#9CA3AF;text-transform:uppercase;margin-bottom:.3rem">Email</div>
+        <div style="font-size:.85rem;font-weight:600">${s.email}</div>
+      </div>
+      <div style="background:#F9FAFB;padding:.8rem;border-radius:10px">
+        <div style="font-size:.7rem;font-weight:700;color:#9CA3AF;text-transform:uppercase;margin-bottom:.3rem">Education</div>
+        <div style="font-size:.85rem;font-weight:600">${s.edu || 'Not specified'}</div>
+      </div>
+      <div style="background:#F9FAFB;padding:.8rem;border-radius:10px">
+        <div style="font-size:.7rem;font-weight:700;color:#9CA3AF;text-transform:uppercase;margin-bottom:.3rem">Target Career</div>
+        <div style="font-size:.85rem;font-weight:600">${s.career}</div>
+      </div>
+      <div style="background:#F9FAFB;padding:.8rem;border-radius:10px">
+        <div style="font-size:.7rem;font-weight:700;color:#9CA3AF;text-transform:uppercase;margin-bottom:.3rem">Roadmap Progress</div>
+        <div style="font-size:.85rem;font-weight:600">${s.progress}%</div>
+      </div>
+    </div>
+    <div style="margin-bottom:1rem">
+      <div style="font-size:.78rem;font-weight:700;margin-bottom:.5rem;color:#374151">Update Progress</div>
+      <div style="display:flex;gap:.5rem">
+        <input type="number" id="updateProgress" value="${s.progress}" min="0" max="100" style="width:80px;padding:.5rem .7rem;border:1.5px solid #E5E7EB;border-radius:8px;font-size:.85rem;outline:none"/>
+        <select id="updateStatus" style="padding:.5rem .8rem;border:1.5px solid #E5E7EB;border-radius:8px;font-size:.82rem;outline:none;cursor:pointer">
+          <option value="active" ${s.status==='active'?'selected':''}>Active</option>
+          <option value="pending" ${s.status==='pending'?'selected':''}>Pending</option>
+          <option value="inactive" ${s.status==='inactive'?'selected':''}>Inactive</option>
+        </select>
+        <button onclick="updateStudent(${s.id})" style="background:#059669;color:#fff;border:none;border-radius:8px;padding:.5rem 1rem;font-family:'Plus Jakarta Sans',sans-serif;font-size:.82rem;font-weight:700;cursor:pointer">Update</button>
+      </div>
+    </div>
+    <div style="font-size:.78rem;font-weight:700;margin-bottom:.6rem;color:#374151">Guidance Notes (${studentNotes.length})</div>
+    ${studentNotes.length ? studentNotes.map(n => `
+      <div style="background:#F0FDF4;border:1px solid #BBF7D0;border-radius:10px;padding:.8rem;margin-bottom:.5rem">
+        <div style="font-size:.7rem;color:#9CA3AF;margin-bottom:.3rem">${n.type} · ${n.date}</div>
+        <div style="font-size:.83rem;color:#374151;line-height:1.5">${n.text}</div>
+      </div>`).join('') : '<div style="font-size:.83rem;color:#9CA3AF">No notes yet for this student.</div>'}
+  `;
+  document.getElementById('studentModal').classList.add('show');
+}
+
+function updateStudent(id) {
+  const s = data.students.find(s => s.id === id);
+  if (!s) return;
+  s.progress = Math.min(parseInt(document.getElementById('updateProgress').value) || 0, 100);
+  s.status   = document.getElementById('updateStatus').value;
+  saveData();
+  renderStudents();
+  updateStats();
+  closeModal();
+  showToast('✅ Student updated!');
+}
+
+function closeModal() { document.getElementById('studentModal').classList.remove('show'); }
+
+// ── Notes
+function populateNoteStudentDropdown() {
+  const sel = document.getElementById('noteStudent');
+  sel.innerHTML = '<option value="">Select a student...</option>' +
+    data.students.map(s => `<option value="${s.id}">${s.name}</option>`).join('');
+}
+
+function addNote() {
+  const studentId = document.getElementById('noteStudent').value;
+  const type      = document.getElementById('noteType').value;
+  const text      = document.getElementById('noteText').value.trim();
+  if (!studentId) return showToast('⚠️ Please select a student');
+  if (!text)      return showToast('⚠️ Please write a note');
+
+  const student = data.students.find(s => s.id == studentId);
+  data.notes.push({
+    id: Date.now(), studentId: parseInt(studentId),
+    studentName: student?.name || 'Unknown',
+    type, text,
+    date: new Date().toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'})
+  });
+  saveData();
+  renderNotes();
+  document.getElementById('noteText').value = '';
+  showToast('📝 Note saved!');
+}
+
+function renderNotes() {
+  const el = document.getElementById('notesList');
+  const count = document.getElementById('noteCount');
+  count.textContent = data.notes.length + ' notes';
+  if (!data.notes.length) {
+    el.innerHTML = '<div class="empty-state"><div class="empty-icon">📝</div><p>No guidance notes yet. Add notes for your students above.</p></div>';
+    return;
+  }
+  const TYPE_ICONS = {guidance:'💬',assessment:'📊',career:'🎯',skills:'💡',followup:'🔄'};
+  el.innerHTML = [...data.notes].reverse().map(n => `
+    <div class="note-item">
+      <div class="note-header">
+        <div class="note-student">${TYPE_ICONS[n.type]||'📝'} ${n.studentName} · ${n.type}</div>
+        <div class="note-date">${n.date}</div>
+      </div>
+      <div class="note-text">${n.text}</div>
+    </div>`).join('');
+}
+
+// ── Insights
+function renderInsights() {
+  // Career distribution
+  const careerCounts = {};
+  data.students.forEach(s => {
+    careerCounts[s.career] = (careerCounts[s.career] || 0) + 1;
+  });
+  const sorted = Object.entries(careerCounts).sort((a,b)=>b[1]-a[1]);
+  const max = sorted[0]?.[1] || 1;
+  const distEl = document.getElementById('careerDistribution');
+  if (!sorted.length) {
+    distEl.innerHTML = '<div class="empty-state"><div class="empty-icon">📊</div><p>Add students to see career distribution</p></div>';
+  } else {
+    distEl.innerHTML = sorted.map(([career, count]) => `
+      <div class="career-dist-row">
+        <div class="career-dist-label">${career}</div>
+        <div class="career-dist-bar-track"><div class="career-dist-bar" style="width:${Math.round((count/max)*100)}%"></div></div>
+        <div class="career-dist-count">${count}</div>
+      </div>`).join('');
+  }
+
+  // Progress overview
+  const progEl = document.getElementById('progressOverview');
+  if (!data.students.length) {
+    progEl.innerHTML = '<div class="empty-state"><div class="empty-icon">📈</div><p>No students yet</p></div>';
+  } else {
+    const avg = Math.round(data.students.reduce((a,s) => a + s.progress, 0) / data.students.length);
+    const high = data.students.filter(s => s.progress >= 70).length;
+    const mid  = data.students.filter(s => s.progress >= 30 && s.progress < 70).length;
+    const low  = data.students.filter(s => s.progress < 30).length;
+    progEl.innerHTML = `
+      <div style="text-align:center;margin-bottom:1.2rem">
+        <div style="font-family:'Instrument Serif',serif;font-size:3rem;color:#059669">${avg}%</div>
+        <div style="font-size:.78rem;color:#6B7280;font-weight:600">Average Progress</div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:.6rem">
+        <div style="display:flex;justify-content:space-between;align-items:center;background:#F0FDF4;padding:.6rem .9rem;border-radius:9px">
+          <span style="font-size:.82rem;font-weight:600">🟢 On Track (70%+)</span>
+          <span style="font-size:.88rem;font-weight:800;color:#059669">${high} students</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;background:#FFFBEB;padding:.6rem .9rem;border-radius:9px">
+          <span style="font-size:.82rem;font-weight:600">🟡 Making Progress (30–70%)</span>
+          <span style="font-size:.88rem;font-weight:800;color:#D97706">${mid} students</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;background:#FEF2F2;padding:.6rem .9rem;border-radius:9px">
+          <span style="font-size:.82rem;font-weight:600">🔴 Needs Help (Below 30%)</span>
+          <span style="font-size:.88rem;font-weight:800;color:#DC2626">${low} students</span>
+        </div>
+      </div>`;
+  }
+
+  // Attention list
+  const attnEl = document.getElementById('attentionList');
+  const needsAttn = data.students.filter(s => s.progress < 30 || s.status === 'inactive');
+  if (!needsAttn.length) {
+    attnEl.innerHTML = '<div style="text-align:center;padding:1.5rem;color:#059669;font-size:.88rem;font-weight:700">✅ All students are making good progress!</div>';
+  } else {
+    attnEl.innerHTML = needsAttn.map(s => `
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:.9rem;background:#FEF2F2;border-radius:10px;margin-bottom:.5rem;border:1px solid #FECACA">
+        <div>
+          <div style="font-size:.88rem;font-weight:700">${s.name}</div>
+          <div style="font-size:.75rem;color:#9CA3AF">${s.career} · ${s.progress}% progress · ${s.status}</div>
+        </div>
+        <button onclick="viewStudent(${s.id})" style="background:#fff;border:1px solid #FECACA;color:#DC2626;border-radius:8px;padding:.4rem .8rem;font-size:.75rem;font-weight:700;cursor:pointer;font-family:inherit">View →</button>
+      </div>`).join('');
+  }
+}
+
+// ── Stats
+function updateStats() {
+  document.getElementById('statTotal').textContent  = data.students.length;
+  document.getElementById('statActive').textContent = data.students.filter(s => s.status === 'active').length;
+  const avg = data.students.length
+    ? Math.round(data.students.reduce((a,s) => a + s.progress, 0) / data.students.length) + '%'
+    : '—';
+  document.getElementById('statAvg').textContent   = avg;
+  document.getElementById('statNotes').textContent = data.notes.length;
+}
+
+// ── Logout
+function confirmLogout() { document.getElementById('logoutModal').classList.add('show'); }
+function closeLogout()    { document.getElementById('logoutModal').classList.remove('show'); }
+function doLogout() {
+  localStorage.removeItem('cc_loggedIn');
+  localStorage.removeItem('cc_username');
+  localStorage.removeItem('cc_current_user');
+  localStorage.removeItem('cc_role');
+  window.location.href = 'login.html';
+}
+document.getElementById('logoutModal').addEventListener('click', e => { if (e.target === document.getElementById('logoutModal')) closeLogout(); });
+document.getElementById('studentModal').addEventListener('click', e => { if (e.target === document.getElementById('studentModal')) closeModal(); });
+
+// ── Toast
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+// ── Init
+loadData();
+renderStudents();
+renderNotes();
+updateStats();
+</script>
+</body>
+</html>

@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Career Crafter — Roadmap</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: #F0F2F5;
+    min-height: 100vh;
+    color: #1a1a2e;
+  }
+
+  /* ── NAVBAR ── */
+  nav {
+    background: #fff;
+    border-bottom: 1px solid #E5E7EB;
+    padding: 0.85rem 4%;
+    display: flex; align-items: center; justify-content: space-between;
+    position: sticky; top: 0; z-index: 100;
+  }
+  .brand { display: flex; align-items: center; gap: 0.6rem; text-decoration: none; }
+  .logo-icon {
+    width: 36px; height: 36px; border-radius: 9px;
+    background: linear-gradient(135deg, #1a6b4a 0%, #2ecc8a 50%, #3aa8d8 100%);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem;
+  }
+  .brand-name { font-size: 1.1rem; font-weight: 700; color: #1a1a2e; }
+  .back-link {
+    font-size: 0.85rem; color: #6C63FF; text-decoration: none;
+    font-weight: 600; display: flex; align-items: center; gap: 0.3rem;
+    transition: gap 0.2s;
+  }
+  .back-link:hover { gap: 0.5rem; }
+
+  /* ── MAIN ── */
+  main {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 2rem 4% 4rem;
+  }
+
+  /* ── SELECT ── */
+  .select-label {
+    font-size: 0.8rem; font-weight: 600; color: #555;
+    text-transform: uppercase; letter-spacing: 0.08em;
+    margin-bottom: 0.5rem; display: block;
+  }
+  .select-wrap {
+    position: relative; display: inline-block; margin-bottom: 1.5rem;
+  }
+  .select-wrap select {
+    appearance: none; -webkit-appearance: none;
+    background: #fff; border: 1.5px solid #E5E7EB;
+    border-radius: 10px; padding: 0.65rem 2.8rem 0.65rem 1rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.93rem; font-weight: 600; color: #1a1a2e;
+    cursor: pointer; outline: none;
+    transition: border-color 0.2s;
+    min-width: 220px;
+  }
+  .select-wrap select:focus { border-color: #6C63FF; }
+  .select-wrap::after {
+    content: '▾'; position: absolute; right: 1rem; top: 50%;
+    transform: translateY(-50%); color: #888; pointer-events: none;
+  }
+
+  /* ── HERO BANNER ── */
+  .career-banner {
+    border-radius: 16px; padding: 2rem 2.2rem;
+    margin-bottom: 1.5rem; color: #fff;
+    transition: background 0.4s;
+  }
+  .career-banner h1 { font-size: 1.8rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 0.4rem; }
+  .career-banner p { font-size: 0.9rem; opacity: 0.85; margin-bottom: 1rem; }
+  .banner-tags { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .banner-tag {
+    background: rgba(255,255,255,0.2);
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 100px; padding: 0.3rem 0.9rem;
+    font-size: 0.78rem; font-weight: 600;
+    display: flex; align-items: center; gap: 0.4rem;
+  }
+
+  /* ── SECTION CARD ── */
+  .section-card {
+    background: #fff; border: 1px solid #E5E7EB;
+    border-radius: 16px; padding: 1.6rem;
+    margin-bottom: 1.2rem;
+  }
+  .section-card-title {
+    font-size: 0.95rem; font-weight: 700; color: #1a1a2e;
+    display: flex; align-items: center; gap: 0.5rem;
+    margin-bottom: 1.2rem;
+  }
+  .section-card-title .s-icon { font-size: 1rem; }
+
+  /* skills */
+  .skills-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .skill-tag {
+    background: #F3F0FF; color: #6C63FF;
+    border: 1px solid #DDD6FE;
+    border-radius: 100px; padding: 0.28rem 0.8rem;
+    font-size: 0.78rem; font-weight: 600;
+  }
+
+  /* certifications */
+  .cert-list { list-style: none; display: flex; flex-direction: column; gap: 0.55rem; }
+  .cert-list li {
+    display: flex; align-items: center; gap: 0.6rem;
+    font-size: 0.88rem; color: #333;
+  }
+  .cert-dot { width: 8px; height: 8px; border-radius: 50%; background: #6C63FF; flex-shrink: 0; }
+
+  /* courses */
+  .courses-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.7rem; }
+  .course-item {
+    display: flex; align-items: center; gap: 0.7rem;
+    background: #F9FAFB; border-radius: 10px; padding: 0.65rem 0.9rem;
+    font-size: 0.85rem; font-weight: 500; color: #333;
+  }
+  .course-num {
+    width: 24px; height: 24px; border-radius: 50%;
+    background: #22c55e; color: #fff;
+    font-size: 0.72rem; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+
+  /* roadmap steps */
+  .roadmap-steps { display: flex; flex-direction: column; gap: 0; }
+  .roadmap-step {
+    display: flex; gap: 1rem; position: relative;
+  }
+  .roadmap-step:not(:last-child)::before {
+    content: ''; position: absolute;
+    left: 17px; top: 36px;
+    width: 2px; height: calc(100% - 16px);
+    background: #E5E7EB; z-index: 0;
+  }
+  .step-circle {
+    width: 34px; height: 34px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.82rem; font-weight: 700; color: #fff;
+    flex-shrink: 0; position: relative; z-index: 1;
+    margin-top: 0.1rem;
+  }
+  .step-body {
+    flex: 1; background: #FAFAFA; border: 1px solid #F0F0F0;
+    border-radius: 12px; padding: 1rem 1.2rem;
+    margin-bottom: 0.8rem;
+  }
+  .step-header {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 0.5rem;
+  }
+  .step-title { font-size: 0.95rem; font-weight: 700; color: #1a1a2e; }
+  .step-duration {
+    font-size: 0.75rem; font-weight: 600;
+    color: #f97316; background: #FFF7ED;
+    padding: 0.2rem 0.6rem; border-radius: 100px;
+  }
+  .step-chips { display: flex; flex-wrap: wrap; gap: 0.45rem; }
+  .step-chip {
+    background: #F3F4F6; color: #555;
+    border-radius: 100px; padding: 0.22rem 0.7rem;
+    font-size: 0.77rem; font-weight: 500;
+  }
+
+  /* salary bar */
+  .salary-section { margin-top: 1.2rem; }
+  .salary-header { display: flex; justify-content: space-between; margin-bottom: 0.4rem; }
+  .salary-label { font-size: 0.82rem; font-weight: 600; color: #555; }
+  .salary-value { font-size: 0.82rem; font-weight: 700; color: #22c55e; }
+  .salary-bar { height: 6px; background: #E5E7EB; border-radius: 6px; overflow: hidden; }
+  .salary-fill { height: 100%; border-radius: 6px; background: linear-gradient(90deg, #22c55e, #16a34a); transition: width 0.6s ease; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 600px) {
+    .skills-grid { grid-template-columns: 1fr; }
+    .courses-grid { grid-template-columns: 1fr; }
+    .career-banner h1 { font-size: 1.4rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav>
+  <a class="brand" href="index.html">
+    <div class="logo-icon">🎯</div>
+    <span class="brand-name">Career Crafter</span>
+  </a>
+  <a class="back-link" href="dashboard.html">← Back to Dashboard</a>
+</nav>
+
+<!-- MAIN -->
+<main>
+
+  <!-- Career Selector -->
+  <label class="select-label">Select Career Path</label>
+  <div class="select-wrap">
+    <select id="careerSelect" onchange="renderCareer()">
+      <option value="ai">AI Engineer</option>
+      <option value="webdev">Web Developer</option>
+      <option value="gamedev">Game Developer</option>
+      <option value="cyber">Cybersecurity Analyst</option>
+      <option value="data">Data Analyst / Scientist</option>
+      <option value="mobile">Mobile App Developer</option>
+      <option value="cloud">Cloud Engineer</option>
+      <option value="devops">DevOps Engineer</option>
+      <option value="ux">UX/UI Designer</option>
+      <option value="blockchain">Blockchain Developer</option>
+    </select>
+  </div>
+
+  <!-- Dynamic Content -->
+  <div id="roadmapContent"></div>
+
+</main>
+
+<script>
+const careers = {
+  ai: {
+    title: "AI Engineer",
+    desc: "Build intelligent systems and machine learning models",
+    gradient: "linear-gradient(135deg, #4f46e5, #7c3aed, #9333ea)",
+    level: "Advanced",
+    duration: "18–24 months",
+    salary: "₹8L – ₹35L/yr",
+    salaryPct: 90,
+    skills: ["Python Programming","Machine Learning","Deep Learning","Neural Networks","TensorFlow/PyTorch","Mathematics & Statistics","Data Structures & Algorithms","Natural Language Processing"],
+    certs: ["Google TensorFlow Developer Certificate","AWS Machine Learning Specialty","Microsoft Azure AI Engineer","Deep Learning Specialization (Coursera)"],
+    courses: ["CS50 Introduction to Computer Science","Machine Learning by Andrew Ng","Deep Learning Specialization","Natural Language Processing","Computer Vision Fundamentals","Reinforcement Learning"],
+    steps: [
+      { title:"Foundation", duration:"2–4 months", color:"#f97316", chips:["Learn Python","Master Mathematics","Study Statistics","Data Structures"] },
+      { title:"Core Skills", duration:"4–6 months", color:"#8b5cf6", chips:["Machine Learning Basics","Deep Learning","Neural Networks","TensorFlow"] },
+      { title:"Specialization", duration:"4–6 months", color:"#3b82f6", chips:["NLP or Computer Vision","Advanced Projects","Research Papers"] },
+      { title:"Job Ready", duration:"2–3 months", color:"#22c55e", chips:["Build Portfolio","Contribute to Open Source","Interview Prep","Apply for Jobs"] },
+    ]
+  },
+  webdev: {
+    title: "Web Developer",
+    desc: "Design and build modern websites and web applications",
+    gradient: "linear-gradient(135deg, #0ea5e9, #2563eb, #4f46e5)",
+    level: "Beginner–Intermediate",
+    duration: "10–16 months",
+    salary: "₹4L – ₹25L/yr",
+    salaryPct: 72,
+    skills: ["HTML & CSS","JavaScript","React / Vue / Angular","Node.js","REST APIs","Git & GitHub","SQL / NoSQL Databases","TypeScript"],
+    certs: ["Meta Front-End Developer (Coursera)","The Odin Project Completion","AWS Cloud Practitioner","freeCodeCamp Responsive Web Design"],
+    courses: ["HTML & CSS Full Course","JavaScript — The Complete Guide","React — The Complete Guide","Node.js & Express","Full Stack Open (University of Helsinki)","MongoDB Crash Course"],
+    steps: [
+      { title:"HTML, CSS & Git Basics", duration:"1–2 months", color:"#f97316", chips:["HTML5","CSS3","Flexbox/Grid","Git Basics"] },
+      { title:"JavaScript Fundamentals", duration:"2–3 months", color:"#8b5cf6", chips:["ES6+","DOM Manipulation","Fetch API","Async/Await"] },
+      { title:"Frontend Framework", duration:"3–4 months", color:"#3b82f6", chips:["React.js","State Management","Routing","REST API Integration"] },
+      { title:"Backend & Databases", duration:"3–4 months", color:"#22c55e", chips:["Node.js","Express","SQL","MongoDB"] },
+      { title:"Deploy & Get Hired", duration:"2 months", color:"#ec4899", chips:["Deploy on Vercel/AWS","Portfolio Projects","System Design Basics","Job Applications"] },
+    ]
+  },
+  gamedev: {
+    title: "Game Developer",
+    desc: "Create immersive games for PC, mobile, and consoles",
+    gradient: "linear-gradient(135deg, #dc2626, #ea580c, #d97706)",
+    level: "Intermediate",
+    duration: "14–20 months",
+    salary: "₹4L – ₹20L/yr",
+    salaryPct: 65,
+    skills: ["C# or C++","Unity or Unreal Engine","Game Physics","3D Mathematics","Shader Programming","Game Design Principles","Version Control","Blender (Basic 3D)"],
+    certs: ["Unity Certified Associate","Unreal Authorized Instructor","GameDev.tv Unity Certificate","Epic MegaGrants Portfolio"],
+    courses: ["C# Programming for Unity","Unity 3D Game Development","Unreal Engine 5 Beginner Course","Game Design Document Writing","Blender for Game Artists","Mobile Game Development"],
+    steps: [
+      { title:"Programming Basics", duration:"2–3 months", color:"#f97316", chips:["C# or C++","OOP Concepts","Algorithms","Math for Games"] },
+      { title:"Engine Fundamentals", duration:"3–4 months", color:"#8b5cf6", chips:["Unity/Unreal Basics","Scenes & Objects","Physics Engine","Input Systems"] },
+      { title:"Build Games", duration:"4–6 months", color:"#3b82f6", chips:["2D Platformer","3D Shooter","UI Systems","Audio Integration"] },
+      { title:"Polish & Publish", duration:"3–4 months", color:"#22c55e", chips:["Optimization","Itch.io / Steam","Multiplayer Basics","Portfolio & Apply"] },
+    ]
+  },
+  cyber: {
+    title: "Cybersecurity Analyst",
+    desc: "Protect systems, networks, and data from digital threats",
+    gradient: "linear-gradient(135deg, #059669, #0d9488, #0891b2)",
+    level: "Intermediate–Advanced",
+    duration: "12–18 months",
+    salary: "₹5L – ₹28L/yr",
+    salaryPct: 78,
+    skills: ["Networking (TCP/IP)","Linux Command Line","Python Scripting","Ethical Hacking","SIEM Tools","Penetration Testing","Cryptography","Incident Response"],
+    certs: ["CompTIA Security+","Certified Ethical Hacker (CEH)","OSCP (Offensive Security)","Google Cybersecurity Certificate"],
+    courses: ["Introduction to Networking (Cisco)","Linux for Beginners","Ethical Hacking Full Course","TryHackMe / HackTheBox Labs","Python for Security Professionals","SOC Analyst Training"],
+    steps: [
+      { title:"Networking & OS Basics", duration:"2–3 months", color:"#f97316", chips:["TCP/IP","DNS/HTTP","Linux","Windows Server"] },
+      { title:"Security Fundamentals", duration:"3–4 months", color:"#8b5cf6", chips:["CompTIA Security+","Cryptography","Firewalls & VPNs","SIEM Basics"] },
+      { title:"Ethical Hacking & Labs", duration:"4–5 months", color:"#3b82f6", chips:["TryHackMe","Kali Linux","Burp Suite","CTF Challenges"] },
+      { title:"Specialise & Certify", duration:"3–4 months", color:"#22c55e", chips:["CEH / OSCP","Pen Test Reports","Bug Bounty","Job Applications"] },
+    ]
+  },
+  data: {
+    title: "Data Analyst / Scientist",
+    desc: "Uncover insights from data to drive business decisions",
+    gradient: "linear-gradient(135deg, #0284c7, #0369a1, #1d4ed8)",
+    level: "Beginner–Advanced",
+    duration: "12–18 months",
+    salary: "₹5L – ₹30L/yr",
+    salaryPct: 80,
+    skills: ["Python / R","SQL","Pandas & NumPy","Data Visualisation","Machine Learning","Statistics","Tableau / Power BI","Big Data (Spark)"],
+    certs: ["Google Data Analytics Certificate","IBM Data Science Professional","Microsoft Power BI Data Analyst","Tableau Desktop Specialist"],
+    courses: ["Python for Data Analysis","SQL for Data Science","Statistics & Probability","Tableau / Power BI Full Course","Machine Learning (Coursera)","Big Data with Spark"],
+    steps: [
+      { title:"Foundations", duration:"2–3 months", color:"#f97316", chips:["Python Basics","Statistics","Excel","SQL Fundamentals"] },
+      { title:"Data Wrangling", duration:"3–4 months", color:"#8b5cf6", chips:["Pandas","NumPy","Data Cleaning","EDA"] },
+      { title:"Visualisation & BI", duration:"2–3 months", color:"#3b82f6", chips:["Tableau","Power BI","Matplotlib","Seaborn"] },
+      { title:"ML & Projects", duration:"3–5 months", color:"#22c55e", chips:["Scikit-learn","Regression/Classification","Kaggle Competitions","Portfolio"] },
+      { title:"Job Ready", duration:"2 months", color:"#ec4899", chips:["Resume","LinkedIn","Case Study Prep","Apply"] },
+    ]
+  },
+  mobile: {
+    title: "Mobile App Developer",
+    desc: "Build apps for Android and iOS platforms",
+    gradient: "linear-gradient(135deg, #db2777, #9333ea, #7c3aed)",
+    level: "Intermediate",
+    duration: "12–16 months",
+    salary: "₹4L – ₹22L/yr",
+    salaryPct: 70,
+    skills: ["Flutter / React Native","Dart or JavaScript","REST API Integration","Firebase","UI/UX Principles","State Management","Git","App Store Publishing"],
+    certs: ["Google Associate Android Developer","Flutter Certification (Udemy/Coursera)","Meta React Native Certificate","Firebase Certification"],
+    courses: ["Flutter & Dart – Full Course","React Native – The Practical Guide","Firebase for Mobile Developers","UI/UX for Mobile Apps","State Management with Provider/Bloc","Publishing to Play Store & App Store"],
+    steps: [
+      { title:"Programming Fundamentals", duration:"2 months", color:"#f97316", chips:["Dart or JavaScript","OOP","Git Basics"] },
+      { title:"Framework Mastery", duration:"3–4 months", color:"#8b5cf6", chips:["Flutter or React Native","Widgets/Components","Navigation","State Management"] },
+      { title:"Backend & APIs", duration:"2–3 months", color:"#3b82f6", chips:["REST APIs","Firebase","Authentication","Local Storage"] },
+      { title:"Launch & Apply", duration:"2–3 months", color:"#22c55e", chips:["Publish App","Portfolio","Interview Prep","Apply"] },
+    ]
+  },
+  cloud: {
+    title: "Cloud Engineer",
+    desc: "Design and manage scalable cloud infrastructure",
+    gradient: "linear-gradient(135deg, #0891b2, #0e7490, #155e75)",
+    level: "Intermediate–Advanced",
+    duration: "12–18 months",
+    salary: "₹7L – ₹40L/yr",
+    salaryPct: 88,
+    skills: ["AWS / Azure / GCP","Linux Administration","Networking","Terraform / IaC","Docker & Kubernetes","Python / Bash Scripting","CI/CD Pipelines","Security & IAM"],
+    certs: ["AWS Solutions Architect Associate","Google Cloud Professional","Microsoft Azure Administrator","HashiCorp Terraform Associate"],
+    courses: ["AWS Cloud Practitioner Essentials","Linux Command Line Basics","Docker & Kubernetes Full Course","Terraform for Beginners","Cloud Security Fundamentals","Serverless Architecture"],
+    steps: [
+      { title:"Linux & Networking", duration:"2–3 months", color:"#f97316", chips:["Linux CLI","Networking Basics","Bash Scripting","Virtualization"] },
+      { title:"Cloud Platform Basics", duration:"3–4 months", color:"#8b5cf6", chips:["AWS/Azure/GCP","Compute & Storage","IAM & Security","Billing & Cost"] },
+      { title:"DevOps Tools", duration:"3–4 months", color:"#3b82f6", chips:["Docker","Kubernetes","Terraform","CI/CD"] },
+      { title:"Certify & Apply", duration:"2–3 months", color:"#22c55e", chips:["AWS SAA Exam","Cloud Projects","Architecture Design","Job Applications"] },
+    ]
+  },
+  devops: {
+    title: "DevOps Engineer",
+    desc: "Bridge development and operations for faster delivery",
+    gradient: "linear-gradient(135deg, #1d4ed8, #2563eb, #0891b2)",
+    level: "Advanced",
+    duration: "14–20 months",
+    salary: "₹8L – ₹38L/yr",
+    salaryPct: 87,
+    skills: ["Linux & Bash","Git & GitHub Actions","Docker & Kubernetes","Jenkins / GitLab CI","Terraform / Ansible","Monitoring (Prometheus/Grafana)","Cloud Platforms","Python Scripting"],
+    certs: ["AWS DevOps Engineer Professional","Certified Kubernetes Administrator (CKA)","Docker Certified Associate","HashiCorp Vault Associate"],
+    courses: ["Git & GitHub Full Course","Docker Mastery","Kubernetes for Beginners","Jenkins CI/CD Pipeline","Ansible for Automation","Prometheus & Grafana Monitoring"],
+    steps: [
+      { title:"Linux, Git & Scripting", duration:"2–3 months", color:"#f97316", chips:["Linux Admin","Bash/Python","Git Workflows","Networking"] },
+      { title:"Containers & Orchestration", duration:"3–4 months", color:"#8b5cf6", chips:["Docker","Kubernetes","Helm Charts","Service Mesh"] },
+      { title:"CI/CD & IaC", duration:"3–4 months", color:"#3b82f6", chips:["Jenkins","GitHub Actions","Terraform","Ansible"] },
+      { title:"Monitoring & Apply", duration:"3–4 months", color:"#22c55e", chips:["Prometheus","Grafana","Incident Response","Portfolio & Jobs"] },
+    ]
+  },
+  ux: {
+    title: "UX / UI Designer",
+    desc: "Create beautiful, user-centred digital experiences",
+    gradient: "linear-gradient(135deg, #ec4899, #a855f7, #8b5cf6)",
+    level: "Beginner–Intermediate",
+    duration: "8–12 months",
+    salary: "₹3.5L – ₹20L/yr",
+    salaryPct: 63,
+    skills: ["Figma / Adobe XD","User Research","Wireframing","Prototyping","Design Systems","Accessibility (WCAG)","Typography & Colour","Usability Testing"],
+    certs: ["Google UX Design Certificate","Interaction Design Foundation","Adobe Certified Professional","Figma Advanced Certification"],
+    courses: ["Google UX Design (Coursera)","Figma UI Design – Full Course","User Research Methods","Design Systems with Figma","Motion Design in Figma","Psychology of Design"],
+    steps: [
+      { title:"Design Fundamentals", duration:"1–2 months", color:"#f97316", chips:["Design Principles","Typography","Colour Theory","Figma Basics"] },
+      { title:"UX Research & Wireframes", duration:"2–3 months", color:"#8b5cf6", chips:["User Interviews","Personas","Wireframing","Information Architecture"] },
+      { title:"High-Fidelity Prototypes", duration:"2–3 months", color:"#3b82f6", chips:["UI Design","Prototyping","Design Systems","Micro-animations"] },
+      { title:"Portfolio & Jobs", duration:"2 months", color:"#22c55e", chips:["Case Studies","Behance/Dribbble","Usability Testing","Apply"] },
+    ]
+  },
+  blockchain: {
+    title: "Blockchain Developer",
+    desc: "Build decentralised applications and smart contracts",
+    gradient: "linear-gradient(135deg, #b45309, #d97706, #f59e0b)",
+    level: "Advanced",
+    duration: "16–22 months",
+    salary: "₹8L – ₹45L/yr",
+    salaryPct: 92,
+    skills: ["Solidity / Rust","Ethereum / Solana","Web3.js / Ethers.js","Smart Contracts","DeFi Protocols","IPFS","Cryptography","Node.js"],
+    certs: ["Certified Blockchain Developer (101 Blockchains)","Ethereum Developer Certification","Solana Developer Bootcamp","ConsenSys Blockchain Developer"],
+    courses: ["Solidity Full Course","Ethereum & Web3 Development","Rust for Solana","DeFi Deep Dive","Smart Contract Security","Web3.js & Ethers.js"],
+    steps: [
+      { title:"Fundamentals", duration:"2–3 months", color:"#f97316", chips:["Blockchain Basics","Cryptography","JavaScript/Python","Git"] },
+      { title:"Smart Contracts", duration:"4–5 months", color:"#8b5cf6", chips:["Solidity","Hardhat/Truffle","ERC-20 Tokens","Testing"] },
+      { title:"DApps & DeFi", duration:"4–5 months", color:"#3b82f6", chips:["Web3.js","MetaMask","IPFS","DeFi Protocols"] },
+      { title:"Security & Launch", duration:"3–4 months", color:"#22c55e", chips:["Smart Contract Auditing","Deploy Mainnet","Open Source","Job Hunt"] },
+    ]
+  }
+};
+
+function renderCareer() {
+  const key = document.getElementById('careerSelect').value;
+  const c = careers[key];
+  const html = `
+    <!-- Banner -->
+    <div class="career-banner" style="background:${c.gradient}">
+      <h1>${c.title}</h1>
+      <p>${c.desc}</p>
+      <div class="banner-tags">
+        <span class="banner-tag">⚡ ${c.level}</span>
+        <span class="banner-tag">⏱ ${c.duration}</span>
+        <span class="banner-tag">💰 ${c.salary}</span>
+      </div>
+    </div>
+
+    <!-- Skills & Certs -->
+    <div class="section-card">
+      <div class="skills-grid">
+        <div>
+          <div class="section-card-title"><span class="s-icon">🛠</span> Required Skills</div>
+          <div class="skill-tags">
+            ${c.skills.map(s=>`<span class="skill-tag">${s}</span>`).join('')}
+          </div>
+        </div>
+        <div>
+          <div class="section-card-title"><span class="s-icon">🏅</span> Certifications</div>
+          <ul class="cert-list">
+            ${c.certs.map(cert=>`<li><span class="cert-dot"></span>${cert}</li>`).join('')}
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Courses -->
+    <div class="section-card">
+      <div class="section-card-title"><span class="s-icon">📚</span> Recommended Courses</div>
+      <div class="courses-grid">
+        ${c.courses.map((course,i)=>`
+          <div class="course-item">
+            <span class="course-num">${i+1}</span>
+            ${course}
+          </div>
+        `).join('')}
+      </div>
+    </div>
+
+    <!-- Roadmap -->
+    <div class="section-card">
+      <div class="section-card-title"><span class="s-icon">🗺️</span> Step-by-Step Roadmap</div>
+      <div class="roadmap-steps">
+        ${c.steps.map((step,i)=>`
+          <div class="roadmap-step">
+            <div class="step-circle" style="background:${step.color}">${i+1}</div>
+            <div class="step-body">
+              <div class="step-header">
+                <span class="step-title">${step.title}</span>
+                <span class="step-duration">${step.duration}</span>
+              </div>
+              <div class="step-chips">
+                ${step.chips.map(chip=>`<span class="step-chip">${chip}</span>`).join('')}
+              </div>
+            </div>
+          </div>
+        `).join('')}
+      </div>
+
+      <!-- Salary -->
+      <div class="salary-section">
+        <div class="salary-header">
+          <span class="salary-label">💰 Expected Salary Range (India)</span>
+          <span class="salary-value">${c.salary}</span>
+        </div>
+        <div class="salary-bar">
+          <div class="salary-fill" style="width:${c.salaryPct}%"></div>
+        </div>
+      </div>
+    </div>
+  `;
+  document.getElementById('roadmapContent').innerHTML = html;
+  try {
+    var sel = document.getElementById('careerSelect');
+    var v = sel && sel.value;
+    if (v) {
+      localStorage.setItem('roadmap_career', v);
+      var u = new URL(window.location.href);
+      u.searchParams.set('career', v);
+      history.replaceState({}, '', u);
+    }
+  } catch (_) {}
+}
+
+function applyCareerFromUrlOrStorage() {
+  var sel = document.getElementById('careerSelect');
+  if (!sel) return;
+  var key = null;
+  try {
+    var params = new URLSearchParams(window.location.search);
+    var q = params.get('career');
+    if (q && careers[q]) key = q;
+    if (!key) {
+      var s = localStorage.getItem('roadmap_career');
+      if (s && careers[s]) key = s;
+    }
+  } catch (_) {}
+  if (key) sel.value = key;
+}
+
+applyCareerFromUrlOrStorage();
+renderCareer();
+</script>
+<script src="chatbot.js"></script>
+</body>
+</html>

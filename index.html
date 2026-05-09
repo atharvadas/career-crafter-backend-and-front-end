@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="description" content="Career Crafter — India's smart career guidance platform. Discover your ideal career path through science-backed assessments, personalised roadmaps, and skill gap analysis."/>
+<meta name="keywords" content="career guidance, career assessment, career roadmap, skill gap, career path India"/>
+<title>Career Crafter — Find Your Career Path with Clarity</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@300;400&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;600&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="neon_style_part1.css"/>
+<style>
+/* ── neon palette overrides ── */
+:root {
+  --ink:#050505;--ink2:#050505;--cream:#050505;
+  --white:#FFFFFF;--accent:#BFFF00;--accent2:#d4ff33;
+  --green:#BFFF00;--green-light:rgba(191,255,0,0.12);
+  --border:rgba(255,255,255,0.1);--muted:rgba(255,255,255,0.4);
+  --card:rgba(255,255,255,0.03);--section-bg:rgba(255,255,255,0.01);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:#050505;color:#FFFFFF;overflow-x:hidden;line-height:1.6}
+
+/* scrollbar */
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:#111}
+::-webkit-scrollbar-thumb{background:#BFFF00;border-radius:4px}
+
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="mainNav">
+  <a class="nav-logo" href="index.html">
+    <div class="nav-logo-icon">🎯</div>
+    <p style="color: #fbf9f8;"></p><span>Elevy</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#how">How it works</a></li>
+    <li><a href="#features">Features</a></li>
+    <li><a href="#testimonials">Stories</a></li>
+    <li><a href="#faq">FAQ</a></li>
+    <li><a href="#aboutus">About</a></li>
+  </ul>
+  <div class="nav-actions">
+    <a class="btn-ghost" href="login.html">Log In</a>
+    <a class="btn-nav-cta" href="choose-role.html">Get Started Free →</a>
+  </div>
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#how" onclick="closeMenu()">How it works</a>
+  <a href="#features" onclick="closeMenu()">Features</a>
+  <a href="#testimonials" onclick="closeMenu()">Stories</a>
+  <a href="#faq" onclick="closeMenu()">FAQ</a>
+  <a href="#aboutus" onclick="closeMenu()">About</a>
+  <a href="login.html">Log In</a>
+  <a href="choose-role.html" class="m-cta">Get Started Free →</a>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="heroSection">
+  <!-- 3D Tubes Canvas -->
+  <canvas id="tubes-canvas"></canvas>
+
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="hero-badge">
+      <div class="hero-badge-dot">🎯</div>
+      <span>Science-backed career guidance for India's next generation</span>
+    </div>
+    <h1>Find Your Career Path with <em>Clarity</em>, Not Confusion</h1>
+    <p class="hero-sub">Elevy maps your unique skills, interests, and goals into a personalised roadmap — backed by real psychology research, not guesswork.</p>
+    <div class="hero-actions">
+      <a href="choose-role.html" class="btn-primary">Start For Free — Takes 5 Min →</a>
+      <a href="#how" class="btn-secondary">See How It Works</a>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="hero-stat-num">10+</div>
+        <div class="hero-stat-label">Career Paths Mapped</div>
+      </div>
+      <div class="hero-stat-div"></div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">40</div>
+        <div class="hero-stat-label">Assessment Questions</div>
+      </div>
+      <div class="hero-stat-div"></div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">3</div>
+        <div class="hero-stat-label">Research Frameworks</div>
+      </div>
+      <div class="hero-stat-div"></div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">100%</div>
+        <div class="hero-stat-label">Free to Use</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Click-to-randomize hint -->
+  <div class="hero-click-hint">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+      <path d="M5 3l2 6.5L9.5 8 12 16l2.5-4.5L17 13l2-10"/>
+    </svg>
+    <span>Click anywhere to change colors</span>
+  </div>
+</section>
+
+<!-- TRUSTED BY -->
+<div class="trusted-bar">
+  <p class="trusted-label">Trusted by students from leading institutions</p>
+  <div class="trusted-logos">
+    <span>IIT Pune</span>
+    <span>VIT</span>
+    <span>COEP</span>
+    <span>Symbiosis</span>
+    <span>PICT</span>
+    <span>MIT-WPU</span>
+    <span>Savitribai Phule University</span>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<section id="how">
+  <div class="how-header">
+    <div class="section-tag reveal">⚡ How It Works</div>
+    <h2 class="section-title reveal">Four steps to your <em>ideal career</em></h2>
+    <p class="section-sub reveal">No fluff, no overwhelm. A clear, structured path built around who you actually are — not who someone thinks you should be.</p>
+  </div>
+  <div class="steps-grid">
+    <div class="step-card reveal">
+      <div class="step-circle">01</div>
+      <h3>Create Your Profile</h3>
+      <p>Tell us your background, education, skills, and what kind of work excites you. Takes under 5 minutes.</p>
+    </div>
+    <div class="step-card reveal">
+      <div class="step-circle">02</div>
+      <h3>Take the Assessment</h3>
+      <p>Our 40-question test — based on Holland's RIASEC model and Gardner's Intelligence theory — pinpoints your strengths.</p>
+    </div>
+    <div class="step-card reveal">
+      <div class="step-circle">03</div>
+      <h3>Get Your Roadmap</h3>
+      <p>Receive a personalised step-by-step plan with skills, certifications, courses and milestones to reach your goal.</p>
+    </div>
+    <div class="step-card reveal">
+      <div class="step-circle">04</div>
+      <h3>Track & Grow</h3>
+      <p>Set goals, log progress, close skill gaps, and adapt your plan as you grow. Your roadmap evolves with you.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features">
+  <div class="features-layout">
+    <div>
+      <div class="section-tag reveal">✨ Features</div>
+      <h2 class="section-title reveal">Everything you need to <em>navigate</em> your career</h2>
+      <div class="feature-list">
+        <div class="feature-item reveal">
+          <div class="feature-icon-wrap" style="background:#EEEDFB">🎯</div>
+          <div>
+            <h4>Science-Backed Career Matching</h4>
+            <p>We use Holland's RIASEC model and Gardner's Multiple Intelligences framework — the same tools used by the US Department of Labor — to match you to careers you'll actually thrive in.</p>
+          </div>
+        </div>
+        <div class="feature-item reveal">
+          <div class="feature-icon-wrap" style="background:#DCFCE7">🗺️</div>
+          <div>
+            <h4>Detailed Career Roadmaps</h4>
+            <p>Step-by-step roadmaps for 10+ tech careers — complete with skill requirements, certifications, recommended courses, timelines, and salary expectations.</p>
+          </div>
+        </div>
+        <div class="feature-item reveal">
+          <div class="feature-icon-wrap" style="background:#FEF3C7">📊</div>
+          <div>
+            <h4>Live Skill Gap Analysis</h4>
+            <p>See exactly which skills you're missing for your target career — with a visual checklist that updates in real time as you add skills to your profile.</p>
+          </div>
+        </div>
+        <div class="feature-item reveal">
+          <div class="feature-icon-wrap" style="background:#DBEAFE">🤖</div>
+          <div>
+            <h4>AI Career Assistant</h4>
+            <p>Ask our Claude-powered chatbot anything about careers, roadmaps, skills to learn, or salary expectations — available 24/7, always free.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="feature-visual reveal">
+      <div class="fv-header">
+        <div class="fv-title">Your Career Roadmap</div>
+        <div class="fv-sub">AI Engineer · 18–24 months · Updated today</div>
+      </div>
+      <div class="path-nodes">
+        <div class="path-node done">
+          <div class="pn-dot" style="background:#22c55e"></div>
+          ✅ Complete Python Fundamentals
+        </div>
+        <div class="path-node done">
+          <div class="pn-dot" style="background:#22c55e"></div>
+          ✅ Build a Data Portfolio Project
+        </div>
+        <div class="path-node active">
+          <div class="pn-dot" style="background:#7B6FF0"></div>
+          🔄 Google ML Certificate — In Progress
+        </div>
+        <div class="path-node">
+          <div class="pn-dot" style="background:rgba(255,255,255,0.2)"></div>
+          ○ Deep Learning Specialisation
+        </div>
+        <div class="path-node">
+          <div class="pn-dot" style="background:rgba(255,255,255,0.2)"></div>
+          ○ Apply to Junior AI Engineer Roles
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-section">
+  <div class="stats-grid">
+    <div class="stat-item reveal">
+      <div class="stat-num">10<span>+</span></div>
+      <div class="stat-label">Career Paths Available</div>
+    </div>
+    <div class="stat-item reveal">
+      <div class="stat-num">40<span>Q</span></div>
+      <div class="stat-label">Psychometric Assessment</div>
+    </div>
+    <div class="stat-item reveal">
+      <div class="stat-num">3<span>x</span></div>
+      <div class="stat-label">Research Frameworks Used</div>
+    </div>
+    <div class="stat-item reveal">
+      <div class="stat-num">₹0</div>
+      <div class="stat-label">Cost — Completely Free</div>
+    </div>
+  </div>
+</div>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <div class="testi-header">
+    <div class="section-tag reveal">💬 Student Stories</div>
+    <h2 class="section-title reveal">People who found their <em>path</em></h2>
+    <p class="section-sub reveal">Real students. Real results. Real clarity.</p>
+  </div>
+  <div class="testi-grid">
+    <div class="testi-card reveal">
+      <div class="stars">★★★★★</div>
+      <p class="testi-text">I spent 2 years aimlessly switching between courses online. Career Crafter gave me a clear direction in one afternoon. I landed my first UX role within 4 months of following the roadmap.</p>
+      <div class="testi-author">
+        <div class="testi-avatar" style="background:linear-gradient(135deg,#a855f7,#7c3aed)">P</div>
+        <div>
+          <div class="testi-name">Priya Mehta</div>
+          <div class="testi-role">UX Designer, Bangalore</div>
+        </div>
+      </div>
+    </div>
+    <div class="testi-card reveal">
+      <div class="stars">★★★★★</div>
+      <p class="testi-text">The skill gap analysis was a wake-up call in the best way. I finally knew exactly what to learn and in what order. Went from a confused CS student to a Data Analyst job in 6 months.</p>
+      <div class="testi-author">
+        <div class="testi-avatar" style="background:linear-gradient(135deg,#3b82f6,#1d4ed8)">A</div>
+        <div>
+          <div class="testi-name">Arjun Sharma</div>
+          <div class="testi-role">Data Analyst, Pune</div>
+        </div>
+      </div>
+    </div>
+    <div class="testi-card reveal">
+      <div class="stars">★★★★★</div>
+      <p class="testi-text">I was completely lost after my B.Tech. The assessment told me I should explore Product Management — I'd never even considered it. Now I'm a PM at a startup and I love my job.</p>
+      <div class="testi-author">
+        <div class="testi-avatar" style="background:linear-gradient(135deg,#22c55e,#16a34a)">S</div>
+        <div>
+          <div class="testi-name">Sneha Iyer</div>
+          <div class="testi-role">Product Manager, Mumbai</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CAREERS PREVIEW -->
+<section id="careers-preview">
+  <div class="careers-header">
+    <div class="section-tag reveal">🚀 Explore Careers</div>
+    <h2 class="section-title reveal">High-growth careers <em>waiting</em> for you</h2>
+    <p class="section-sub reveal">Browse detailed roadmaps, skill requirements, and salary data for India's most in-demand tech careers.</p>
+  </div>
+  <div class="careers-grid">
+    <a class="career-card reveal" href="careers.html">
+      <div class="career-icon" style="background:#EEEDFB">🤖</div>
+      <div class="career-title">AI Engineer</div>
+      <div class="career-desc">Build intelligent systems and machine learning models that power the future.</div>
+      <div class="career-growth">📈 40% growth expected · ₹8L–₹35L/yr</div>
+    </a>
+    <a class="career-card reveal" href="careers.html">
+      <div class="career-icon" style="background:#DBEAFE">🌐</div>
+      <div class="career-title">Web Developer</div>
+      <div class="career-desc">Design and build modern websites and web applications used by millions.</div>
+      <div class="career-growth">📈 23% growth · ₹4L–₹25L/yr</div>
+    </a>
+    <a class="career-card reveal" href="careers.html">
+      <div class="career-icon" style="background:#DCFCE7">📊</div>
+      <div class="career-title">Data Scientist</div>
+      <div class="career-desc">Turn raw data into insights that drive business decisions and strategy.</div>
+      <div class="career-growth">📈 36% growth · ₹5L–₹30L/yr</div>
+    </a>
+    <a class="career-card reveal" href="careers.html">
+      <div class="career-icon" style="background:#FEF3C7">🔒</div>
+      <div class="career-title">Cybersecurity Analyst</div>
+      <div class="career-desc">Protect systems and networks from the ever-growing threat landscape.</div>
+      <div class="career-growth">📈 33% growth · ₹5L–₹28L/yr</div>
+    </a>
+    <a class="career-card reveal" href="careers.html">
+      <div class="career-icon" style="background:#FEF2F2">🎮</div>
+      <div class="career-title">Game Developer</div>
+      <div class="career-desc">Create immersive games for PC, mobile and consoles using cutting-edge engines.</div>
+      <div class="career-growth">📈 35% growth · ₹4L–₹20L/yr</div>
+    </a>
+    <a class="career-card reveal" href="careers.html">
+      <div class="career-icon" style="background:#F3F0FF">🎨</div>
+      <div class="career-title">UX / UI Designer</div>
+      <div class="career-desc">Craft beautiful, intuitive digital experiences that people actually enjoy using.</div>
+      <div class="career-growth">📈 25% growth · ₹3.5L–₹20L/yr</div>
+    </a>
+  </div>
+  <div style="text-align:center">
+    <a href="careers.html" class="btn-secondary">View All 10+ Careers →</a>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="faq-layout">
+    <div>
+      <div class="section-tag reveal">❓ FAQ</div>
+      <h2 class="section-title reveal">Common <em>questions</em></h2>
+      <p class="section-sub reveal">Can't find your answer? Use our AI chatbot — it's available 24/7 on every page.</p>
+    </div>
+    <div class="faq-wrap">
+      <div class="faq-item reveal">
+        <div class="faq-q">Is Career Crafter completely free? <span class="faq-arrow">+</span></div>
+        <div class="faq-a">Yes — 100% free. Every feature including the career assessment, personalised roadmaps, skill gap analysis, goal tracker, and AI chatbot is completely free to use. No credit card required.</div>
+      </div>
+      <div class="faq-item reveal">
+        <div class="faq-q">Is this suitable for freshers and students? <span class="faq-arrow">+</span></div>
+        <div class="faq-a">Absolutely. Career Crafter is built specifically for students, freshers, and anyone feeling lost about their career direction. You don't need any prior work experience to get started.</div>
+      </div>
+      <div class="faq-item reveal">
+        <div class="faq-q">How is this different from LinkedIn or Naukri? <span class="faq-arrow">+</span></div>
+        <div class="faq-a">Those platforms help you apply for jobs once you know what you want. Career Crafter helps you figure out what you want, build the skills to get there, and then go apply. Think of us as the step that comes before the job board.</div>
+      </div>
+      <div class="faq-item reveal">
+        <div class="faq-q">What is the career assessment based on? <span class="faq-arrow">+</span></div>
+        <div class="faq-a">Our 40-question assessment is based on three peer-reviewed research frameworks: Holland's RIASEC Vocational Interest Theory (1959), Gardner's Multiple Intelligences Theory (1983), and the O*NET Interest Profiler developed by the US Department of Labor.</div>
+      </div>
+      <div class="faq-item reveal">
+        <div class="faq-q">Can I change my career path after I start? <span class="faq-arrow">+</span></div>
+        <div class="faq-a">Yes! Your roadmap is fully flexible. You can retake the assessment anytime, explore different career paths, and update your goals whenever your direction changes. There are no lock-ins.</div>
+      </div>
+      <div class="faq-item reveal">
+        <div class="faq-q">Is my data private and secure? <span class="faq-arrow">+</span></div>
+        <div class="faq-a">Your data is stored locally in your browser using localStorage — it never leaves your device or gets sent to any server. Each user's data is stored separately and only accessible to them after logging in.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT US -->
+<section id="aboutus">
+  <div class="about-grid">
+    <div>
+      <div class="section-tag reveal">👋 About Us</div>
+      <h2 class="section-title reveal">Built by students, <em>for students</em></h2>
+      <p class="section-sub reveal" style="margin-bottom:1rem">Career Crafter was born out of a simple frustration — too many talented students in India have no idea what career to pursue, which skills to build, or where to even start.</p>
+      <p style="font-size:.9rem;color:var(--muted);line-height:1.7" class="reveal">We built Career Crafter to be the guidance counsellor that most of us never had — one that's grounded in real research, gives honest answers, and actually helps you take action.</p>
+      <div class="about-values">
+        <div class="value-card reveal">
+          <div class="value-icon">🔬</div>
+          <div class="value-title">Research-Driven</div>
+          <div class="value-desc">Every feature is grounded in peer-reviewed psychology and vocational science.</div>
+        </div>
+        <div class="value-card reveal">
+          <div class="value-icon">🇮🇳</div>
+          <div class="value-title">Made for India</div>
+          <div class="value-desc">Built with Indian students, universities, and the Indian job market in mind.</div>
+        </div>
+        <div class="value-card reveal">
+          <div class="value-icon">🔓</div>
+          <div class="value-title">Always Free</div>
+          <div class="value-desc">Career clarity should not have a price tag. Everything on Career Crafter is free.</div>
+        </div>
+        <div class="value-card reveal">
+          <div class="value-icon">⚡</div>
+          <div class="value-title">Action-Focused</div>
+          <div class="value-desc">We give you a concrete plan to follow, not just vague advice and personality labels.</div>
+        </div>
+      </div>
+    </div>
+    <div class="about-image-placeholder reveal">
+      <div class="big-icon">🎯</div>
+      <h3 style="font-family:'Instrument Serif',serif;font-size:1.4rem;color:var(--ink);letter-spacing:-0.02em">Our Mission</h3>
+      <p>To make career clarity accessible to every student in India — regardless of college, city, or background.</p>
+      <div style="margin-top:1.5rem;display:flex;flex-direction:column;gap:0.6rem;width:100%">
+        <div style="background:#fff;border-radius:10px;padding:.8rem 1rem;display:flex;align-items:center;gap:.8rem;border:1px solid var(--border)">
+          <span style="font-size:1.1rem">🧠</span>
+          <span style="font-size:.82rem;color:var(--muted)">Holland RIASEC + Gardner MI frameworks</span>
+        </div>
+        <div style="background:#fff;border-radius:10px;padding:.8rem 1rem;display:flex;align-items:center;gap:.8rem;border:1px solid var(--border)">
+          <span style="font-size:1.1rem">📍</span>
+          <span style="font-size:.82rem;color:var(--muted)">Built in Pune, Maharashtra, India 🇮🇳</span>
+        </div>
+        <div style="background:#fff;border-radius:10px;padding:.8rem 1rem;display:flex;align-items:center;gap:.8rem;border:1px solid var(--border)">
+          <span style="font-size:1.1rem">🎓</span>
+          <span style="font-size:.82rem;color:var(--muted)">Designed for engineering & science students</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-section">
+  <h2>Your future career is <em>waiting</em> for you to claim it</h2>
+  <p>Take the free assessment today. Get your personalised roadmap in under 15 minutes.</p>
+  <a href="choose-role.html" class="btn-primary">Get Started — It's Free →</a>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a class="footer-logo" href="index.html">
+        <div class="nav-logo-icon">🎯</div>
+        Career<span>Crafter</span>
+      </a>
+      <p class="footer-tagline">India's science-backed career guidance platform. Find your path with clarity, not confusion.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Platform</h4>
+      <ul>
+        <li><a href="dashboard.html">Dashboard</a></li>
+        <li><a href="assessment.html">Career Assessment</a></li>
+        <li><a href="roadmap.html">Roadmaps</a></li>
+        <li><a href="careers.html">Emerging Careers</a></li>
+        <li><a href="profile.html">My Profile</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="#aboutus">About Us</a></li>
+        <li><a href="#faq">FAQ</a></li>
+        <li><a href="#how">How It Works</a></li>
+        <li><a href="#features">Features</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Legal</h4>
+      <ul>
+        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#">Terms of Use</a></li>
+        <li><a href="#">Cookie Policy</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 Career Crafter. Made with ❤️ in Pune, India 🇮🇳</p>
+    <div class="footer-bottom-links">
+      <a href="#">Privacy</a>
+      <a href="#">Terms</a>
+      <a href="#aboutus">About</a>
+    </div>
+  </div>
+</footer>
+
+<script src="chatbot.js"></script>
+<!-- Three.js Tubes interactive background -->
+<script type="module">
+import TubesCursor from 'https://cdn.jsdelivr.net/npm/threejs-components@0.0.19/build/cursors/tubes1.min.js';
+
+const canvas = document.getElementById('tubes-canvas');
+if (canvas) {
+  // Neon lime palette
+  const ccColors = ['#BFFF00','#d4ff33','#a8e600'];
+  const ccLights = ['#BFFF00','#d4ff33','#8acc00','#ffffff'];
+
+  let app;
+  try {
+    app = TubesCursor(canvas, {
+      tubes: {
+        colors: ccColors,
+        lights: {
+          intensity: 200,
+          colors: ccLights
+        }
+      }
+    });
+  } catch(e) {
+    console.warn('Tubes init error:', e);
+  }
+
+  // Click on hero = randomize colors
+  const randomHex = () => '#' + Math.floor(Math.random()*16777215).toString(16).padStart(6,'0');
+  document.getElementById('heroSection').addEventListener('click', () => {
+    if (!app) return;
+    try {
+      app.tubes.setColors([randomHex(), randomHex(), randomHex()]);
+      app.tubes.setLightsColors([randomHex(), randomHex(), randomHex(), randomHex()]);
+    } catch(e) {}
+  });
+}
+</script>
+<script>
+// ── Nav scroll effect
+window.addEventListener('scroll', () => {
+  document.getElementById('mainNav').classList.toggle('scrolled', window.scrollY > 20);
+});
+
+// ── Hamburger menu
+const hamburger = document.getElementById('hamburger');
+const mobileMenu = document.getElementById('mobileMenu');
+hamburger.addEventListener('click', () => {
+  hamburger.classList.toggle('open');
+  mobileMenu.classList.toggle('open');
+});
+function closeMenu() {
+  hamburger.classList.remove('open');
+  mobileMenu.classList.remove('open');
+}
+// Close menu on outside click
+document.addEventListener('click', e => {
+  if (!hamburger.contains(e.target) && !mobileMenu.contains(e.target)) closeMenu();
+});
+
+// ── Scroll reveal
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('visible'), i * 60);
+      observer.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(r => observer.observe(r));
+
+// ── FAQ accordion
+document.querySelectorAll('.faq-item').forEach(item => {
+  item.querySelector('.faq-q').addEventListener('click', () => {
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+    if (!isOpen) item.classList.add('open');
+  });
+});
+
+// ── Smooth redirect for Get Started buttons (check if logged in)
+document.querySelectorAll('a[href="choose-role.html"]').forEach(btn => {
+  btn.addEventListener('click', e => {
+    if (localStorage.getItem('cc_loggedIn')) {
+      e.preventDefault();
+      window.location.href = 'dashboard.html';
+    }
+  });
+});
+</script>
+</body>
+</html>

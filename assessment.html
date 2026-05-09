@@ -1,0 +1,1024 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Career Crafter — Career Assessment</title>
+<!-- <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet"/> -->
+  <!-- Google Fonts -->
+<!-- <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Geist+Mono:wght@400;600&display=swap" rel="stylesheet"/>
+
+
+<link rel="stylesheet" href="theme.css"/> -->
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  <script src="theme.js"></script>
+  body {
+    /* font-family: 'DM Sans', sans-serif;
+    background: #F0F2F5;
+    min-height: 100vh;
+    color: #1a1a2e; */
+  
+  }
+
+  NAV
+  nav {
+    background: #fff; border-bottom: 1px solid #E5E7EB;
+    padding: 0.85rem 4%;
+    display: flex; align-items: center; justify-content: space-between;
+    position: sticky; top: 0; z-index: 100;
+  }
+  .brand { display: flex; align-items: center; gap: 0.6rem; text-decoration: none; }
+  .logo-icon {
+    width: 36px; height: 36px; border-radius: 9px;
+    background: linear-gradient(135deg, #1a6b4a, #2ecc8a 50%, #3aa8d8);
+    display: flex; align-items: center; justify-content: center; font-size: 1rem;
+  }
+  .brand-name { font-size: 1.1rem; font-weight: 700; color: #1a1a2e; }
+  .nav-back {
+    font-size: 0.85rem; color: #6C63FF; text-decoration: none;
+    font-weight: 600; display: flex; align-items: center; gap: 0.3rem;
+  }
+  .nav-back:hover { text-decoration: underline; }
+
+  /* MAIN */
+  main { max-width: 780px; margin: 0 auto; padding: 2.5rem 4% 5rem; }
+
+  /* INTRO SCREEN */
+  #introScreen { text-align: center; }
+  .intro-badge {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    background: linear-gradient(135deg, #4f46e5, #7c3aed);
+    color: #fff; font-size: 0.72rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.1em;
+    padding: 0.35rem 1rem; border-radius: 100px; margin-bottom: 1.5rem;
+  }
+  .intro-title {
+    font-family: 'Instrument Serif', serif;
+    font-size: clamp(2rem, 5vw, 3rem);
+    letter-spacing: -0.03em; line-height: 1.1;
+    margin-bottom: 1rem;
+  }
+  .intro-title em { color: #6C63FF; font-style: italic; }
+  .intro-sub {
+    font-size: 0.97rem; color: #888; line-height: 1.7;
+    max-width: 520px; margin: 0 auto 2rem;
+  }
+
+  .framework-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 1rem; margin: 2rem 0; text-align: left;
+  }
+  .framework-card {
+    background: #fff; border: 1px solid #E5E7EB;
+    border-radius: 14px; padding: 1.2rem;
+  }
+  .framework-card .f-icon { font-size: 1.5rem; margin-bottom: 0.6rem; }
+  .framework-card h4 { font-size: 0.85rem; font-weight: 700; margin-bottom: 0.3rem; }
+  .framework-card p { font-size: 0.78rem; color: #888; line-height: 1.5; }
+
+  .intro-stats {
+    display: flex; justify-content: center; gap: 2.5rem; margin: 2rem 0;
+  }
+  .stat { text-align: center; }
+  .stat-num {
+    font-family: 'Instrument Serif', serif;
+    font-size: 2rem; color: #6C63FF; letter-spacing: -0.02em;
+  }
+  .stat-label { font-size: 0.78rem; color: #888; }
+
+  .btn-start {
+    background: #1a1a2e; color: #fff;
+    border: none; cursor: pointer;
+    padding: 1rem 3rem; border-radius: 100px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1rem; font-weight: 700;
+    transition: background 0.2s, transform 0.2s;
+  }
+  .btn-start:hover { background: #6C63FF; transform: translateY(-2px); }
+
+  /* PROGRESS BAR */
+  #progressBar {
+    display: none;
+    background: #fff; border-radius: 16px; padding: 1.2rem 1.5rem;
+    margin-bottom: 1.5rem; border: 1px solid #E5E7EB;
+  }
+  .progress-top {
+    display: flex; justify-content: space-between;
+    align-items: center; margin-bottom: 0.8rem;
+  }
+  .progress-section { font-size: 0.8rem; font-weight: 700; color: #6C63FF; }
+  .progress-count { font-size: 0.8rem; color: #888; }
+  .progress-track {
+    height: 6px; background: #F0F2F5; border-radius: 6px; overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%; border-radius: 6px;
+    background: linear-gradient(90deg, #6C63FF, #a855f7);
+    transition: width 0.4s ease;
+  }
+
+  /* QUESTION SCREEN */
+  #questionScreen { display: none; }
+
+  .section-header {
+    background: #fff; border-radius: 16px; padding: 1.2rem 1.5rem;
+    margin-bottom: 1rem; border: 1px solid #E5E7EB;
+    display: flex; align-items: center; gap: 0.8rem;
+  }
+  .section-icon {
+    width: 42px; height: 42px; border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.2rem; flex-shrink: 0;
+  }
+  .section-title-text { font-size: 1rem; font-weight: 700; }
+  .section-desc { font-size: 0.8rem; color: #888; margin-top: 0.2rem; }
+
+  .question-card {
+    background: #fff; border: 1px solid #E5E7EB;
+    border-radius: 16px; padding: 1.8rem;
+    margin-bottom: 1rem;
+    animation: fadeUp 0.3s ease both;
+  }
+  @keyframes fadeUp { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
+
+  .q-number { font-size: 0.72rem; font-weight: 700; color: #6C63FF; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.6rem; }
+  .q-text { font-size: 1rem; font-weight: 600; color: #1a1a2e; line-height: 1.5; margin-bottom: 1.3rem; }
+
+  .options-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 0.6rem;
+  }
+  .option-btn {
+    background: #F9FAFB; border: 1.5px solid #E5E7EB;
+    border-radius: 12px; padding: 0.75rem 1rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.87rem; font-weight: 500; color: #1a1a2e;
+    cursor: pointer; text-align: left; line-height: 1.4;
+    transition: all 0.2s;
+    display: flex; align-items: center; gap: 0.6rem;
+  }
+  .option-btn:hover { background: #F0F0FF; border-color: #a78bfa; color: #4f46e5; }
+  .option-btn.selected { background: #F0F0FF; border-color: #6C63FF; color: #4f46e5; font-weight: 600; }
+  .option-btn.selected .opt-check { background: #6C63FF; border-color: #6C63FF; color: #fff; }
+
+  .opt-check {
+    width: 20px; height: 20px; border-radius: 50%;
+    border: 2px solid #D1D5DB; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.65rem; transition: all 0.2s;
+  }
+
+  /* Likert scale */
+  .likert-scale {
+    display: flex; gap: 0.5rem; justify-content: space-between;
+    margin-top: 0.5rem;
+  }
+  .likert-btn {
+    flex: 1; padding: 0.6rem 0.3rem;
+    border: 1.5px solid #E5E7EB; border-radius: 10px;
+    background: #F9FAFB; cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.75rem; font-weight: 600; color: #888;
+    text-align: center; line-height: 1.3;
+    transition: all 0.2s;
+  }
+  .likert-btn:hover { border-color: #a78bfa; color: #6C63FF; background: #F0F0FF; }
+  .likert-btn.selected { border-color: #6C63FF; background: #6C63FF; color: #fff; }
+
+  .likert-labels {
+    display: flex; justify-content: space-between;
+    font-size: 0.7rem; color: #bbb; margin-top: 0.4rem;
+    padding: 0 0.2rem;
+  }
+
+  /* Navigation buttons */
+  .nav-btns {
+    display: flex; gap: 0.8rem; justify-content: space-between; margin-top: 1.5rem;
+  }
+  .btn-prev {
+    background: #fff; border: 1.5px solid #E5E7EB; color: #555;
+    border-radius: 100px; padding: 0.75rem 1.8rem;
+    font-family: 'DM Sans', sans-serif; font-size: 0.9rem; font-weight: 600;
+    cursor: pointer; transition: all 0.2s;
+  }
+  .btn-prev:hover { border-color: #6C63FF; color: #6C63FF; }
+  .btn-next {
+    background: #1a1a2e; color: #fff;
+    border: none; border-radius: 100px; padding: 0.75rem 2rem;
+    font-family: 'DM Sans', sans-serif; font-size: 0.9rem; font-weight: 700;
+    cursor: pointer; transition: all 0.2s; margin-left: auto;
+  }
+  .btn-next:hover { background: #6C63FF; transform: translateY(-1px); }
+  .btn-next:disabled { background: #ccc; cursor: not-allowed; transform: none; }
+
+  /* RESULTS SCREEN */
+  #resultsScreen { display: none; }
+
+  .results-hero {
+    background: linear-gradient(135deg, #4f46e5, #7c3aed, #9333ea);
+    border-radius: 20px; padding: 2.5rem; text-align: center;
+    color: #fff; margin-bottom: 1.5rem;
+  }
+  .results-hero h2 {
+    font-family: 'Instrument Serif', serif;
+    font-size: 2rem; letter-spacing: -0.02em; margin-bottom: 0.5rem;
+  }
+  .results-hero p { font-size: 0.9rem; opacity: 0.8; }
+
+  .top-career-badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.4);
+    border-radius: 100px; padding: 0.5rem 1.5rem;
+    font-size: 1.1rem; font-weight: 700; margin: 1rem 0 0.3rem;
+  }
+
+  /* Score bars */
+  .scores-card {
+    background: #fff; border: 1px solid #E5E7EB;
+    border-radius: 16px; padding: 1.5rem; margin-bottom: 1.2rem;
+  }
+  .scores-card h3 { font-size: 0.95rem; font-weight: 700; margin-bottom: 1.2rem; }
+  .score-row { margin-bottom: 0.9rem; }
+  .score-header { display: flex; justify-content: space-between; margin-bottom: 0.3rem; }
+  .score-name { font-size: 0.85rem; font-weight: 600; }
+  .score-val { font-size: 0.85rem; font-weight: 700; color: #6C63FF; }
+  .score-track { height: 8px; background: #F0F2F5; border-radius: 8px; overflow: hidden; }
+  .score-bar { height: 100%; border-radius: 8px; transition: width 1s ease; }
+
+  /* Career recommendations */
+  .careers-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 1rem; margin-bottom: 1.2rem;
+  }
+  .career-rec-card {
+    background: #fff; border: 1.5px solid #E5E7EB;
+    border-radius: 16px; padding: 1.3rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+    text-decoration: none; color: inherit;
+    cursor: pointer;
+  }
+  .career-rec-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
+  .career-rec-card.rank-1 { border-color: #6C63FF; background: #F8F7FF; }
+  .career-rec-card.rank-1::before {
+    content: '🥇 Best Match';
+    display: block; font-size: 0.7rem; font-weight: 700;
+    color: #6C63FF; margin-bottom: 0.6rem; text-transform: uppercase; letter-spacing: 0.08em;
+  }
+  .rec-icon { font-size: 1.8rem; margin-bottom: 0.6rem; }
+  .rec-title { font-size: 0.97rem; font-weight: 700; margin-bottom: 0.3rem; }
+  .rec-match {
+    display: inline-flex; align-items: center; gap: 0.3rem;
+    background: #DCFCE7; color: #15803d;
+    border-radius: 100px; padding: 0.2rem 0.7rem;
+    font-size: 0.73rem; font-weight: 700; margin-bottom: 0.5rem;
+  }
+  .rec-reason { font-size: 0.8rem; color: #888; line-height: 1.5; }
+
+  .btn-explore {
+    display: block; width: 100%;
+    background: linear-gradient(135deg, #4f46e5, #7c3aed);
+    color: #fff; border: none; border-radius: 100px;
+    padding: 1rem; font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem; font-weight: 700; cursor: pointer;
+    text-align: center; text-decoration: none;
+    transition: opacity 0.2s, transform 0.2s;
+    margin-top: 1rem;
+  }
+  .btn-explore:hover { opacity: 0.9; transform: translateY(-1px); }
+
+  .btn-retake {
+    display: block; width: 100%; text-align: center;
+    background: #fff; border: 1.5px solid #E5E7EB; color: #555;
+    border-radius: 100px; padding: 0.85rem;
+    font-family: 'DM Sans', sans-serif; font-size: 0.9rem; font-weight: 600;
+    cursor: pointer; margin-top: 0.8rem;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .btn-retake:hover { border-color: #6C63FF; color: #6C63FF; }
+
+  .personality-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.8rem; }
+  .ptag {
+    background: #F3F0FF; color: #6C63FF;
+    border: 1px solid #DDD6FE; border-radius: 100px;
+    padding: 0.3rem 0.85rem; font-size: 0.78rem; font-weight: 600;
+  }
+
+  @media (max-width: 600px) {
+    .framework-grid { grid-template-columns: 1fr; }
+    .options-grid { grid-template-columns: 1fr; }
+    .careers-grid { grid-template-columns: 1fr; }
+    .intro-stats { gap: 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="brand" href="index.html">
+    <div class="logo-icon">🎯</div>
+    <span class="brand-name">Career Crafter</span>
+  </a>
+  <a class="nav-back" href="dashboard.html">← Back to Dashboard</a>
+</nav>
+
+<main>
+
+  <!-- ══ INTRO SCREEN ══ -->
+  <div id="introScreen">
+    <div class="intro-badge">🧠 Science-Backed Assessment</div>
+    <h1 class="intro-title">Discover Your <em>Perfect</em> Career Match</h1>
+    <p class="intro-sub">Our assessment combines 3 proven psychological frameworks to analyze your unique strengths, interests, and thinking style — then matches you to the careers where you'll truly thrive.</p>
+
+    <div class="framework-grid">
+      <div class="framework-card">
+        <div class="f-icon">🔬</div>
+        <h4>Holland's RIASEC</h4>
+        <p>60+ years of vocational research. Used by the US Dept. of Labor's O*NET system for 900+ occupations.</p>
+      </div>
+      <div class="framework-card">
+        <div class="f-icon">🧠</div>
+        <h4>Multiple Intelligences</h4>
+        <p>Gardner's Harvard framework identifying 8 distinct intelligence types that shape career success.</p>
+      </div>
+      <div class="framework-card">
+        <div class="f-icon">⚡</div>
+        <h4>Work Style Analysis</h4>
+        <p>Measures your preferred environment, problem-solving approach, and collaboration style.</p>
+      </div>
+    </div>
+
+    <div class="intro-stats">
+      <div class="stat"><div class="stat-num">40</div><div class="stat-label">Questions</div></div>
+      <div class="stat"><div class="stat-num">12</div><div class="stat-label">Minutes</div></div>
+      <div class="stat"><div class="stat-num">10+</div><div class="stat-label">Career Matches</div></div>
+    </div>
+
+    <button class="btn-start" onclick="startAssessment()">Start Assessment →</button>
+    <p style="font-size:0.78rem;color:#aaa;margin-top:1rem;">No signup required · Results shown instantly</p>
+  </div>
+
+  <!-- ══ PROGRESS BAR ══ -->
+  <div id="progressBar">
+    <div class="progress-top">
+      <span class="progress-section" id="sectionLabel">Section 1 of 4</span>
+      <span class="progress-count" id="progressCount">0 / 40</span>
+    </div>
+    <div class="progress-track">
+      <div class="progress-fill" id="progressFill" style="width:0%"></div>
+    </div>
+  </div>
+
+  <!-- ══ QUESTION SCREEN ══ -->
+  <div id="questionScreen">
+    <div class="section-header" id="sectionHeader">
+      <div class="section-icon" id="sectionIconEl"></div>
+      <div>
+        <div class="section-title-text" id="sectionTitleEl"></div>
+        <div class="section-desc" id="sectionDescEl"></div>
+      </div>
+    </div>
+    <div id="questionsContainer"></div>
+    <div class="nav-btns">
+      <button class="btn-prev" id="prevBtn" onclick="prevSection()" style="display:none">← Back</button>
+      <button class="btn-next" id="nextBtn" onclick="nextSection()">Continue →</button>
+    </div>
+  </div>
+
+  <!-- ══ RESULTS SCREEN ══ -->
+  <div id="resultsScreen"></div>
+
+</main>
+
+<script>
+/* ════════════════════════════════════════════
+   ASSESSMENT DATA — Based on:
+   - Holland (1959, 1973) RIASEC Vocational Interest Theory
+   - Gardner (1983) Multiple Intelligences Theory (Frames of Mind)
+   - O*NET Interest Profiler Short Form (US Dept. of Labor)
+   - Liao, Armstrong & Rounds (2008) IIP RIASEC Markers
+════════════════════════════════════════════ */
+
+const SECTIONS = [
+  {
+    id: 'interests',
+    title: 'Vocational Interests',
+    desc: 'Based on Holland\'s RIASEC Model — rate how much you enjoy each activity',
+    icon: '🎯',
+    color: '#4f46e5',
+    bg: '#EEF2FF',
+    type: 'likert',
+    questions: [
+      { text: 'Building, repairing or assembling things with your hands (machines, electronics, furniture)', trait: 'R' },
+      { text: 'Solving complex math problems or working with numbers and formulas', trait: 'I' },
+      { text: 'Creating art, music, stories, videos or other creative works', trait: 'A' },
+      { text: 'Teaching, counselling or helping others solve their personal problems', trait: 'S' },
+      { text: 'Leading a team, starting a project, or persuading others to follow your ideas', trait: 'E' },
+      { text: 'Organising data, maintaining records, following structured systems and procedures', trait: 'C' },
+      { text: 'Conducting scientific experiments or researching how things work at a deep level', trait: 'I' },
+      { text: 'Designing visuals — logos, UI layouts, graphics, architecture or interior spaces', trait: 'A' },
+      { text: 'Working with computers, writing code, or building software applications', trait: 'I' },
+      { text: 'Managing projects, schedules, budgets or organising people to meet deadlines', trait: 'C' },
+    ]
+  },
+  {
+    id: 'intelligences',
+    title: 'Thinking & Intelligence Style',
+    desc: 'Based on Gardner\'s Multiple Intelligences Theory — how do you naturally process the world?',
+    icon: '🧠',
+    color: '#7c3aed',
+    bg: '#F5F3FF',
+    type: 'mcq',
+    questions: [
+      {
+        text: 'When you face a difficult problem, what is your natural first instinct?',
+        trait: 'MI',
+        options: [
+          { text: 'Break it into logical steps and analyze each part', val: 'logical' },
+          { text: 'Sketch it out or visualize it in my head', val: 'spatial' },
+          { text: 'Talk it through with someone or explain it out loud', val: 'linguistic' },
+          { text: 'Go with my gut feeling and try things hands-on', val: 'kinesthetic' },
+        ]
+      },
+      {
+        text: 'Which of these activities would you most enjoy spending a free Saturday doing?',
+        trait: 'MI',
+        options: [
+          { text: 'Coding a personal project or solving puzzles', val: 'logical' },
+          { text: 'Drawing, designing, photography or video editing', val: 'spatial' },
+          { text: 'Reading, writing, debating or learning a language', val: 'linguistic' },
+          { text: 'Sports, dancing, building something physical', val: 'kinesthetic' },
+        ]
+      },
+      {
+        text: 'Your friend is upset. Your natural response is to:',
+        trait: 'MI',
+        options: [
+          { text: 'Logically help them analyse what went wrong', val: 'logical' },
+          { text: 'Show empathy and really listen to how they feel', val: 'interpersonal' },
+          { text: 'Write them a thoughtful message or card', val: 'linguistic' },
+          { text: 'Do something active with them to cheer them up', val: 'kinesthetic' },
+        ]
+      },
+      {
+        text: 'In school, which subject came most naturally to you?',
+        trait: 'MI',
+        options: [
+          { text: 'Maths, Physics or Computer Science', val: 'logical' },
+          { text: 'Art, Design or Geography (maps/visuals)', val: 'spatial' },
+          { text: 'English, Languages or History', val: 'linguistic' },
+          { text: 'PE, Biology (hands-on labs) or Vocational subjects', val: 'kinesthetic' },
+        ]
+      },
+      {
+        text: 'You learn something new best when:',
+        trait: 'MI',
+        options: [
+          { text: 'Reading detailed explanations and taking structured notes', val: 'linguistic' },
+          { text: 'Watching diagrams, charts, or video walkthroughs', val: 'spatial' },
+          { text: 'Doing it yourself and learning by trial and error', val: 'kinesthetic' },
+          { text: 'Discussing it with others and hearing different perspectives', val: 'interpersonal' },
+        ]
+      },
+      {
+        text: 'Which statement best describes you?',
+        trait: 'MI',
+        options: [
+          { text: 'I love patterns, data, and finding hidden logic in things', val: 'logical' },
+          { text: 'I think in pictures and notice visual details others miss', val: 'spatial' },
+          { text: 'I am deeply self-aware and often reflect on my thoughts/feelings', val: 'intrapersonal' },
+          { text: 'I easily understand people\'s emotions and motivations', val: 'interpersonal' },
+        ]
+      },
+      {
+        text: 'When working on a project, you prefer:',
+        trait: 'MI',
+        options: [
+          { text: 'Using spreadsheets, code or analytical tools', val: 'logical' },
+          { text: 'Creating a visual presentation, prototype or mockup', val: 'spatial' },
+          { text: 'Writing a detailed proposal or report', val: 'linguistic' },
+          { text: 'Building or making a physical demo', val: 'kinesthetic' },
+        ]
+      },
+      {
+        text: 'Which environment makes you most productive?',
+        trait: 'MI',
+        options: [
+          { text: 'Quiet space alone where I can focus deeply', val: 'intrapersonal' },
+          { text: 'Collaborative space with lots of discussions', val: 'interpersonal' },
+          { text: 'Outdoors or hands-on environment', val: 'kinesthetic' },
+          { text: 'A structured setting with clear rules and goals', val: 'logical' },
+        ]
+      },
+    ]
+  },
+  {
+    id: 'workstyle',
+    title: 'Work Style & Values',
+    desc: 'Understanding how you prefer to work helps predict career satisfaction',
+    icon: '⚡',
+    color: '#0891b2',
+    bg: '#ECFEFF',
+    type: 'mcq',
+    questions: [
+      {
+        text: 'Which work scenario excites you most?',
+        trait: 'WS',
+        options: [
+          { text: 'Building something technical from scratch', val: 'builder' },
+          { text: 'Analysing data to find hidden insights', val: 'analyst' },
+          { text: 'Designing a beautiful user experience', val: 'creator' },
+          { text: 'Helping someone solve a major life problem', val: 'helper' },
+        ]
+      },
+      {
+        text: 'Your ideal team size is:',
+        trait: 'WS',
+        options: [
+          { text: 'Solo — I work best independently', val: 'solo' },
+          { text: 'Small team (2–5 people)', val: 'small' },
+          { text: 'Large collaborative team', val: 'large' },
+          { text: 'I lead a team and delegate work', val: 'leader' },
+        ]
+      },
+      {
+        text: 'When you make a mistake at work, you:',
+        trait: 'WS',
+        options: [
+          { text: 'Debug methodically and trace the exact cause', val: 'analytical' },
+          { text: 'Ask colleagues for input and brainstorm solutions', val: 'collaborative' },
+          { text: 'Reflect deeply on what I could have done differently', val: 'reflective' },
+          { text: 'Quickly try a new approach and iterate fast', val: 'agile' },
+        ]
+      },
+      {
+        text: 'What kind of impact do you want your work to have?',
+        trait: 'WS',
+        options: [
+          { text: 'Build technology that millions of people use', val: 'scale' },
+          { text: 'Help individuals grow, heal or improve their lives', val: 'human' },
+          { text: 'Create something beautiful that lasts', val: 'artistic' },
+          { text: 'Solve a critical problem in society or science', val: 'research' },
+        ]
+      },
+      {
+        text: 'What stresses you most at work?',
+        trait: 'WS',
+        options: [
+          { text: 'Unclear instructions or vague goals', val: 'structured' },
+          { text: 'Repetitive tasks with no creative freedom', val: 'creative' },
+          { text: 'Working alone with no team interaction', val: 'social' },
+          { text: 'Slow pace and too many meetings', val: 'fast' },
+        ]
+      },
+      {
+        text: 'Which reward motivates you most?',
+        trait: 'WS',
+        options: [
+          { text: 'High salary and financial stability', val: 'financial' },
+          { text: 'Recognition and influence in my field', val: 'status' },
+          { text: 'Constant learning and skill growth', val: 'growth' },
+          { text: 'Making a real difference in people\'s lives', val: 'impact' },
+        ]
+      },
+      {
+        text: 'Describe your relationship with deadlines:',
+        trait: 'WS',
+        options: [
+          { text: 'I work best under pressure — deadlines motivate me', val: 'pressure' },
+          { text: 'I plan ahead and rarely need to rush', val: 'planner' },
+          { text: 'I prefer flexible timelines to do things properly', val: 'flexible' },
+          { text: 'I set my own deadlines and am self-disciplined', val: 'autonomous' },
+        ]
+      },
+    ]
+  },
+  {
+    id: 'skills',
+    title: 'Skills & Strengths',
+    desc: 'Rate your confidence in each of these areas honestly',
+    icon: '💡',
+    color: '#059669',
+    bg: '#ECFDF5',
+    type: 'likert',
+    questions: [
+      { text: 'Writing code, debugging programs or understanding how software works', trait: 'tech' },
+      { text: 'Understanding and working with numbers, statistics and data', trait: 'math' },
+      { text: 'Communicating clearly — writing, presenting or explaining ideas', trait: 'comm' },
+      { text: 'Designing visual things — layouts, graphics, UI, illustrations', trait: 'design' },
+      { text: 'Understanding people\'s emotions and building relationships', trait: 'people' },
+      { text: 'Planning, organising and managing complex projects or tasks', trait: 'organize' },
+      { text: 'Coming up with original ideas and thinking outside the box', trait: 'creative' },
+      { text: 'Researching, investigating and figuring out how things work', trait: 'research' },
+      { text: 'Selling, persuading, negotiating or leading others', trait: 'leadership' },
+      { text: 'Building, repairing or working with physical objects and tools', trait: 'hands' },
+      { text: 'Quickly learning and adapting to new technologies or tools', trait: 'tech_adapt' },
+      { text: 'Solving problems that don\'t have a clear or obvious solution', trait: 'problem' },
+      { text: 'Analysing patterns and finding insights in large amounts of information', trait: 'analysis' },
+      { text: 'Protecting systems, identifying security risks or thinking like a hacker', trait: 'security' },
+      { text: 'Making things look beautiful and paying attention to aesthetic details', trait: 'aesthetic' },
+    ]
+  }
+];
+
+/* ════════ Career Scoring Engine ════════
+   Each career gets points from:
+   - RIASEC scores (interest match)
+   - MI type scores (intelligence match)
+   - Skill scores (ability match)
+   - Work style match
+*/
+const CAREERS = [
+  {
+    key: 'ai',
+    title: 'AI / ML Engineer',
+    icon: '🤖',
+    match_criteria: { R:1, I:5, A:1, S:1, E:2, C:2, logical:5, spatial:3, research:5, math:5, tech:5, problem:4, analysis:4 },
+    reason: 'Your analytical mindset and logical intelligence are perfectly suited for building machine learning systems.',
+    roadmap: 'ai'
+  },
+  {
+    key: 'webdev',
+    title: 'Web Developer',
+    icon: '🌐',
+    match_criteria: { R:2, I:4, A:3, S:1, E:2, C:3, logical:4, spatial:3, tech:5, design:3, problem:4, tech_adapt:4 },
+    reason: 'Your technical skills combined with creative thinking make web development a natural fit.',
+    roadmap: 'webdev'
+  },
+  {
+    key: 'data',
+    title: 'Data Analyst / Scientist',
+    icon: '📊',
+    match_criteria: { R:1, I:5, A:1, S:1, E:2, C:4, logical:5, math:5, research:4, analysis:5, problem:4, organize:3 },
+    reason: 'You excel at finding patterns in complexity — the core skill of every great data scientist.',
+    roadmap: 'data'
+  },
+  {
+    key: 'ux',
+    title: 'UX / UI Designer',
+    icon: '🎨',
+    match_criteria: { R:1, I:3, A:5, S:4, E:2, C:2, spatial:5, interpersonal:4, design:5, creative:5, aesthetic:5, people:3 },
+    reason: 'Your visual intelligence and empathy for people are exactly what makes great UX designers.',
+    roadmap: 'ux'
+  },
+  {
+    key: 'cyber',
+    title: 'Cybersecurity Analyst',
+    icon: '🔒',
+    match_criteria: { R:3, I:5, A:1, S:1, E:2, C:3, logical:5, research:4, tech:4, security:5, problem:5, analytical:4 },
+    reason: 'Your investigative mindset and love of problem-solving make cybersecurity a great challenge.',
+    roadmap: 'cyber'
+  },
+  {
+    key: 'gamedev',
+    title: 'Game Developer',
+    icon: '🎮',
+    match_criteria: { R:3, I:4, A:4, S:1, E:2, C:2, logical:4, spatial:4, creative:5, tech:4, design:3, kinesthetic:3 },
+    reason: 'Your mix of technical skill and creative vision is the perfect combination for game development.',
+    roadmap: 'gamedev'
+  },
+  {
+    key: 'cloud',
+    title: 'Cloud / DevOps Engineer',
+    icon: '☁️',
+    match_criteria: { R:3, I:4, A:1, S:1, E:2, C:5, logical:5, tech:5, organize:4, problem:4, tech_adapt:5, analytical:4 },
+    reason: 'Your systematic thinking and technical adaptability are ideal for cloud infrastructure roles.',
+    roadmap: 'cloud'
+  },
+  {
+    key: 'product',
+    title: 'Product Manager',
+    icon: '💼',
+    match_criteria: { R:1, I:3, A:2, S:4, E:5, C:3, linguistic:4, interpersonal:5, leadership:5, organize:4, comm:4, people:4 },
+    reason: 'Your leadership skills and ability to understand people make you a natural product thinker.',
+    roadmap: 'webdev'
+  },
+  {
+    key: 'mobile',
+    title: 'Mobile App Developer',
+    icon: '📱',
+    match_criteria: { R:2, I:4, A:3, S:1, E:2, C:3, logical:4, spatial:3, tech:5, creative:3, tech_adapt:4, problem:3 },
+    reason: 'Your technical skills combined with attention to user experience make mobile dev a great fit.',
+    roadmap: 'mobile'
+  },
+  {
+    key: 'researcher',
+    title: 'Research Scientist',
+    icon: '🔬',
+    match_criteria: { R:2, I:5, A:2, S:2, E:1, C:3, logical:5, linguistic:3, research:5, math:5, problem:5, analysis:5 },
+    reason: 'Your deep curiosity and analytical rigour are the hallmarks of a great research scientist.',
+    roadmap: 'data'
+  },
+  {
+    key: 'content',
+    title: 'Content / Tech Writer',
+    icon: '✍️',
+    match_criteria: { R:1, I:2, A:4, S:3, E:2, C:2, linguistic:5, comm:5, creative:4, research:3, aesthetic:3 },
+    reason: 'Your linguistic intelligence and ability to explain complex things clearly is a rare and valuable skill.',
+    roadmap: 'webdev'
+  },
+  {
+    key: 'blockchain',
+    title: 'Blockchain Developer',
+    icon: '⛓️',
+    match_criteria: { R:2, I:5, A:2, S:1, E:3, C:3, logical:5, tech:5, research:4, problem:5, math:4, security:3 },
+    reason: 'Your technical depth and love of complex systems makes blockchain development an exciting frontier.',
+    roadmap: 'blockchain'
+  },
+];
+
+/* ════════ State ════════ */
+let currentSection = 0;
+let answers = { riasec:{R:0,I:0,A:0,S:0,E:0,C:0}, mi:{logical:0,spatial:0,linguistic:0,kinesthetic:0,interpersonal:0,intrapersonal:0}, ws:{}, skills:{} };
+let sectionAnswers = [];
+
+/* ════════ Start ════════ */
+function startAssessment() {
+  document.getElementById('introScreen').style.display = 'none';
+  document.getElementById('progressBar').style.display = 'block';
+  document.getElementById('questionScreen').style.display = 'block';
+  renderSection(0);
+}
+
+/* ════════ Render Section ════════ */
+function renderSection(idx) {
+  const sec = SECTIONS[idx];
+  const totalQ = SECTIONS.reduce((a,s)=>a+s.questions.length,0);
+  const doneQ = SECTIONS.slice(0,idx).reduce((a,s)=>a+s.questions.length,0);
+
+  // Update progress
+  document.getElementById('sectionLabel').textContent = `Section ${idx+1} of ${SECTIONS.length}: ${sec.title}`;
+  document.getElementById('progressCount').textContent = `${doneQ} / ${totalQ} questions`;
+  document.getElementById('progressFill').style.width = `${(doneQ/totalQ)*100}%`;
+
+  // Section header
+  document.getElementById('sectionIconEl').textContent = sec.icon;
+  document.getElementById('sectionIconEl').style.background = sec.bg;
+  document.getElementById('sectionTitleEl').textContent = sec.title;
+  document.getElementById('sectionDescEl').textContent = sec.desc;
+
+  // Nav buttons
+  document.getElementById('prevBtn').style.display = idx > 0 ? 'block' : 'none';
+  document.getElementById('nextBtn').textContent = idx < SECTIONS.length-1 ? 'Continue →' : 'See My Results 🎉';
+
+  // Questions
+  sectionAnswers = new Array(sec.questions.length).fill(null);
+  const container = document.getElementById('questionsContainer');
+  container.innerHTML = '';
+
+  sec.questions.forEach((q, qi) => {
+    const card = document.createElement('div');
+    card.className = 'question-card';
+
+    if (sec.type === 'likert') {
+      card.innerHTML = `
+        <div class="q-number">Question ${doneQ+qi+1}</div>
+        <div class="q-text">${q.text}</div>
+        <div class="likert-scale" id="likert_${qi}">
+          ${[1,2,3,4,5].map(v=>`
+            <button class="likert-btn" data-val="${v}" onclick="selectLikert(${qi},'${q.trait}',${v},this)">
+              ${['Strongly<br>Dislike','Dislike','Neutral','Like','Strongly<br>Like'][v-1]}
+            </button>
+          `).join('')}
+        </div>
+        <div class="likert-labels"><span>← Not for me</span><span>Love it →</span></div>
+      `;
+    } else {
+      card.innerHTML = `
+        <div class="q-number">Question ${doneQ+qi+1}</div>
+        <div class="q-text">${q.text}</div>
+        <div class="options-grid" id="opts_${qi}">
+          ${q.options.map((opt,oi)=>`
+            <button class="option-btn" onclick="selectMCQ(${qi},'${q.trait}','${opt.val}',${oi},this)">
+              <span class="opt-check"></span>
+              ${opt.text}
+            </button>
+          `).join('')}
+        </div>
+      `;
+    }
+
+    container.appendChild(card);
+  });
+
+  window.scrollTo({top: 0, behavior:'smooth'});
+}
+
+/* ════════ Answer handlers ════════ */
+function selectLikert(qi, trait, val, btn) {
+  const row = btn.parentElement;
+  row.querySelectorAll('.likert-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  sectionAnswers[qi] = { trait, val };
+
+  // Add to scores
+  const sec = SECTIONS[currentSection];
+  if (sec.id === 'interests') answers.riasec[trait] = (answers.riasec[trait]||0) + val;
+  if (sec.id === 'skills') answers.skills[trait] = val;
+  updateNextBtn();
+}
+
+function selectMCQ(qi, trait, val, oi, btn) {
+  const grid = btn.parentElement;
+  grid.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  btn.querySelector('.opt-check').textContent = '✓';
+  sectionAnswers[qi] = { trait, val };
+
+  const sec = SECTIONS[currentSection];
+  if (sec.id === 'intelligences') answers.mi[val] = (answers.mi[val]||0) + 1;
+  if (sec.id === 'workstyle') answers.ws[val] = (answers.ws[val]||0) + 1;
+  updateNextBtn();
+}
+
+function updateNextBtn() {
+  const answered = sectionAnswers.filter(a=>a!==null).length;
+  const total = SECTIONS[currentSection].questions.length;
+  const btn = document.getElementById('nextBtn');
+  btn.disabled = answered < Math.ceil(total * 0.7); // allow 70% completion
+}
+
+/* ════════ Navigation ════════ */
+function nextSection() {
+  if (currentSection < SECTIONS.length - 1) {
+    currentSection++;
+    sectionAnswers = [];
+    renderSection(currentSection);
+    document.getElementById('nextBtn').disabled = true;
+  } else {
+    showResults();
+  }
+}
+
+function prevSection() {
+  if (currentSection > 0) {
+    currentSection--;
+    renderSection(currentSection);
+    document.getElementById('nextBtn').disabled = false;
+  }
+}
+
+/* ════════ Score & Results ════════ */
+function scoreCareer(career) {
+  let score = 0;
+  let maxScore = 0;
+  const c = career.match_criteria;
+
+  // RIASEC (weight: 35%)
+  const riasecKeys = ['R','I','A','S','E','C'];
+  riasecKeys.forEach(k => {
+    if (c[k] !== undefined) {
+      const norm = Math.min(answers.riasec[k] / 25, 1); // normalize 0-1
+      score += norm * c[k] * 3.5;
+      maxScore += c[k] * 3.5;
+    }
+  });
+
+  // MI (weight: 30%)
+  const miKeys = ['logical','spatial','linguistic','kinesthetic','interpersonal','intrapersonal'];
+  miKeys.forEach(k => {
+    if (c[k] !== undefined) {
+      const norm = Math.min((answers.mi[k]||0) / 3, 1);
+      score += norm * c[k] * 3;
+      maxScore += c[k] * 3;
+    }
+  });
+
+  // Skills (weight: 35%)
+  const skillKeys = ['tech','math','comm','design','people','organize','creative','research','leadership','hands','tech_adapt','problem','analysis','security','aesthetic'];
+  skillKeys.forEach(k => {
+    if (c[k] !== undefined) {
+      const norm = (answers.skills[k] || 0) / 5;
+      score += norm * c[k] * 3.5;
+      maxScore += c[k] * 3.5;
+    }
+  });
+
+  return maxScore > 0 ? Math.round((score / maxScore) * 100) : 0;
+}
+
+function showResults() {
+  document.getElementById('progressBar').style.display = 'none';
+  document.getElementById('questionScreen').style.display = 'none';
+  const resultsDiv = document.getElementById('resultsScreen');
+  resultsDiv.style.display = 'block';
+
+  // Score all careers
+  const scored = CAREERS.map(c => ({ ...c, score: scoreCareer(c) }))
+    .sort((a,b) => b.score - a.score);
+
+  // Top RIASEC types
+  const riasecLabels = {R:'Realistic',I:'Investigative',A:'Artistic',S:'Social',E:'Enterprising',C:'Conventional'};
+  const riasecColors = {R:'#f97316',I:'#6C63FF',A:'#ec4899',S:'#22c55e',E:'#3b82f6',C:'#f59e0b'};
+  const topRIASEC = Object.entries(answers.riasec).sort((a,b)=>b[1]-a[1]).slice(0,3);
+
+  // Top MI
+  const miLabels = {logical:'Logical-Mathematical',spatial:'Visual-Spatial',linguistic:'Linguistic',kinesthetic:'Kinesthetic',interpersonal:'Interpersonal',intrapersonal:'Intrapersonal'};
+  const topMI = Object.entries(answers.mi).filter(e=>e[1]>0).sort((a,b)=>b[1]-a[1]).slice(0,2);
+
+  // Personality tags
+  const personalityTags = [
+    ...topRIASEC.map(([k])=>riasecLabels[k]),
+    ...topMI.map(([k])=>miLabels[k]),
+  ];
+
+  resultsDiv.innerHTML = `
+    <div class="results-hero">
+      <p style="font-size:0.8rem;opacity:0.7;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.5rem">Your Top Career Match</p>
+      <div class="top-career-badge">${scored[0].icon} ${scored[0].title}</div>
+      <h2>Your Results Are Ready!</h2>
+      <p>Based on your interests, intelligence style, work values and skills</p>
+    </div>
+
+    <!-- RIASEC Scores -->
+    <div class="scores-card">
+      <h3>🔬 Your RIASEC Vocational Profile</h3>
+      <p style="font-size:0.8rem;color:#888;margin-bottom:1rem">Based on Holland's (1959) Vocational Interest Theory</p>
+      ${Object.entries(answers.riasec).sort((a,b)=>b[1]-a[1]).map(([k,v])=>{
+        const pct = Math.min(Math.round((v/30)*100), 100);
+        return `
+        <div class="score-row">
+          <div class="score-header">
+            <span class="score-name">${riasecLabels[k]} (${k})</span>
+            <span class="score-val">${pct}%</span>
+          </div>
+          <div class="score-track">
+            <div class="score-bar" style="width:${pct}%;background:${riasecColors[k]}"></div>
+          </div>
+        </div>`;
+      }).join('')}
+    </div>
+
+    <!-- MI Scores -->
+    <div class="scores-card">
+      <h3>🧠 Your Intelligence Profile</h3>
+      <p style="font-size:0.8rem;color:#888;margin-bottom:1rem">Based on Gardner's (1983) Multiple Intelligences Theory</p>
+      ${Object.entries(answers.mi).filter(([,v])=>v>0).sort((a,b)=>b[1]-a[1]).map(([k,v])=>{
+        const pct = Math.round((v/8)*100);
+        return `
+        <div class="score-row">
+          <div class="score-header">
+            <span class="score-name">${miLabels[k]||k}</span>
+            <span class="score-val">${pct}%</span>
+          </div>
+          <div class="score-track">
+            <div class="score-bar" style="width:${pct}%;background:#7c3aed"></div>
+          </div>
+        </div>`;
+      }).join('')}
+    </div>
+
+    <!-- Personality Tags -->
+    <div class="scores-card">
+      <h3>✨ Your Personality Profile</h3>
+      <div class="personality-tags">
+        ${personalityTags.map(t=>`<span class="ptag">${t}</span>`).join('')}
+      </div>
+    </div>
+
+    <!-- Career Recommendations -->
+    <div class="scores-card">
+      <h3>🚀 Your Top Career Matches</h3>
+      <p style="font-size:0.8rem;color:#888;margin-bottom:1.2rem">Ranked by compatibility with your unique profile</p>
+      <div class="careers-grid">
+        ${scored.slice(0,6).map((c,i)=>`
+          <div class="career-rec-card ${i===0?'rank-1':''}" onclick="goToRoadmap('${c.roadmap}')">
+            <div class="rec-icon">${c.icon}</div>
+            <div class="rec-title">${c.title}</div>
+            <div class="rec-match">✓ ${c.score}% match</div>
+            <div class="rec-reason">${c.reason}</div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+
+    <a class="btn-explore" href="roadmap.html?career=${scored[0].roadmap}" onclick="try{localStorage.setItem('roadmap_career','${scored[0].roadmap}')}catch(e){}">
+      🗺️ View My Roadmap for ${scored[0].title}
+    </a>
+    <button class="btn-retake" onclick="retakeAssessment()">↺ Retake Assessment</button>
+  `;
+
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function goToRoadmap(key) {
+  try { localStorage.setItem('roadmap_career', key); } catch (e) {}
+  window.location.href = 'roadmap.html?career=' + encodeURIComponent(key);
+}
+
+function retakeAssessment() {
+  answers = { riasec:{R:0,I:0,A:0,S:0,E:0,C:0}, mi:{logical:0,spatial:0,linguistic:0,kinesthetic:0,interpersonal:0,intrapersonal:0}, ws:{}, skills:{} };
+  currentSection = 0;
+  document.getElementById('resultsScreen').style.display = 'none';
+  document.getElementById('introScreen').style.display = 'block';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// Initialize next btn as disabled
+document.addEventListener('DOMContentLoaded', ()=>{
+  document.getElementById('nextBtn').disabled = true;
+});
+</script>
+<script src="chatbot.js"></script>
+</body>
+</html>

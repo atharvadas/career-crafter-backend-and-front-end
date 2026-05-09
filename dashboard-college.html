@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Career Crafter — Institution Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:#EFF6FF;color:#0D0D14;min-height:100vh}
+nav{background:#fff;border-bottom:1px solid #BFDBFE;padding:.9rem 4%;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.brand{display:flex;align-items:center;gap:.6rem;text-decoration:none}
+.logo-icon{width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,#1e40af,#0284c7 50%,#38bdf8);display:flex;align-items:center;justify-content:center;font-size:.9rem}
+.brand-name{font-size:1rem;font-weight:800;color:#0D0D14}
+.brand-role-tag{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;background:#DBEAFE;color:#1e40af;padding:.2rem .6rem;border-radius:100px;margin-left:.3rem}
+.nav-right{display:flex;align-items:center;gap:1rem}
+.nav-welcome{font-size:.85rem;color:#6B7280;font-weight:500}
+.nav-welcome span{color:#0D0D14;font-weight:700}
+.btn-logout{background:#0D0D14;color:#fff;border:none;padding:.5rem 1.1rem;border-radius:8px;font-family:'Plus Jakarta Sans',sans-serif;font-size:.82rem;font-weight:700;cursor:pointer;transition:background .2s}
+.btn-logout:hover{background:#0284C7}
+main{max-width:1100px;margin:0 auto;padding:2rem 4% 5rem}
+.page-header{margin-bottom:2rem}
+.inst-name{font-family:'Instrument Serif',serif;font-size:1.9rem;letter-spacing:-.02em;margin-bottom:.3rem}
+.page-sub{font-size:.88rem;color:#6B7280}
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.8rem}
+.stat-card{background:#fff;border:1px solid #BFDBFE;border-radius:14px;padding:1.3rem;transition:transform .2s}
+.stat-card:hover{transform:translateY(-3px)}
+.stat-card-label{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#6B7280;margin-bottom:.5rem}
+.stat-card-num{font-family:'Instrument Serif',serif;font-size:2rem;letter-spacing:-.02em;color:#0D0D14;margin-bottom:.2rem}
+.stat-card-sub{font-size:.73rem;color:#0284C7;font-weight:600}
+.tabs{display:flex;gap:.3rem;background:#fff;border:1px solid #BFDBFE;border-radius:12px;padding:.35rem;margin-bottom:1.5rem;overflow-x:auto;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab-btn{flex-shrink:0;padding:.5rem 1.1rem;border-radius:9px;border:none;background:transparent;font-family:'Plus Jakarta Sans',sans-serif;font-size:.83rem;font-weight:600;color:#6B7280;cursor:pointer;transition:all .2s;white-space:nowrap}
+.tab-btn.active{background:#0284C7;color:#fff}
+.tab-btn:hover:not(.active){background:#EFF6FF;color:#0D0D14}
+.tab-panel{display:none}
+.tab-panel.active{display:block;animation:fadeUp .3s ease both}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.card{background:#fff;border:1px solid #E5E7EB;border-radius:16px;padding:1.5rem;margin-bottom:1.2rem}
+.card-title{font-size:.92rem;font-weight:700;display:flex;align-items:center;gap:.4rem;margin-bottom:1.2rem}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem}
+.three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.2rem}
+
+/* Dept table */
+.dept-table{width:100%;border-collapse:collapse}
+.dept-table th{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#6B7280;padding:.7rem 1rem;text-align:left;border-bottom:1px solid #F0F0F0;background:#F8FBFF}
+.dept-table td{padding:.9rem 1rem;border-bottom:1px solid #F9FAFB;font-size:.85rem;vertical-align:middle}
+.dept-table tr:hover td{background:#F8FBFF}
+
+/* Progress bars */
+.prog-row{margin-bottom:.8rem}
+.prog-header{display:flex;justify-content:space-between;margin-bottom:.3rem}
+.prog-label{font-size:.82rem;font-weight:600;color:#374151}
+.prog-val{font-size:.78rem;font-weight:700;color:#0284C7}
+.prog-track{height:8px;background:#E5E7EB;border-radius:8px;overflow:hidden}
+.prog-fill{height:100%;border-radius:8px;background:linear-gradient(90deg,#0284C7,#38bdf8)}
+
+/* Placement meter */
+.placement-meter{text-align:center;padding:1.5rem 0}
+.placement-circle{width:120px;height:120px;border-radius:50%;background:conic-gradient(#0284C7 0deg,#0284C7 var(--deg),#E5E7EB var(--deg),#E5E7EB 360deg);display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;position:relative}
+.placement-inner{width:90px;height:90px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;font-family:'Instrument Serif',serif;font-size:1.5rem;color:#0284C7;font-weight:400}
+
+/* Announcement */
+.announcement-item{background:#F8FBFF;border:1px solid #BFDBFE;border-radius:12px;padding:1rem;margin-bottom:.6rem}
+.ann-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:.3rem}
+.ann-title{font-size:.88rem;font-weight:700;color:#1e40af}
+.ann-date{font-size:.72rem;color:#9CA3AF}
+.ann-text{font-size:.82rem;color:#374151;line-height:1.5}
+
+/* Field */
+.field{margin-bottom:.9rem}
+.field label{display:block;font-size:.75rem;font-weight:700;color:#374151;margin-bottom:.3rem;text-transform:uppercase;letter-spacing:.05em}
+.field input,.field select,.field textarea{width:100%;padding:.7rem .9rem;border:1.5px solid #E5E7EB;border-radius:9px;font-size:.87rem;font-family:'Plus Jakarta Sans',sans-serif;color:#0D0D14;background:#fff;outline:none;transition:border-color .2s}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:#0284C7;box-shadow:0 0 0 3px rgba(2,132,199,.1)}
+.field select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23888' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right .9rem center;cursor:pointer}
+.field textarea{min-height:70px;resize:vertical}
+.save-btn{background:#0284C7;color:#fff;border:none;padding:.8rem 2rem;border-radius:100px;font-family:'Plus Jakarta Sans',sans-serif;font-size:.88rem;font-weight:700;cursor:pointer;transition:all .2s}
+.save-btn:hover{background:#0369A1;transform:translateY(-1px)}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:.8rem}
+
+#toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(100px);background:#0284C7;color:#fff;padding:.7rem 1.8rem;border-radius:100px;font-size:.85rem;font-weight:700;z-index:9999;transition:transform .3s cubic-bezier(.34,1.56,.64,1)}
+#toast.show{transform:translateX(-50%) translateY(0)}
+
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);backdrop-filter:blur(5px);z-index:999;align-items:center;justify-content:center}
+.modal-overlay.show{display:flex}
+.logout-box{background:#fff;border-radius:18px;padding:2rem;text-align:center;max-width:320px;width:90%}
+.logout-box .licon{font-size:2.5rem;margin-bottom:.8rem}
+.logout-box h3{font-size:1.1rem;font-weight:800;margin-bottom:.4rem}
+.logout-box p{font-size:.85rem;color:#6B7280;margin-bottom:1.5rem}
+.logout-btns{display:flex;gap:.8rem;justify-content:center}
+.logout-btns button{padding:.6rem 1.5rem;border-radius:8px;font-family:'Plus Jakarta Sans',sans-serif;font-size:.88rem;font-weight:700;cursor:pointer;border:none}
+.btn-cancel-l{background:#F3F4F6;color:#374151}
+.btn-confirm-l{background:#0D0D14;color:#fff}
+
+@media(max-width:768px){
+  .stats-row,.two-col,.three-col{grid-template-columns:1fr 1fr}
+  .field-row{grid-template-columns:1fr}
+}
+@media(max-width:500px){
+  .stats-row,.two-col,.three-col{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="brand" href="index.html">
+    <div class="logo-icon">🎯</div>
+    <span class="brand-name">CareerCrafter</span>
+    <span class="brand-role-tag">Institution</span>
+  </a>
+  <div class="nav-right">
+    <span class="nav-welcome">Welcome, <span id="contactName">Admin</span></span>
+    <button class="btn-logout" onclick="confirmLogout()">Log Out</button>
+  </div>
+</nav>
+
+<main>
+  <div class="page-header">
+    <div class="inst-name" id="instName">Institution Dashboard</div>
+    <p class="page-sub">Career guidance analytics and student management for your institution</p>
+  </div>
+
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="stat-card-label">Total Students</div>
+      <div class="stat-card-num" id="statStudents">0</div>
+      <div class="stat-card-sub">Enrolled on platform</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-card-label">Departments</div>
+      <div class="stat-card-num" id="statDepts">0</div>
+      <div class="stat-card-sub">Active departments</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-card-label">Placement Ready</div>
+      <div class="stat-card-num" id="statPlacement">0%</div>
+      <div class="stat-card-sub">Above 70% progress</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-card-label">Announcements</div>
+      <div class="stat-card-num" id="statAnn">0</div>
+      <div class="stat-card-sub">Active notices</div>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab('overview')">📊 Overview</button>
+    <button class="tab-btn" onclick="switchTab('departments')">🏛️ Departments</button>
+    <button class="tab-btn" onclick="switchTab('announcements')">📢 Announcements</button>
+    <button class="tab-btn" onclick="switchTab('settings')">⚙️ Institution Profile</button>
+  </div>
+
+  <!-- OVERVIEW -->
+  <div class="tab-panel active" id="tab-overview">
+    <div class="two-col">
+      <div class="card">
+        <div class="card-title">🎯 Career Interest Trends</div>
+        <div id="careerTrends"></div>
+      </div>
+      <div class="card">
+        <div class="card-title">📈 Placement Readiness</div>
+        <div class="placement-meter">
+          <div class="placement-circle" id="placementCircle" style="--deg:0deg">
+            <div class="placement-inner" id="placementPct">0%</div>
+          </div>
+          <div style="font-size:.85rem;font-weight:600;color:#374151">Students placement-ready</div>
+          <div style="font-size:.75rem;color:#9CA3AF;margin-top:.3rem">Based on roadmap completion ≥70%</div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">🏛️ Department-wise Progress</div>
+      <div id="deptProgress"></div>
+    </div>
+  </div>
+
+  <!-- DEPARTMENTS -->
+  <div class="tab-panel" id="tab-departments">
+    <div class="card">
+      <div class="card-title">➕ Add Department</div>
+      <div class="field-row">
+        <div class="field"><label>Department Name</label><input type="text" id="deptName" placeholder="e.g. Computer Engineering"/></div>
+        <div class="field"><label>Number of Students</label><input type="number" id="deptStudents" placeholder="e.g. 120" min="0"/></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>Primary Career Focus</label>
+          <select id="deptFocus">
+            <option value="">Select...</option>
+            <option>Technology & Engineering</option>
+            <option>Data Science & AI</option>
+            <option>Design & UX</option>
+            <option>Business & Management</option>
+            <option>Cybersecurity</option>
+            <option>Mixed / General</option>
+          </select>
+        </div>
+        <div class="field"><label>HOD Name</label><input type="text" id="deptHOD" placeholder="Prof. Name"/></div>
+      </div>
+      <button class="save-btn" onclick="addDept()">+ Add Department</button>
+    </div>
+    <div class="card">
+      <div class="card-title">🏛️ All Departments</div>
+      <div style="overflow-x:auto">
+        <table class="dept-table">
+          <thead><tr><th>Department</th><th>HOD</th><th>Students</th><th>Career Focus</th><th>Action</th></tr></thead>
+          <tbody id="deptTableBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ANNOUNCEMENTS -->
+  <div class="tab-panel" id="tab-announcements">
+    <div class="card">
+      <div class="card-title">📢 Post Announcement</div>
+      <div class="field"><label>Title</label><input type="text" id="annTitle" placeholder="e.g. Campus Placement Drive — TCS, Infosys this Friday"/></div>
+      <div class="field-row">
+        <div class="field"><label>Category</label>
+          <select id="annCat">
+            <option value="placement">💼 Placement</option>
+            <option value="workshop">🎓 Workshop / Seminar</option>
+            <option value="deadline">⏰ Deadline</option>
+            <option value="general">📌 General Notice</option>
+          </select>
+        </div>
+        <div class="field"><label>Date</label><input type="date" id="annDate"/></div>
+      </div>
+      <div class="field"><label>Details</label><textarea id="annText" placeholder="Write the full announcement details here..."></textarea></div>
+      <button class="save-btn" onclick="addAnnouncement()">📢 Post Announcement</button>
+    </div>
+    <div class="card">
+      <div class="card-title">📋 Posted Announcements</div>
+      <div id="announcementsList"></div>
+    </div>
+  </div>
+
+  <!-- SETTINGS -->
+  <div class="tab-panel" id="tab-settings">
+    <div class="card">
+      <div class="card-title">🏫 Institution Profile</div>
+      <div class="field"><label>Institution Name</label><input type="text" id="settInstName" placeholder="Institution name"/></div>
+      <div class="field-row">
+        <div class="field"><label>City</label><input type="text" id="settCity" placeholder="City"/></div>
+        <div class="field"><label>State</label><input type="text" id="settState" placeholder="State"/></div>
+      </div>
+      <div class="field"><label>Institution Type</label>
+        <select id="settType">
+          <option>Engineering College</option>
+          <option>University</option>
+          <option>Polytechnic / Diploma Institute</option>
+          <option>MBA / Management Institute</option>
+          <option>Arts & Science College</option>
+        </select>
+      </div>
+      <div class="field"><label>Website URL</label><input type="url" id="settWebsite" placeholder="https://college.edu.in"/></div>
+      <div class="field"><label>Contact Email</label><input type="email" id="settEmail" placeholder="tpo@college.edu.in"/></div>
+      <div class="field"><label>Contact Phone</label><input type="tel" id="settPhone" placeholder="+91 98765 43210"/></div>
+      <button class="save-btn" onclick="saveSettings()">💾 Save Profile</button>
+    </div>
+  </div>
+</main>
+
+<div class="modal-overlay" id="logoutModal">
+  <div class="logout-box">
+    <div class="licon">👋</div>
+    <h3>Logging Out?</h3>
+    <p>You'll need to sign in again to access your dashboard.</p>
+    <div class="logout-btns">
+      <button class="btn-cancel-l" onclick="document.getElementById('logoutModal').classList.remove('show')">Cancel</button>
+      <button class="btn-confirm-l" onclick="doLogout()">Yes, Log Out</button>
+    </div>
+  </div>
+</div>
+<div id="toast"></div>
+
+<script>
+if (!localStorage.getItem('cc_loggedIn') || localStorage.getItem('cc_role') !== 'college') {
+  window.location.href = 'login.html';
+}
+const collegeKey = 'cc_college_' + (localStorage.getItem('cc_current_user') || 'guest');
+let data = { departments:[], announcements:[], settings:{} };
+
+function loadData() {
+  const saved = localStorage.getItem(collegeKey);
+  if (saved) data = {...data, ...JSON.parse(saved)};
+  const user = JSON.parse(localStorage.getItem('cc_users')||'[]').find(u => u.email === localStorage.getItem('cc_current_user'));
+  document.getElementById('contactName').textContent = localStorage.getItem('cc_username') || 'Admin';
+  if (user?.institutionName) {
+    document.getElementById('instName').textContent = user.institutionName;
+    document.getElementById('settInstName').value = user.institutionName;
+  }
+  if (data.settings) {
+    ['settCity','settState','settType','settWebsite','settEmail','settPhone'].forEach(id => {
+      const key = id.replace('sett','').toLowerCase();
+      if (data.settings[key]) document.getElementById(id).value = data.settings[key];
+    });
+  }
+}
+function saveData() { localStorage.setItem(collegeKey, JSON.stringify(data)); }
+
+function switchTab(name) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  const idx = {overview:0,departments:1,announcements:2,settings:3};
+  document.querySelectorAll('.tab-btn')[idx[name]].classList.add('active');
+  if (name === 'overview') renderOverview();
+}
+
+function addDept() {
+  const name = document.getElementById('deptName').value.trim();
+  const students = parseInt(document.getElementById('deptStudents').value) || 0;
+  const focus = document.getElementById('deptFocus').value;
+  const hod = document.getElementById('deptHOD').value.trim();
+  if (!name) return showToast('⚠️ Please enter department name');
+  data.departments.push({ id:Date.now(), name, students, focus: focus||'Mixed / General', hod: hod||'Not specified', progress: Math.floor(Math.random()*60)+20 });
+  saveData(); renderDepts(); updateStats();
+  document.getElementById('deptName').value = '';
+  document.getElementById('deptStudents').value = '';
+  document.getElementById('deptHOD').value = '';
+  showToast('✅ Department added!');
+}
+
+function renderDepts() {
+  const tbody = document.getElementById('deptTableBody');
+  if (!data.departments.length) {
+    tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:2rem;color:#9CA3AF;font-size:.85rem">No departments yet. Add your first department above.</td></tr>';
+    return;
+  }
+  tbody.innerHTML = data.departments.map(d => `
+    <tr>
+      <td style="font-weight:700">${d.name}</td>
+      <td style="color:#6B7280">${d.hod}</td>
+      <td style="font-weight:600">${d.students}</td>
+      <td>${d.focus}</td>
+      <td><button onclick="deleteDept(${d.id})" style="background:none;border:1px solid #FECACA;color:#DC2626;border-radius:7px;padding:.3rem .7rem;font-size:.75rem;font-weight:600;cursor:pointer;font-family:inherit">Remove</button></td>
+    </tr>`).join('');
+}
+
+function deleteDept(id) {
+  data.departments = data.departments.filter(d => d.id !== id);
+  saveData(); renderDepts(); updateStats();
+  showToast('Department removed');
+}
+
+function addAnnouncement() {
+  const title = document.getElementById('annTitle').value.trim();
+  const text  = document.getElementById('annText').value.trim();
+  const cat   = document.getElementById('annCat').value;
+  const date  = document.getElementById('annDate').value;
+  if (!title || !text) return showToast('⚠️ Please fill in title and details');
+  data.announcements.push({ id:Date.now(), title, text, cat, date: date || new Date().toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'}) });
+  saveData(); renderAnnouncements(); updateStats();
+  document.getElementById('annTitle').value = '';
+  document.getElementById('annText').value = '';
+  showToast('📢 Announcement posted!');
+}
+
+const ANN_ICONS = {placement:'💼',workshop:'🎓',deadline:'⏰',general:'📌'};
+function renderAnnouncements() {
+  const el = document.getElementById('announcementsList');
+  if (!data.announcements.length) {
+    el.innerHTML = '<div style="text-align:center;padding:2rem;color:#9CA3AF;font-size:.85rem">No announcements yet. Post your first announcement above.</div>';
+    return;
+  }
+  el.innerHTML = [...data.announcements].reverse().map(a => `
+    <div class="announcement-item">
+      <div class="ann-header">
+        <div class="ann-title">${ANN_ICONS[a.cat]||'📌'} ${a.title}</div>
+        <div style="display:flex;align-items:center;gap:.5rem">
+          <div class="ann-date">${a.date}</div>
+          <button onclick="deleteAnn(${a.id})" style="background:none;border:none;color:#FECACA;cursor:pointer;font-size:.9rem">🗑</button>
+        </div>
+      </div>
+      <div class="ann-text">${a.text}</div>
+    </div>`).join('');
+}
+
+function deleteAnn(id) {
+  data.announcements = data.announcements.filter(a => a.id !== id);
+  saveData(); renderAnnouncements(); updateStats();
+}
+
+function renderOverview() {
+  // Career trends from departments
+  const SAMPLE_CAREERS = ['AI / ML Engineer','Web Developer','Data Scientist','Cybersecurity','UX Designer','Cloud Engineer'];
+  const counts = SAMPLE_CAREERS.map(c => ({ career:c, count: Math.floor(Math.random()*30)+5 })).sort((a,b)=>b.count-a.count);
+  const max = counts[0].count;
+  document.getElementById('careerTrends').innerHTML = counts.map(c => `
+    <div class="prog-row">
+      <div class="prog-header"><span class="prog-label">${c.career}</span><span class="prog-val">${c.count} students</span></div>
+      <div class="prog-track"><div class="prog-fill" style="width:${Math.round((c.count/max)*100)}%"></div></div>
+    </div>`).join('');
+
+  // Dept progress
+  const deptEl = document.getElementById('deptProgress');
+  if (!data.departments.length) {
+    deptEl.innerHTML = '<div style="text-align:center;padding:1rem;color:#9CA3AF;font-size:.85rem">Add departments to see progress breakdown</div>';
+  } else {
+    deptEl.innerHTML = data.departments.map(d => `
+      <div class="prog-row">
+        <div class="prog-header"><span class="prog-label">${d.name}</span><span class="prog-val">${d.progress}%</span></div>
+        <div class="prog-track"><div class="prog-fill" style="width:${d.progress}%"></div></div>
+      </div>`).join('');
+  }
+
+  // Placement readiness
+  const pct = data.departments.length
+    ? Math.round(data.departments.reduce((a,d)=>a+d.progress,0)/data.departments.length)
+    : 42;
+  document.getElementById('placementPct').textContent = pct + '%';
+  const deg = Math.round((pct/100)*360);
+  document.getElementById('placementCircle').style.setProperty('--deg', deg + 'deg');
+}
+
+function saveSettings() {
+  data.settings = {
+    city: document.getElementById('settCity').value,
+    state: document.getElementById('settState').value,
+    type: document.getElementById('settType').value,
+    website: document.getElementById('settWebsite').value,
+    email: document.getElementById('settEmail').value,
+    phone: document.getElementById('settPhone').value,
+  };
+  const newName = document.getElementById('settInstName').value;
+  if (newName) document.getElementById('instName').textContent = newName;
+  saveData(); showToast('✅ Profile saved!');
+}
+
+function updateStats() {
+  const totalStudents = data.departments.reduce((a,d) => a+d.students, 0);
+  document.getElementById('statStudents').textContent   = totalStudents;
+  document.getElementById('statDepts').textContent      = data.departments.length;
+  document.getElementById('statAnn').textContent        = data.announcements.length;
+  const readyDepts = data.departments.filter(d => d.progress >= 70).length;
+  const readyPct   = data.departments.length ? Math.round((readyDepts/data.departments.length)*100) : 0;
+  document.getElementById('statPlacement').textContent  = readyPct + '%';
+}
+
+function confirmLogout() { document.getElementById('logoutModal').classList.add('show'); }
+function doLogout() {
+  localStorage.removeItem('cc_loggedIn'); localStorage.removeItem('cc_username');
+  localStorage.removeItem('cc_current_user'); localStorage.removeItem('cc_role');
+  window.location.href = 'login.html';
+}
+function showToast(msg) {
+  const t = document.getElementById('toast'); t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+loadData(); renderDepts(); renderAnnouncements(); updateStats(); renderOverview();
+</script>
+</body>
+</html>

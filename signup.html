@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Career Crafter — Create Account</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: #F0F2F5;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1rem;
+  }
+
+  .page-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+
+  /* ── BRAND ── */
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.8rem;
+  }
+  .logo-icon {
+    width: 56px; height: 56px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #1a6b4a 0%, #2ecc8a 50%, #3aa8d8 100%);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.6rem;
+    box-shadow: 0 4px 16px rgba(46,204,138,0.3);
+    position: relative; overflow: hidden;
+  }
+  .logo-icon::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, transparent 60%);
+  }
+  .brand-text { line-height: 1.1; }
+  .brand-name {
+    font-size: 1.55rem; font-weight: 700;
+    color: #1a1a2e; letter-spacing: -0.02em;
+  }
+  .brand-tagline {
+    font-size: 0.7rem; color: #888;
+    text-transform: uppercase; letter-spacing: 0.1em; font-weight: 500;
+  }
+
+  /* ── CARD ── */
+  .card {
+    background: #fff;
+    border-radius: 20px;
+    padding: 2.5rem 2.2rem;
+    width: min(440px, 100%);
+    box-shadow: 0 4px 30px rgba(0,0,0,0.08);
+  }
+
+  .card-title {
+    font-size: 1.7rem; font-weight: 700;
+    color: #1a1a2e; text-align: center;
+    margin-bottom: 0.4rem; letter-spacing: -0.02em;
+  }
+  .card-sub {
+    font-size: 0.9rem; color: #888;
+    text-align: center; margin-bottom: 2rem;
+  }
+
+  /* ── FIELDS ── */
+  .field { margin-bottom: 1.2rem; }
+  .field label {
+    display: block; font-size: 0.88rem;
+    font-weight: 600; color: #333; margin-bottom: 0.5rem;
+  }
+  .field-hint {
+    font-size: 0.78rem; color: #888; margin-top: 0.45rem; line-height: 1.45;
+  }
+
+  .input-wrap { position: relative; }
+  .input-wrap input,
+  .input-wrap select {
+    width: 100%;
+    padding: 0.85rem 1rem;
+    border: 1.5px solid #E5E7EB;
+    border-radius: 10px;
+    font-size: 0.93rem;
+    font-family: 'DM Sans', sans-serif;
+    color: #1a1a2e;
+    background: #fff;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    appearance: none;
+    -webkit-appearance: none;
+  }
+  .input-wrap input::placeholder { color: #bbb; }
+  .input-wrap input:focus,
+  .input-wrap select:focus {
+    border-color: #6C63FF;
+    box-shadow: 0 0 0 3px rgba(108,99,255,0.1);
+  }
+  /* select arrow */
+  .select-wrap { position: relative; }
+  .select-wrap::after {
+    content: '▾';
+    position: absolute; right: 1rem; top: 50%;
+    transform: translateY(-50%);
+    color: #aaa; font-size: 0.9rem;
+    pointer-events: none;
+  }
+
+  /* toggle pw */
+  .toggle-pw {
+    position: absolute; right: 1rem; top: 50%;
+    transform: translateY(-50%);
+    background: none; border: none; cursor: pointer;
+    color: #aaa; font-size: 1rem;
+    transition: color 0.2s; padding: 0;
+  }
+  .toggle-pw:hover { color: #555; }
+
+  /* password strength bar */
+  .strength-bar {
+    height: 4px; border-radius: 4px;
+    background: #eee; margin-top: 0.5rem;
+    overflow: hidden;
+  }
+  .strength-fill {
+    height: 100%; border-radius: 4px;
+    width: 0%; transition: width 0.3s, background 0.3s;
+  }
+  .strength-label {
+    font-size: 0.75rem; margin-top: 0.3rem;
+    color: #aaa; height: 1rem;
+  }
+
+  /* ── ERROR & SUCCESS ── */
+  .error-msg {
+    background: #FEF2F2; border: 1px solid #FECACA;
+    color: #DC2626; border-radius: 8px;
+    padding: 0.7rem 1rem; font-size: 0.85rem;
+    margin-bottom: 1.2rem; display: none; text-align: center;
+  }
+  .error-msg.show { display: block; animation: shake 0.3s ease; }
+  @keyframes shake {
+    0%,100%{transform:translateX(0)}
+    25%{transform:translateX(-6px)}
+    75%{transform:translateX(6px)}
+  }
+
+  /* ── BUTTON ── */
+  .btn-create {
+    width: 100%; padding: 0.95rem;
+    border-radius: 10px;
+    background: #1a1a2e; color: #fff;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1rem; font-weight: 600;
+    border: none; cursor: pointer;
+    transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+    letter-spacing: 0.01em;
+  }
+  .btn-create:hover {
+    background: #2d2b55;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(26,26,46,0.25);
+  }
+  .btn-create:active { transform: translateY(0); }
+  .btn-create.loading { pointer-events: none; background: #555; }
+
+  /* ── LOGIN LINK ── */
+  .login-row {
+    text-align: center; margin-top: 1.5rem;
+    font-size: 0.88rem; color: #888;
+  }
+  .login-row a {
+    color: #6C63FF; text-decoration: none;
+    font-weight: 600; transition: color 0.2s;
+  }
+  .login-row a:hover { color: #4f46e5; text-decoration: underline; }
+
+  /* ── SUCCESS OVERLAY ── */
+  .success-overlay {
+    display: none; position: fixed; inset: 0;
+    background: rgba(26,26,46,0.5);
+    backdrop-filter: blur(6px);
+    z-index: 999; align-items: center; justify-content: center;
+  }
+  .success-overlay.show { display: flex; animation: fadeIn 0.3s ease; }
+  @keyframes fadeIn { from{opacity:0} to{opacity:1} }
+  .success-box {
+    background: #fff; border-radius: 20px;
+    padding: 2.5rem 2rem; text-align: center; max-width: 340px;
+    animation: popUp 0.35s cubic-bezier(.34,1.56,.64,1) both;
+  }
+  @keyframes popUp { from{transform:scale(0.8);opacity:0} to{transform:scale(1);opacity:1} }
+  .success-box .icon { font-size: 3rem; margin-bottom: 1rem; }
+  .success-box h3 { font-size: 1.4rem; font-weight: 700; color: #1a1a2e; margin-bottom: 0.4rem; }
+  .success-box p { font-size: 0.9rem; color: #888; margin-bottom: 1.5rem; }
+  .success-box a {
+    display: inline-block;
+    background: #1a1a2e; color: #fff;
+    padding: 0.75rem 2rem; border-radius: 10px;
+    text-decoration: none; font-weight: 600; font-size: 0.9rem;
+    transition: background 0.2s;
+  }
+  .success-box a:hover { background: #6C63FF; }
+</style>
+</head>
+<body>
+
+<div class="page-wrap">
+
+  <!-- BRAND -->
+  <a href="index.html" class="brand" style="text-decoration:none;color:inherit">
+    <div class="logo-icon">🎯</div>
+    <div class="brand-text">
+      <div class="brand-name">Career Crafter</div>
+      <div class="brand-tagline">Career Guidance</div>
+    </div>
+  </a>
+
+  <!-- CARD -->
+  <div class="card">
+    <h1 class="card-title">Create Your Account</h1>
+    <p class="card-sub">Choose your role (student, counsellor, college, or parent) — your dashboard will match.</p>
+
+    <div class="error-msg" id="errorMsg"></div>
+
+    <!-- Full Name -->
+    <div class="field">
+      <label for="fullname">Full Name</label>
+      <div class="input-wrap">
+        <input type="text" id="fullname" placeholder="Enter your full name" autocomplete="name"/>
+      </div>
+    </div>
+
+    <!-- Email -->
+    <div class="field">
+      <label for="email">Email Address</label>
+      <div class="input-wrap">
+        <input type="email" id="email" placeholder="your.email@example.com" autocomplete="email"/>
+      </div>
+    </div>
+
+    <!-- Who is signing up -->
+    <div class="field">
+      <label for="role">I am signing up as</label>
+      <div class="input-wrap select-wrap">
+        <select id="role">
+          <option value="">Choose your primary role</option>
+          <option value="student">Student / learner</option>
+          <option value="counsellor">Career counsellor / counselor</option>
+          <option value="college">College / university staff</option>
+          <option value="parent">Parent / guardian</option>
+        </select>
+      </div>
+      <p class="field-hint" id="roleHint">We tailor your dashboard, wording, and shortcuts based on this choice.</p>
+    </div>
+
+    <!-- Academic Level -->
+    <div class="field">
+      <label for="academic">Academic context</label>
+      <div class="input-wrap select-wrap">
+        <select id="academic">
+          <option value="">Select one</option>
+          <option value="na">Not applicable (counsellor, college, or parent)</option>
+          <option value="high_school">High School</option>
+          <option value="diploma">Diploma / Polytechnic</option>
+          <option value="undergraduate">Undergraduate (B.Tech / B.E / B.Sc)</option>
+          <option value="graduate">Graduate (M.Tech / MBA / M.Sc)</option>
+          <option value="postgraduate">Post Graduate / PhD</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Password -->
+    <div class="field">
+      <label for="password">Password</label>
+      <div class="input-wrap">
+        <input type="password" id="password" placeholder="Create a strong password" oninput="checkStrength(this.value)"/>
+        <button class="toggle-pw" type="button" id="togglePw1">👁</button>
+      </div>
+      <div class="strength-bar"><div class="strength-fill" id="strengthFill"></div></div>
+      <div class="strength-label" id="strengthLabel"></div>
+    </div>
+
+    <!-- Confirm Password -->
+    <div class="field">
+      <label for="confirm">Confirm Password</label>
+      <div class="input-wrap">
+        <input type="password" id="confirm" placeholder="Confirm your password"/>
+        <button class="toggle-pw" type="button" id="togglePw2">👁</button>
+      </div>
+    </div>
+
+    <button class="btn-create" id="createBtn" onclick="handleSignup()">Create Account</button>
+
+    <p class="login-row">Already have an account? <a href="login.html">Log In</a></p>
+  </div>
+
+</div>
+
+<!-- SUCCESS OVERLAY -->
+<div class="success-overlay" id="successOverlay">
+  <div class="success-box">
+    <div class="icon">🎉</div>
+    <h3>Account Created!</h3>
+    <p>Welcome to Career Crafter. Your journey to career clarity starts now!</p>
+    <a href="login.html">Go to Login →</a>
+  </div>
+</div>
+
+<script>
+  // ── Toggle password visibility ──
+  function setupToggle(btnId, inputId) {
+    const btn = document.getElementById(btnId);
+    const inp = document.getElementById(inputId);
+    btn.addEventListener('click', () => {
+      const hidden = inp.type === 'password';
+      inp.type = hidden ? 'text' : 'password';
+      btn.textContent = hidden ? '🙈' : '👁';
+    });
+  }
+  setupToggle('togglePw1', 'password');
+  setupToggle('togglePw2', 'confirm');
+
+  // ── Password strength ──
+  function checkStrength(val) {
+    const fill = document.getElementById('strengthFill');
+    const label = document.getElementById('strengthLabel');
+    if (!val) { fill.style.width = '0%'; label.textContent = ''; return; }
+
+    let score = 0;
+    if (val.length >= 8) score++;
+    if (/[A-Z]/.test(val)) score++;
+    if (/[0-9]/.test(val)) score++;
+    if (/[^A-Za-z0-9]/.test(val)) score++;
+
+    const levels = [
+      { pct: '25%', color: '#ef4444', text: 'Weak' },
+      { pct: '50%', color: '#f97316', text: 'Fair' },
+      { pct: '75%', color: '#eab308', text: 'Good' },
+      { pct: '100%', color: '#22c55e', text: 'Strong 💪' },
+    ];
+    const lvl = levels[score - 1] || levels[0];
+    fill.style.width = lvl.pct;
+    fill.style.background = lvl.color;
+    label.textContent = lvl.text;
+    label.style.color = lvl.color;
+  }
+
+  // ── Signup handler ──
+  function handleSignup() {
+    const name = document.getElementById('fullname').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const role = document.getElementById('role').value;
+    const academic = document.getElementById('academic').value;
+    const password = document.getElementById('password').value;
+    const confirm = document.getElementById('confirm').value;
+    const errorMsg = document.getElementById('errorMsg');
+    const btn = document.getElementById('createBtn');
+
+    errorMsg.classList.remove('show');
+
+    // Validations
+    if (!name) return showError('⚠️ Please enter your full name.');
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return showError('⚠️ Please enter a valid email address.');
+    if (!role) return showError('⚠️ Please choose who you are signing up as (student, counsellor, college, or parent).');
+    if (!academic) return showError('⚠️ Please select academic context (or “Not applicable”).');
+    if (role === 'student' && academic === 'na') {
+      return showError('⚠️ Students should pick a real academic level — “Not applicable” is for counsellors, colleges, and parents only.');
+    }
+    if (password.length < 8) return showError('⚠️ Password must be at least 8 characters.');
+    if (!/[A-Z]/.test(password)) return showError('⚠️ Password must contain at least one uppercase letter.');
+    if (!/[0-9]/.test(password)) return showError('⚠️ Password must contain at least one number.');
+    if (password !== confirm) return showError('⚠️ Passwords do not match. Please try again.');
+
+    // Check if email already registered
+    const users = JSON.parse(localStorage.getItem('cc_users') || '[]');
+    const exists = users.find(u => u.email.toLowerCase() === email.toLowerCase());
+    if (exists) return showError('❌ An account with this email already exists. Please log in instead.');
+
+    // Save new user
+    btn.classList.add('loading');
+    btn.textContent = 'Creating Account...';
+
+    setTimeout(() => {
+      btn.classList.remove('loading');
+      btn.textContent = 'Create Account';
+
+      // Add user to the registered users list
+      users.push({
+        name: name,
+        email: email,
+        password: password,
+        role: role,
+        academic: academic,
+        createdAt: new Date().toISOString()
+      });
+      localStorage.setItem('cc_users', JSON.stringify(users));
+
+      // Auto-save name for dashboard welcome message
+      localStorage.setItem('cc_username', name.split(' ')[0]);
+      localStorage.setItem('cc_role', role);
+
+      document.getElementById('successOverlay').classList.add('show');
+    }, 1200);
+  }
+
+  function showError(msg) {
+    const el = document.getElementById('errorMsg');
+    el.textContent = msg;
+    el.classList.add('show');
+  }
+
+  // Enter key support
+  document.addEventListener('keydown', e => { if (e.key === 'Enter') handleSignup(); });
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const r = new URLSearchParams(window.location.search).get('role');
+    if (['student', 'counsellor', 'college', 'parent'].includes(r)) {
+      document.getElementById('role').value = r;
+    }
+  });
+</script>
+<script src="chatbot.js"></script>
+</body>
+</html>
