@@ -19,7 +19,7 @@ app.use('/api', userRoutes);
 app.use('/api/auth', authRoutes);
 
 // SPA fallback — serve index.html for any route not matched above
-app.get('*', (req, res) => {
+app.get('/:path(.*)', (req, res) => {
   res.sendFile(__dirname + '/index.html');
 });
 
