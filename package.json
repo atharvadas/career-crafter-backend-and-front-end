@@ -1,4 +1,7 @@
 {
+  "scripts": {
+    "start": "node server.js"
+  },
   "dependencies": {
     "@clerk/clerk-sdk-node": "^4.13.23",
     "bcryptjs": "^3.0.3",
